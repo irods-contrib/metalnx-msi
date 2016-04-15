@@ -1,9 +1,13 @@
-TARGET = libmsiobjput_populate.so
+GCC = g++
 
-SRCS = libmsiobjput_populate.cpp
+INC=-I/usr/include/irods/ -I/usr/include/irods/boost/ 
 
-HEADERS = 
+LIBS=
 
-EXTRALIBS =
+all: libmsiobjput_populate
 
-include ../Makefile.base
+libmsiobjput_populate:
+	${GCC} ${INC} -DRODS_SERVER -fPIC "-Wl,-E" -shared -g -Wno-deprecated -rdynamic -o $@.so $@.cpp
+     
+clean:
+	@rm -f ./*.so

@@ -1,10 +1,13 @@
-CXXFLAGS =	-g -Wall -fmessage-length=0
+GCC = g++
 
-TARGET =	libmsiget_illumina_meta.so
+INC=-I/usr/include/irods/ -I/usr/include/irods/boost/ 
 
-LIBS =		-lboost_system -lboost_filesystem
+LIBS=
 
-SRCS = libmsiget_illumina_meta.cpp
+all: libmsiget_illumina_meta
 
-include ../Makefile.base
-
+libmsiget_illumina_meta:
+	${GCC} ${INC} -DRODS_SERVER -fPIC "-Wl,-E" -shared -g -Wno-deprecated -rdynamic -o $@.so $@.cpp
+     
+clean:
+	@rm -f ./*.so
