@@ -221,8 +221,8 @@ if [ "$DETECTEDOS" == "RedHatCompatible" ] ; then # CentOS and RHEL and Fedora
     ostype=`awk '{print $1}' /etc/redhat-release`
     osversion=`awk '{print $3}' /etc/redhat-release`
     if [ "$ostype" == "CentOS" -a "$osversion" \> "6" ]; then
-        epmosversion="CENTOS6"
-        SUFFIX="centos6"
+        epmosversion="CENTOS7"
+        SUFFIX="centos7"
     else
         epmosversion="NOTCENTOS6"
         SUFFIX="centos5"
