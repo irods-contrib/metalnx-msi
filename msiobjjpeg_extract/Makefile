@@ -1,11 +1,13 @@
-TARGET = libmsiobjjpeg_extract.so
+GCC=g++
 
-SRCS = libmsiobjjpeg_extract.cpp
+INC=-I/usr/include/irods/ -I/usr/include/libexif -I/usr/include/irods/boost/ 
 
-HEADERS = 
+LIBS=-lexif
 
-EXTRALIBS = -lexif
+all: libmsiobjjpeg_extract
 
-include ../Makefile.base
-
-INC += -I/usr/include/libexif
+libmsiobjjpeg_extract:
+	${GCC} ${INC} -DRODS_SERVER -fPIC "-Wl,-E" -shared -g -Wno-deprecated -rdynamic -o $@.so $@.cpp ${LIBS}
+     
+clean:
+	@rm -f ./*.so

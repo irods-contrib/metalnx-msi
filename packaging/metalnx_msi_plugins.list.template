@@ -107,6 +107,7 @@ END_POSTREMOVE
 # =-=-=-=-=-=-=-
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiget_illumina_meta.so ./msiget_illumina_meta/libmsiget_illumina_meta.so
 f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjput_populate.so ./msiobjput_populate/libmsiobjput_populate.so
+f 644 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjjpeg_extract.so ./msiobjjpeg_extract/libmsiobjjpeg_extract.so
 
 
 
