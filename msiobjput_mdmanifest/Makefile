@@ -1,9 +1,13 @@
-TARGET = libmsiobjput_mdmanifest.so
+GCC=g++
 
-SRCS = libmsiobjput_mdmanifest.cpp
+INC=-I/usr/include/irods/ -I/usr/include/irods/boost/ -I/usr/include/libxml2
 
-EXTRALIBS = -lxml2
+LIBS=-lxml2
 
-include ../Makefile.base
+all: libmsiobjput_mdmanifest
 
-INC += -I/usr/include/libxml2
+libmsiobjput_mdmanifest:
+	${GCC} ${INC} -DRODS_SERVER -fPIC "-Wl,-E" -shared -g -Wno-deprecated -rdynamic -o $@.so $@.cpp ${LIBS}
+     
+clean:
+	@rm -f ./*.so
