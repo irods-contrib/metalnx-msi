@@ -2,6 +2,7 @@ MSIGET_ILLUMINA_META = msiget_illumina_meta
 MSIPUT_POPULATE = msiobjput_populate
 MSIPUT_JPEG_EXTRACT = msiobjjpeg_extract
 MSIPUT_MDMANIFEST = msiobjput_mdmanifest
+MSIPUT_MDBAM = msiobjput_mdbam
 
 MAKEFLAGS += --no-print-directory
 
@@ -9,7 +10,8 @@ LIBS = \
        $(MSIGET_ILLUMINA_META) \
 	   $(MSIPUT_POPULATE) \
 	   $(MSIPUT_JPEG_EXTRACT) \
-	   $(MSIPUT_MDMANIFEST)
+	   $(MSIPUT_MDMANIFEST) \
+	   $(MSIPUT_MDBAM)
 
 .PHONY: all $(LIBS) clean
 all: $(LIBS)
@@ -22,5 +24,6 @@ clean:
 	@$(MAKE) -C $(MSIPUT_POPULATE) clean;
 	@$(MAKE) -C $(MSIPUT_JPEG_EXTRACT) clean;
 	@$(MAKE) -C $(MSIPUT_MDMANIFEST) clean;
+	@$(MAKE) -C $(MSIPUT_MDBAM) clean;
 
 
