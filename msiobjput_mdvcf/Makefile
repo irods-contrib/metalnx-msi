@@ -1,7 +1,14 @@
-TARGET = libmsiobjput_mdvcf.so
+GCC = g++
 
-SRCS = libmsiobjput_mdvcf.cpp
+INC=-I/usr/include/irods/ -I/usr/include/irods/boost/
 
-EXTRALIBS = 
+LIBS=
 
-include ../Makefile.base
+all: libmsiobjput_mdvcf
+
+libmsiobjput_mdvcf:
+	${GCC} ${INC} -DRODS_SERVER -fPIC "-Wl,-E" -shared -g -Wno-deprecated -rdynamic -o $@.so $@.cpp
+
+clean:
+	@rm -f ./*.so
+
