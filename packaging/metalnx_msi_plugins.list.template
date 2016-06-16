@@ -5,7 +5,7 @@
 %copyright 2015-16, EMC Corporation
 %vendor EMC Corporation
 %license LICENSE
-%readme README
+%readme README.md
 %description Set of microservice plugins for EMC Metalnx Application
 %version TEMPLATE_PLUGINVERSION TEMPLATE_PLUGINVERSIONINT
 
