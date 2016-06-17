@@ -17,7 +17,9 @@
 %endif
 
 %if RPM
-%requires curl-devel
+%requires irods-dev
+%requires libexif-devel
+%requires libxml2-devel
 %endif
 
 %if ARCH
