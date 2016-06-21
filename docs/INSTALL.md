@@ -207,7 +207,7 @@ The microservices are triggered by file types during the **upload** function on 
 
 All the operations executed by the microservices are traceable by the iRODS logs. These logs can be accessed on the `/var/lib/irods/iRODS/server/log` directory and they have a name format `rodsLogs.YYYY.MM.DD`.
 
-> Notice that if your infrastructure contains multiple iRODS servers (iCAT and resources) the `metalnx-msi-plugins´ package **must** be installed in **all** of the servers. The microservices are executed locally on each one of the machines. It means that if an user uploads a file to a resource server and it does not have the Metalnx MSI package installed, the metadata extraction will fail. 
+> Notice that if your infrastructure contains multiple iRODS servers (iCAT and resources) the `metalnx-msi-plugins´ package **must** be installed in **all** of the servers. The microservices are executed locally on each one of the machines. It means that if a user uploads a file to a resource server and it does not have the Metalnx MSI package installed, the metadata extraction will fail. 
 
 [Back to Table of Contents](#TOC)
 
