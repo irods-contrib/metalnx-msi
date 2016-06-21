@@ -29,7 +29,7 @@ The information in this file is provided “as is.” EMC Corporation makes no r
   * [On RPM-Based systems](#rpm-install)
   * [On DEB-Based systems](#deb-install)
   * [Verifying installed files](#verify-install)
-5. [Using Metalnx Micro Services](#using)
+5. [Using Metalnx Microservices](#using)
 
 ----------------------------------
 
@@ -171,10 +171,10 @@ Now that all the dependencies are satisfied, we need to install the `metalnx-msi
 In order to get the `metalnx-msi-plugins` package installed on CentOS 7, execute:
 
 ```bash
-$ rpm -ivh -nodeps metalnx-msi-plugins-1.0-centos7.rpm	
+$ rpm -ivh --nodeps metalnx-msi-plugins-1.0-centos7.rpm	
 ```
 
-> Notice that the **--nodeps** option is used. It happens because the `libhts.so` is only used on runtime. We don't need to configure the `rpm` installation process to search on the linker directories.
+> Notice that the **--nodeps** option is used. It happens because the `libhts.so` is only used at runtime. We don't need to configure the `rpm` installation process to search on the linker directories.
 
 [Back to Table of Contents](#TOC)
 
@@ -201,7 +201,7 @@ Once installed, the `metalnx-msi-plugins` will copy all the shared objects imple
 
 [Back to Table of Contents](#TOC)
 
-# <a id="using"></a>Using Metalnx Micro Services
+# <a id="using"></a>Using Metalnx Microservices
 
 The microservices are triggered by file types during the **upload** function on the Metalnx UI. It means that you upload a file called `photo.jpg`, Metalnx will try to execute the `jpeg_extract` microservice to get metadata from the file. 
 
