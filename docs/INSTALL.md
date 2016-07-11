@@ -82,13 +82,13 @@ Image files also contain metadata that can be extracted and assigned to the orig
 Both libraries are available on official repositories for CentOS7 and Ubuntu 14. On CentOS7 they can be installed with the following command:
 
 ```bash
-$ sudo yum install -y libexif-dev libxml2-dev
+$ sudo yum install -y libexif-devel libxml2-devel
 ```
 
 On Ubuntu the same can be achieved with:
 
 ```bash
-$ sudo apt-get -y install libexif-devel libxml2-devel
+$ sudo apt-get -y install libexif-dev libxml2-dev
 ```
 
 ## <a id="dependencies-irods"></a>irods-devel package
@@ -98,6 +98,9 @@ The `irods-devel` package can be downloaded from the [iRODS download page][irods
 ```bash
 $ sudo yum install irods-dev-4.1.8-centos7-x86_64.rpm
 ```
+
+> __Note:__ The `yum` command accepts local RPM files as input. When using `yum` to install RPM packages, it will automatically fetch all the dependencies from the central repository. The `irods-dev-4.1.8-centos7-x86_64.rpm
+` package used in the last command is a __local__ file.
 
 YUM will resolve the dependencies for the `irods-devel` package and will fetch them from the central repository.
 
@@ -137,14 +140,14 @@ $ sudo make install
 The default installation process of the htslib copies the shared object `libhts.so.1.3.1` to the `/usr/local/lib` directory which is not the default search location for libraries. We need to configure linker to look for it on its installation path. To do so, use the following commands:
 
 ```bash
-$ echo "/usr/local/lib" > /etc/ld.conf.d/htslib.conf
-$ ldconfig
+$ echo "/usr/local/lib" > /etc/ld.so.conf.d/htslib.conf
+$ sudo ldconfig
 ```
 
-To confirm that the operation was sucessfully:
+To confirm that the operation was successfully executed:
 
 ```bash
-$ ldconfig -p | grep hts
+$ sudo ldconfig -p | grep hts
         libhts.so.1 (libc6,x86-64) => /usr/local/lib/libhts.so.1
         libhts.so (libc6,x86-64) => /usr/local/lib/libhts.so
 ```
