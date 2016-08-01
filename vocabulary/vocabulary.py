@@ -47,7 +47,6 @@ class Vocabulary:
         c.execute('INSERT INTO vocabulary_metadata VALUES (?, ?, ?, ?)', (attr, value, unit, type))
         c.execute('UPDATE vocabularies SET modify_date = ?', (datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'),))
         self.conn.commit()
-        pass
 
     def update_metadata(self, metadata):
         # metadata = AVU + AVU_ID
@@ -55,17 +54,18 @@ class Vocabulary:
         # replace current A by the new A
         # replace current V by the new V
         # replace current U by the new U
-
         pass
 
-    def del_metadata(self, metadata):
-        # look for the metadata whose ID = AVU_ID
-        # delete from the Vocabulary_Metadata table
-
-        pass
+    def remove_metadata(self, attr, value, unit):
+        c = self.conn.cursor()
+        c.execute('DELETE FROM vocabulary_metadata WHERE attr=? AND value=? AND unit=?', (attr, value, unit))
+        c.execute('UPDATE vocabularies SET modify_date = ?', (datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'),))
+        self.conn.commit()
 
 
 class VocabularyCtrl:
+    def __init__(self):
+        self.conn = None
 
     def create_vocabulary(self, name, author, location):
         vocab_db_path = os.path.join(location, name)
@@ -103,6 +103,64 @@ class VocabularyCtrl:
 
     def _create_vocab_change_schema(self):
         pass
+
+
+def mlx_create_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Creating Vocabulary...")
+    VocabularyCtrl().create_vocabulary('test.vocab', 'arthur', '/etc/irods')
+    callback.writeLine("serverLog", "Vocabulary created.")
+
+
+def mlx_show_vocabulary_info(rule_args, callback):
+    callback.writeLine("serverLog", "Showing vocabulary info...")
+    vocab = Vocabulary('/etc/irods')
+    vocab.show_info()
+    callback.writeLine("serverLog", "Vocabulary info showed.")
+
+
+def mlx_remove_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Delete Vocabulary")
+
+
+def mlx_update_vocabulary_location(rule_args, callback):
+    callback.writeLine("serverLog", "Update Vocabulary Location")
+
+
+def mlx_update_vocabulary_name(rule_args, callback):
+    callback.writeLine("serverLog", "Update Vocabulary Name")
+
+
+def mlx_add_metadata_to_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Adding Metadata to Vocabulary...")
+    vocab = Vocabulary('/etc/irods')
+    vocab.add_metadata('vocab_attr1', 'vocab_value1', 'vocab_unit1')
+    vocab.add_metadata('vocab_attr2', 'vocab_value2', 'vocab_unit2')
+    vocab.add_metadata('vocab_attr3', 'vocab_value3', 'vocab_unit3')
+    callback.writeLine("serverLog", "Metadata added to vocabulary.")
+
+
+def mlx_show_metadata_of_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Showing Metadata of Vocabulary...")
+    Vocabulary('/etc/irods').show_metadata()
+    callback.writeLine("serverLog", "Metadata of Vocabulary showed.")
+
+
+def mlx_remove_metadata_from_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Removing Metadata from Vocabulary...")
+    Vocabulary('/etc/irods').remove_metadata('vocab_attr1', 'vocab_value1', 'vocab_unit1')
+    callback.writeLine("serverLog", "Metadata of Vocabulary removed.")
+
+
+def mlx_update_metadata_of_vocabulary(rule_args, callback):
+    callback.writeLine("serverLog", "Update Metadata of a Vocabulary")
+
+
+def acPreProcForModifyAVUMetadata(rule_args, callback):
+    callback.writeLine("serverLog", "overloading acPreProcForModifyAVUMetadata")
+    callback.writeLine("serverLog", "Rule args should be *Option,*ItemType,*ItemName,*AName,*AValue,*AUnit")
+
+    for arg in rule_args:
+        callback.writeLine("serverLog", arg)
 
 
 def main():
