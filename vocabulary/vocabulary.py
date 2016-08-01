@@ -62,6 +62,15 @@ class Vocabulary:
         c.execute('UPDATE vocabularies SET modify_date = ?', (datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'),))
         self.conn.commit()
 
+    def is_metadata_defined(self, attr, value, unit):
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM vocabulary_metadata WHERE attr=? AND value=? AND unit=?', (attr, value, unit))
+
+        if c.fetchone() is None:
+            return False
+
+        return True
+
 
 class VocabularyCtrl:
     def __init__(self):
@@ -156,11 +165,24 @@ def mlx_update_metadata_of_vocabulary(rule_args, callback):
 
 
 def acPreProcForModifyAVUMetadata(rule_args, callback):
-    callback.writeLine("serverLog", "overloading acPreProcForModifyAVUMetadata")
-    callback.writeLine("serverLog", "Rule args should be *Option,*ItemType,*ItemName,*AName,*AValue,*AUnit")
+    callback.writeLine('serverLog', 'overloading acPreProcForModifyAVUMetadata')
 
-    for arg in rule_args:
-        callback.writeLine("serverLog", arg)
+    if not rule_args:
+        raise Exception('Could not read rule_args from rule')
+
+    path, attr, val, unit = rule_args[2], rule_args[3], rule_args[4], rule_args[5]
+
+    callback.writeLine('serverLog', 'Path = ' + path)
+    callback.writeLine('serverLog', 'Attr = ' + attr)
+    callback.writeLine('serverLog', 'Val = ' + val)
+    callback.writeLine('serverLog', 'unt = ' + unit)
+
+    path = '/etc/irods'
+
+    if Vocabulary(path).is_metadata_defined(attr, val, unit):
+        callback.writeLine('serverLog', 'AVU defined by vocabulary')
+    else:
+        callback.writeLine('serverLog', 'AVU NOT defined by vocabulary')
 
 
 def main():
