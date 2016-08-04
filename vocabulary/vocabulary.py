@@ -180,9 +180,9 @@ def acPreProcForModifyAVUMetadata(rule_args, callback):
     path = '/etc/irods'
 
     if Vocabulary(path).is_metadata_defined(attr, val, unit):
-        callback.writeLine('serverLog', 'AVU defined by vocabulary')
+        callback.writeLine('serverLog', 'AVU defined by vocabulary /etc/irods/test.vocab')
     else:
-        callback.writeLine('serverLog', 'AVU NOT defined by vocabulary')
+        callback.writeLine('serverLog', 'AVU NOT defined by vocabulary /etc/irods/test.vocab')
 
 
 def main():
