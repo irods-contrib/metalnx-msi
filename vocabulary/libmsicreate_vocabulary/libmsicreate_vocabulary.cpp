@@ -6,23 +6,13 @@
 //				 Sheet csv file and apply it to all files in a run.
 //==============================================================================
 #include "rods.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
 #include "reFuncDefs.hpp"
-#include "apiHeaderAll.h"
 #include "miscServerFunct.hpp"
-#include "rcGlobalExtern.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_log.hpp"
-#include "irods_file_object.hpp"
-#include "irods_stacktrace.hpp"
-#include "irods_resource_redirect.hpp"
 
 #include<sqlite3.h>
 
 #include<fstream>
 
-#define METADATA_CHAR_TAM 50
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
 
 /*
