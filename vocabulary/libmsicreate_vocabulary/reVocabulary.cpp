@@ -1,5 +1,44 @@
 #include "reVocabulary.hpp"
 
+bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei) {
+    dataObjInp_t dataObjInp;
+    char *outBadKeyWd = NULL;
+    int validKwFlags;
+    msParam_t* inpParam = (msParam_t*) malloc(sizeof(msParam_t));
+    inpParam->type = STR_MS_T;
+    inpParam->inOutStruct = (void*) irods_obj_path;
+
+    bzero( &dataObjInp, sizeof( dataObjInp ) );
+    validKwFlags = OBJ_PATH_FLAG | RESC_NAME_FLAG | OPEN_FLAGS_FLAG | REPL_NUM_FLAG;
+    parseMsKeyValStrForDataObjInp( inpParam, &dataObjInp, OBJ_PATH_KW, validKwFlags, &outBadKeyWd );
+    if (rsDataObjUnlink( rei->rsComm, &dataObjInp ) != 0) {
+        rodsLog(LOG_ERROR, "%s Could not unlink Vocabulary file from the grid.", VOCABULARY_MSI_LOG );
+        return false;
+    }
+
+    return true;
+}
+
+bool remove_vocabulary(char* phy_path, char* irods_obj_path, ruleExecInfo_t* rei) {
+    if (!is_there_any_vocab_under_path (irods_obj_path, rei)) {
+        rodsLog(LOG_NOTICE,
+                "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
+                VOCABULARY_MSI_LOG, irods_obj_path);
+        return 0;
+    }
+
+    unlink_obj(irods_obj_path, rei);
+
+    // Remove vocabulary file from the file system
+    if( remove( phy_path ) != 0 ) {
+        rodsLog(LOG_ERROR, "%s Could not delete Vocabulary file from the file system.", VOCABULARY_MSI_LOG );
+        return false;
+    }
+
+    rodsLog(LOG_NOTICE, "%s Vocabulary file removed from the file system successfully.", VOCABULARY_MSI_LOG );
+    return true;
+}
+
 sqlite3* open_db_connection(char* db_path) {
     rodsLog(LOG_NOTICE, "%s Opening a connection to the vocabulary database in %s\n", VOCABULARY_MSI_LOG, db_path);
 

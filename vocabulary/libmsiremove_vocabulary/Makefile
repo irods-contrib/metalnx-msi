@@ -1,6 +1,6 @@
-TARGET = libmsicreate_vocabulary.so
+TARGET = libmsiremove_vocabulary.so
 
-SRCS = libmsicreate_vocabulary.cpp
+SRCS = libmsiremove_vocabulary.cpp reVocabulary.cpp
 
 HEADERS =
 

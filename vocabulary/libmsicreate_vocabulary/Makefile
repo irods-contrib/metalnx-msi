@@ -1,6 +1,6 @@
 TARGET = libmsicreate_vocabulary.so
 
-SRCS = libmsicreate_vocabulary.cpp
+SRCS = libmsicreate_vocabulary.cpp reVocabulary.cpp
 
 HEADERS =
 

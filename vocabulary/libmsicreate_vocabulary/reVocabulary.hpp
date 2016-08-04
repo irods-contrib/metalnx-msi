@@ -7,10 +7,14 @@
 #include "miscServerFunct.hpp"
 
 #include<sqlite3.h>
-
-#include<fstream>
+#include <stdio.h>
 
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
+
+/*
+ * Remove a vocabulary from a given path in the grid and from the file system.
+ * */
+bool remove_vocabulary(char*, char*, ruleExecInfo_t*);
 
 /*
  * Open up a connection with a Sqlite3 database existing in the given path.
