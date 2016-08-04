@@ -1,5 +1,37 @@
 #include "reVocabulary.hpp"
 
+bool remove_vocab_metadata(char* irods_obj_path, char* attr_name, ruleExecInfo_t* rei) {
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    char sql[50];
+    const char* data = "Callback function called";
+
+    db = open_db_connection("/etc/irods/test.vocab");
+
+	sprintf(sql, "delete from vocabulary_metadata where attr=\'%s\';", attr_name);
+
+	rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
+
+    rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+
+    if( rc != SQLITE_OK ) {
+        rodsLog(LOG_ERROR,
+                "%s Could not delete metadata from vocabulary in %s: %s\n",
+                VOCABULARY_MSI_LOG, irods_obj_path, sqlite3_errmsg(db));
+        sqlite3_free(zErrMsg);
+        return false;
+    }
+
+    rodsLog(LOG_NOTICE,
+            "%s Vocabulary metadata removed successfully from vocabulary in %s\n",
+            VOCABULARY_MSI_LOG, irods_obj_path);
+
+    close_db_connection(db);
+
+    return true;
+}
+
 bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei) {
     dataObjInp_t dataObjInp;
     char *outBadKeyWd = NULL;

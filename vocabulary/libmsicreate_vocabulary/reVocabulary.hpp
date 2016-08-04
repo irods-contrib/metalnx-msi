@@ -12,6 +12,16 @@
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
 
 /*
+ * Removes a metadata from a vocabulary based on its attribute name.
+ * */
+bool remove_vocab_metadata(char*, char*, ruleExecInfo_t*);
+
+/*
+ * Unlinks a data object from the grid.
+ * */
+bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei);
+
+/*
  * Remove a vocabulary from a given path in the grid and from the file system.
  * */
 bool remove_vocabulary(char*, char*, ruleExecInfo_t*);

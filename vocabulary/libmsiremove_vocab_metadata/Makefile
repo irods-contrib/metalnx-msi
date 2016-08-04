@@ -1,6 +1,6 @@
-TARGET = libmsiremove_vocabulary.so
+TARGET = libmsiremove_vocab_metadata.so
 
-SRCS = libmsiremove_vocabulary.cpp reVocabulary.cpp
+SRCS = libmsiremove_vocab_metadata.cpp reVocabulary.cpp
 
 HEADERS =
 
