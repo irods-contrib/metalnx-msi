@@ -13,7 +13,7 @@ extern "C" {
 
     	char* obj_path = parseMspForStr(_objPath);
 
-        if (!remove_vocabulary("/etc/irods/test.vocab", obj_path, rei)) {
+        if (!remove_vocabulary(obj_path, rei)) {
             rodsLog(LOG_NOTICE,
                     "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
                     VOCABULARY_MSI_LOG, obj_path);

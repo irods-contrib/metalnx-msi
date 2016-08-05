@@ -16,7 +16,7 @@ bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* att
         return false;
     }
 
-    db = open_db_connection("/etc/irods/test.vocab");
+    db = open_db_connection(resolve_db_path(irods_obj_path));
 
     sprintf(sql, INSERT_INTO_VOCABULARY_METADATA, attr_name, attr_unit, attr_type);
 
@@ -46,7 +46,7 @@ bool remove_vocab_metadata(char* irods_obj_path, char* attr_name) {
     char sql[50];
     const char* data = "Callback function called";
 
-    db = open_db_connection("/etc/irods/test.vocab");
+    db = open_db_connection(resolve_db_path(irods_obj_path));
 
 	sprintf(sql, DELETE_FROM_VOCAB_METADATA, attr_name);
 
@@ -90,7 +90,11 @@ bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei) {
     return true;
 }
 
-bool remove_vocabulary(char* phy_path, char* irods_obj_path, ruleExecInfo_t* rei) {
+bool rm_file(char* phy_path) {
+    return remove( phy_path ) != 0;
+}
+
+bool remove_vocabulary(char* irods_obj_path, ruleExecInfo_t* rei) {
     if (!is_there_any_vocab_under_path (irods_obj_path, rei)) {
         rodsLog(LOG_NOTICE,
                 "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
@@ -100,11 +104,7 @@ bool remove_vocabulary(char* phy_path, char* irods_obj_path, ruleExecInfo_t* rei
 
     unlink_obj(irods_obj_path, rei);
 
-    // Remove vocabulary file from the file system
-    if( remove( phy_path ) != 0 ) {
-        rodsLog(LOG_ERROR, "%s Could not delete Vocabulary file from the file system.", VOCABULARY_MSI_LOG );
-        return false;
-    }
+    rm_file(resolve_db_path(irods_obj_path));
 
     rodsLog(LOG_NOTICE, "%s Vocabulary file removed from the file system successfully.", VOCABULARY_MSI_LOG );
     return true;
@@ -136,18 +136,18 @@ void close_db_connection(sqlite3* db) {
     if(db) sqlite3_close(db);
 }
 
-bool create_vocabulary (char* obj_path, char* vocab_name, char* vocab_author, ruleExecInfo_t* rei) {
-	if (obj_path == NULL || vocab_name == NULL || vocab_author == NULL) {
+bool create_vocabulary (char* irods_obj_path, char* vocab_name, char* vocab_author, ruleExecInfo_t* rei) {
+	if (irods_obj_path == NULL || vocab_name == NULL || vocab_author == NULL) {
 		rodsLog( LOG_ERROR, "%s Could not create Vocabulary struct. NULL parameter provided.", VOCABULARY_MSI_LOG );
 		return false;
 	}
 
-	if (is_there_any_vocab_under_path (obj_path, rei)) {
+	if (is_there_any_vocab_under_path (irods_obj_path, rei)) {
         rodsLog(LOG_NOTICE, "%s Could not create a new Vocabulary. Another one already exists.\n", VOCABULARY_MSI_LOG);
         return -1;
     }
 
-    sqlite3* db = open_db_connection(resolve_db_path(obj_path));
+    sqlite3* db = open_db_connection(resolve_db_path(irods_obj_path));
 
     create_vocabulary_database_schema(db);
 

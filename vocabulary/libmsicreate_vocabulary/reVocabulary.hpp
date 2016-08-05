@@ -28,6 +28,12 @@
 
 #define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies/test.vocab"
 
+
+/*
+ * Removes a file from the local file system.
+ * */
+bool rm_file(char*);
+
 /*
  * Resolves the vocabulary database physical path based on an iRODS path.
  * */
@@ -51,7 +57,7 @@ bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei);
 /*
  * Remove a vocabulary from a given path in the grid and from the file system.
  * */
-bool remove_vocabulary(char*, char*, ruleExecInfo_t*);
+bool remove_vocabulary(char*, ruleExecInfo_t*);
 
 /*
  * Open up a connection with a Sqlite3 database existing in the given path.
