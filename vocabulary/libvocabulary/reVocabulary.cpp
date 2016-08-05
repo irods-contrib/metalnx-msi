@@ -1,5 +1,53 @@
 #include "reVocabulary.hpp"
 
+const char* find_vocab_under_irods_path(char* irods_path, char* dest_resource, ruleExecInfo_t* rei) {
+	if (irods_path == NULL) {
+		return NULL;
+	}
+
+	collEnt_t* collEnt = NULL;
+	collInp_t collInp;
+	bzero( &collInp, sizeof( collInp ) );
+	collInp.flags = RECUR_QUERY_FG | VERY_LONG_METADATA_FG | NO_TRIM_REPL_FG | INCLUDE_CONDINPUT_IN_QUERY;
+	rstrcpy( collInp.collName, irods_path, MAX_NAME_LEN );
+	addKeyVal( &collInp.condInput, RESC_NAME_KW, dest_resource );
+
+	int handleInx = rsOpenCollection( rei->rsComm, &collInp );
+
+	if ( handleInx < 0 ) {
+		rodsLog( LOG_ERROR,
+				 "%s find_vocab_under_irods_path: rsOpenCollection of %s error. status = %d",
+				 VOCABULARY_MSI_LOG, irods_path, handleInx );
+		return NULL;
+	}
+
+	int status = rsReadCollection( rei->rsComm, &handleInx, &collEnt );
+
+	while ( ( status = rsReadCollection( rei->rsComm, &handleInx, &collEnt ) ) >= 0 ) {
+		if ( NULL == collEnt ) {
+			rodsLog(LOG_ERROR, "%s find_vocab_under_irods_path rsReadCollection: collEnt is NULL", VOCABULARY_MSI_LOG );
+			continue;
+		}
+
+		if ( collEnt->objType != DATA_OBJ_T ) {
+		    continue;
+		}
+
+        std::string data_obj_name(collEnt->dataName);
+
+        if (data_obj_name.compare("test.vocab") == 0) {
+            rodsLog(LOG_NOTICE,
+                    "%s Vocabulary %s found in %s\n",
+                    VOCABULARY_MSI_LOG, data_obj_name.c_str(), irods_path);
+            return data_obj_name.c_str();
+        }
+	}
+
+	rsCloseCollection( rei->rsComm, &handleInx );
+
+	return NULL;
+}
+
 char* find_vocab_irods_path(char* irods_obj_path) {
     char* irods_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
     memset(irods_path, 0, MAX_STR_LEN);
@@ -43,7 +91,7 @@ bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* att
     char sql[MAX_STR_LEN];
     const char* data = "Callback function called";
 
-    if (!is_there_any_vocab_under_path (find_vocab_irods_path(irods_obj_path), rei)) {
+    if (find_vocab_under_irods_path (find_vocab_irods_path(irods_obj_path), "demoResc", rei) == NULL) {
         rodsLog(LOG_NOTICE, "%s Vocabulary does not exist.\n", VOCABULARY_MSI_LOG);
         return false;
     }
@@ -127,7 +175,7 @@ bool rm_file(char* phy_path) {
 }
 
 bool remove_vocabulary(char* irods_obj_path, ruleExecInfo_t* rei) {
-    if (!is_there_any_vocab_under_path (find_vocab_irods_path(irods_obj_path), rei)) {
+    if (find_vocab_under_irods_path (find_vocab_irods_path(irods_obj_path), "demoResc", rei) == NULL) {
         rodsLog(LOG_NOTICE,
                 "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
                 VOCABULARY_MSI_LOG, irods_obj_path);
@@ -174,9 +222,9 @@ bool create_vocabulary (char* irods_obj_path, char* vocab_name, char* vocab_auth
 		return false;
 	}
 
-	if (is_there_any_vocab_under_path (irods_obj_path, rei)) {
+	if (find_vocab_under_irods_path (irods_obj_path, "demoResc", rei) != NULL) {
         rodsLog(LOG_NOTICE, "%s Could not create a new Vocabulary. Another one already exists.\n", VOCABULARY_MSI_LOG);
-        return -1;
+        return false;
     }
 
 	boost::filesystem::path dir(find_vocab_phy_dir(irods_obj_path));

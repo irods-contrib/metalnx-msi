@@ -32,6 +32,7 @@
 
 #define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies"
 
+const char* find_vocab_under_irods_path(char* irods_path, char* dest_resource, ruleExecInfo_t* rei);
 
 char* find_vocab_irods_path(char*);
 
