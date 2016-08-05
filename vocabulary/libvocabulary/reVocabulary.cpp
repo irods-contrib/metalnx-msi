@@ -48,18 +48,6 @@ const char* find_vocab_under_irods_path(char* irods_path, char* dest_resource, r
 	return NULL;
 }
 
-char* find_vocab_irods_path(char* irods_obj_path) {
-    char* irods_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
-    memset(irods_path, 0, MAX_STR_LEN);
-
-    strcat (irods_path, irods_obj_path);
-    strcat (irods_path, "/test.vocab");
-
-    rodsLog(LOG_NOTICE, "%s Vocabulary file: %s\n", VOCABULARY_MSI_LOG, irods_path);
-
-    return irods_path;
-}
-
 char* find_vocab_phy_path(char* irods_obj_path) {
     char* db_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
     memset(db_path, 0, MAX_STR_LEN);
@@ -84,6 +72,23 @@ char* find_vocab_phy_dir(char* irods_obj_path) {
     return dir;
 }
 
+char* find_vocab_irods_path(char* irods_dir_path, ruleExecInfo_t* rei) {
+    const char* vocab_name = find_vocab_under_irods_path (irods_dir_path, "demoResc", rei);
+
+    if(vocab_name == NULL) return NULL;
+
+    char* db_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
+    memset(db_path, 0, MAX_STR_LEN);
+
+    strcat (db_path, irods_dir_path);
+    strcat (db_path, "/");
+    strcat (db_path, vocab_name);
+
+    rodsLog(LOG_NOTICE, "%s Vocabulary file: %s\n", VOCABULARY_MSI_LOG, db_path);
+
+    return db_path;
+}
+
 bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* attr_unit, char* attr_type, ruleExecInfo_t* rei) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -91,7 +96,7 @@ bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* att
     char sql[MAX_STR_LEN];
     const char* data = "Callback function called";
 
-    if (find_vocab_under_irods_path (find_vocab_irods_path(irods_obj_path), "demoResc", rei) == NULL) {
+    if (find_vocab_under_irods_path (irods_obj_path, "demoResc", rei) == NULL) {
         rodsLog(LOG_NOTICE, "%s Vocabulary does not exist.\n", VOCABULARY_MSI_LOG);
         return false;
     }
@@ -151,7 +156,7 @@ bool remove_vocab_metadata(char* irods_obj_path, char* attr_name) {
     return true;
 }
 
-bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei) {
+bool unlink_obj(const char* irods_obj_path, ruleExecInfo_t* rei) {
     dataObjInp_t dataObjInp;
     char *outBadKeyWd = NULL;
     int validKwFlags;
@@ -175,14 +180,16 @@ bool rm_file(char* phy_path) {
 }
 
 bool remove_vocabulary(char* irods_obj_path, ruleExecInfo_t* rei) {
-    if (find_vocab_under_irods_path (find_vocab_irods_path(irods_obj_path), "demoResc", rei) == NULL) {
+    char* vocab_irods_path = find_vocab_irods_path(irods_obj_path, rei);
+
+    if (vocab_irods_path == NULL) {
         rodsLog(LOG_NOTICE,
                 "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
                 VOCABULARY_MSI_LOG, irods_obj_path);
         return 0;
     }
 
-    unlink_obj(find_vocab_irods_path(irods_obj_path), rei);
+    unlink_obj(vocab_irods_path, rei);
 
     rm_file(find_vocab_phy_path(irods_obj_path));
 

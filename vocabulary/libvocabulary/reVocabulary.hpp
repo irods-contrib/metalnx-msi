@@ -32,7 +32,9 @@
 
 #define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies"
 
-const char* find_vocab_under_irods_path(char* irods_path, char* dest_resource, ruleExecInfo_t* rei);
+char* find_vocab_irods_path(char*, ruleExecInfo_t*);
+
+const char* find_vocab_under_irods_path(char*, char*, ruleExecInfo_t*);
 
 char* find_vocab_irods_path(char*);
 
@@ -64,7 +66,7 @@ bool remove_vocab_metadata(char*, char*);
 /*
  * Unlinks a data object from the grid.
  * */
-bool unlink_obj(char* irods_obj_path, ruleExecInfo_t* rei);
+bool unlink_obj(const char* irods_obj_path, ruleExecInfo_t* rei);
 
 /*
  * Remove a vocabulary from a given path in the grid and from the file system.
