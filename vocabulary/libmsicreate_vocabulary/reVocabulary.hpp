@@ -24,6 +24,14 @@
 #define SELECT_ALL_FROM_VOCABULARIES "SELECT * FROM VOCABULARIES"
 #define INSERT_INTO_VOCABULARIES "INSERT INTO VOCABULARIES (NAME, AUTHOR) VALUES (\'%s\', \'%s\')"
 #define INSERT_INTO_VOCABULARY_METADATA "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');"
+#define DELETE_FROM_VOCAB_METADATA "delete from vocabulary_metadata where attr=\'%s\';"
+
+#define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies/test.vocab"
+
+/*
+ * Resolves the vocabulary database physical path based on an iRODS path.
+ * */
+char* resolve_db_path(char*);
 
 /*
  * Adds metadata (AVU) to a vocabulary existing in a path.
@@ -58,7 +66,7 @@ void close_db_connection(sqlite3*);
 /*
  * Creates a vocabulary entry in the database
  * */
-bool create_vocabulary(sqlite3*, char*, char*, char*);
+bool create_vocabulary(char*, char*, char*, ruleExecInfo_t*);
 
 /*
  * Checks whether or not exist a vocabulary in the given path

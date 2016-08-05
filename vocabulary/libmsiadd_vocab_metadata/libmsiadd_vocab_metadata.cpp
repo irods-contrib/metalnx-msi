@@ -15,7 +15,6 @@ extern "C" {
     	char* attr_name = parseMspForStr(_attr_name);
     	char* attr_unit = parseMspForStr(_attr_unit);
     	char* attr_type = parseMspForStr(_attr_type);
-    	char* vocab_path = "/etc/irods/test.vocab";
 
         if (!add_metadata_to_vocabulary(obj_path, attr_name, attr_unit, attr_type, rei)) {
             rodsLog(LOG_ERROR, "%s Could not add metadata to vocabulary.", VOCABULARY_MSI_LOG);

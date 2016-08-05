@@ -1,5 +1,9 @@
 #include "reVocabulary.hpp"
 
+char* resolve_db_path(char* irods_obj_path) {
+    return VOCABULARIES_BASE_DIR;
+}
+
 bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* attr_unit, char* attr_type, ruleExecInfo_t* rei) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -44,7 +48,7 @@ bool remove_vocab_metadata(char* irods_obj_path, char* attr_name) {
 
     db = open_db_connection("/etc/irods/test.vocab");
 
-	sprintf(sql, "delete from vocabulary_metadata where attr=\'%s\';", attr_name);
+	sprintf(sql, DELETE_FROM_VOCAB_METADATA, attr_name);
 
 	rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
 
@@ -132,11 +136,20 @@ void close_db_connection(sqlite3* db) {
     if(db) sqlite3_close(db);
 }
 
-bool create_vocabulary (sqlite3* db, char* obj_path, char* vocab_name, char* vocab_author) {
-	if (db == NULL || obj_path == NULL || vocab_name == NULL || vocab_author == NULL) {
+bool create_vocabulary (char* obj_path, char* vocab_name, char* vocab_author, ruleExecInfo_t* rei) {
+	if (obj_path == NULL || vocab_name == NULL || vocab_author == NULL) {
 		rodsLog( LOG_ERROR, "%s Could not create Vocabulary struct. NULL parameter provided.", VOCABULARY_MSI_LOG );
 		return false;
 	}
+
+	if (is_there_any_vocab_under_path (obj_path, rei)) {
+        rodsLog(LOG_NOTICE, "%s Could not create a new Vocabulary. Another one already exists.\n", VOCABULARY_MSI_LOG);
+        return -1;
+    }
+
+    sqlite3* db = open_db_connection(resolve_db_path(obj_path));
+
+    create_vocabulary_database_schema(db);
 
     int rc;
     char* zErrMsg;
@@ -158,6 +171,8 @@ bool create_vocabulary (sqlite3* db, char* obj_path, char* vocab_name, char* voc
 
     sqlite3_exec(db, SELECT_ALL_FROM_VOCABULARIES, callback, 0, &zErrMsg);
 
+    close_db_connection(db);
+
 	return true;
 }
 
@@ -165,6 +180,7 @@ bool is_there_any_vocab_under_path (char* vocab_irods_path, ruleExecInfo_t* rei)
     dataObjInp_t dataObjInp;
     char *outBadKeyWd = NULL;
     int validKwFlags;
+
     msParam_t* inpParam = (msParam_t*) malloc(sizeof(msParam_t));
     inpParam->type = STR_MS_T;
     inpParam->inOutStruct = (void*) vocab_irods_path;

@@ -14,22 +14,13 @@ extern "C" {
     	char* obj_path = parseMspForStr(_objPath);
     	char* vocab_name = parseMspForStr(_vocabName);
     	char* vocab_author = parseMspForStr(_vocabAuthor);
-    	char* vocab_path = "/etc/irods/test.vocab";
 
-        if (is_there_any_vocab_under_path (obj_path, rei)) {
-            rodsLog(LOG_NOTICE, "%s Could not create a new Vocabulary. Another one already exists.\n", VOCABULARY_MSI_LOG);
+        if (!create_vocabulary(obj_path, vocab_name, vocab_author, rei)) {
+            rodsLog(LOG_ERROR, "%s Could not create vocabulary in %s.\n", VOCABULARY_MSI_LOG, obj_path);
             return -1;
         }
 
-        sqlite3* db = open_db_connection(vocab_path);
-
-    	create_vocabulary_database_schema(db);
-
-        if (!create_vocabulary(db, obj_path, vocab_name, vocab_author)) {
-            return -1;
-        }
-
-        close_db_connection(db);
+        rodsLog(LOG_NOTICE, "%s Vocabulary created successfully in %s.\n", VOCABULARY_MSI_LOG, obj_path);
 
         return 0;
     }
