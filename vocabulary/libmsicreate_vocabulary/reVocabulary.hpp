@@ -12,6 +12,11 @@
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
 
 /*
+ * Adds metadata (AVU) to a vocabulary existing in a path.
+ * */
+bool add_metadata_to_vocabulary(char*, char*, char*, char*, ruleExecInfo_t*);
+
+/*
  * Removes a metadata from a vocabulary based on its attribute name.
  * */
 bool remove_vocab_metadata(char*, char*, ruleExecInfo_t*);

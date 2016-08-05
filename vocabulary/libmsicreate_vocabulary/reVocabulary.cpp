@@ -1,5 +1,42 @@
 #include "reVocabulary.hpp"
 
+bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* attr_unit, char* attr_type, ruleExecInfo_t* rei) {
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    char sql[100];
+    const char* data = "Callback function called";
+
+    if (!is_there_any_vocab_under_path (irods_obj_path, rei)) {
+        rodsLog(LOG_NOTICE, "%s Vocabulary does not exist.\n", VOCABULARY_MSI_LOG);
+        return false;
+    }
+
+    db = open_db_connection("/etc/irods/test.vocab");
+
+    sprintf(sql,
+	        "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');",
+	        attr_name, attr_unit, attr_type);
+
+	rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
+
+	rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+
+	if( rc != SQLITE_OK ) {
+        rodsLog(LOG_ERROR,
+                "%s Could insert metadata to a vocabulary in %s: %s\n",
+                VOCABULARY_MSI_LOG, irods_obj_path, sqlite3_errmsg(db));
+        sqlite3_free(zErrMsg);
+        return false;
+    }
+
+    rodsLog(LOG_NOTICE, "%s Metadata added successfully.\n", VOCABULARY_MSI_LOG);
+
+    close_db_connection(db);
+
+    return true;
+}
+
 bool remove_vocab_metadata(char* irods_obj_path, char* attr_name, ruleExecInfo_t* rei) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -166,6 +203,8 @@ void create_vocabulary_database_schema(sqlite3* db) {
                  "CREATED_AT     datetime       default current_timestamp," \
                  "MODIFIED_AT    datetime       default current_timestamp );";
 
+    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
+
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 
     if( rc != SQLITE_OK ){
@@ -178,9 +217,10 @@ void create_vocabulary_database_schema(sqlite3* db) {
 
     sql =  "CREATE TABLE VOCABULARY_METADATA ("  \
            "ATTR      text      not null," \
-           "VALUE     text      not null," \
            "UNIT      text      not null," \
            "TYPE      text      not null );";
+
+    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 
