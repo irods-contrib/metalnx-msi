@@ -14,9 +14,7 @@ bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* att
 
     db = open_db_connection("/etc/irods/test.vocab");
 
-    sprintf(sql,
-	        "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');",
-	        attr_name, attr_unit, attr_type);
+    sprintf(sql, INSERT_INTO_VOCABULARY_METADATA, attr_name, attr_unit, attr_type);
 
 	rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
 
@@ -37,7 +35,7 @@ bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* att
     return true;
 }
 
-bool remove_vocab_metadata(char* irods_obj_path, char* attr_name, ruleExecInfo_t* rei) {
+bool remove_vocab_metadata(char* irods_obj_path, char* attr_name) {
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
@@ -144,9 +142,7 @@ bool create_vocabulary (sqlite3* db, char* obj_path, char* vocab_name, char* voc
     char* zErrMsg;
     char sql[50];
 
-	sprintf(sql,
-	        "INSERT INTO VOCABULARIES (NAME, AUTHOR) VALUES (\'%s\', \'%s\')",
-	        vocab_name, vocab_author);
+	sprintf(sql, INSERT_INTO_VOCABULARIES, vocab_name, vocab_author);
 
 	rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
 
@@ -160,7 +156,7 @@ bool create_vocabulary (sqlite3* db, char* obj_path, char* vocab_name, char* voc
         rodsLog(LOG_NOTICE, "%s Vocabulary info inserted into database successfully.\n", VOCABULARY_MSI_LOG);
     }
 
-    sqlite3_exec(db, "SELECT * FROM VOCABULARIES", callback, 0, &zErrMsg);
+    sqlite3_exec(db, SELECT_ALL_FROM_VOCABULARIES, callback, 0, &zErrMsg);
 
 	return true;
 }
@@ -179,7 +175,7 @@ bool is_there_any_vocab_under_path (char* vocab_irods_path, ruleExecInfo_t* rei)
     return rsDataObjOpen( rei->rsComm, &dataObjInp ) >= 0;
 }
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+int callback(void *NotUsed, int argc, char **argv, char **azColName) {
    int i;
 
    for(i = 0; i < argc; i++){
@@ -195,17 +191,12 @@ void create_vocabulary_database_schema(sqlite3* db) {
 		return;
     }
 
-    char *zErrMsg = 0;
     int  rc;
-    char* sql =  "CREATE TABLE VOCABULARIES ("  \
-                 "NAME           text           not null," \
-                 "AUTHOR         text           not null," \
-                 "CREATED_AT     datetime       default current_timestamp," \
-                 "MODIFIED_AT    datetime       default current_timestamp );";
+    char *zErrMsg = 0;
 
-    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
+    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, CREATE_TABLE_VOCABULARY);
 
-    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, CREATE_TABLE_VOCABULARY, callback, 0, &zErrMsg);
 
     if( rc != SQLITE_OK ){
         rodsLog(LOG_ERROR, "%s Could not Create Table VOCABULARIES. SQL error: %s\n", VOCABULARY_MSI_LOG, zErrMsg);
@@ -215,14 +206,9 @@ void create_vocabulary_database_schema(sqlite3* db) {
         rodsLog(LOG_NOTICE, "%s VOCABULARIES Table Created Successfully.\n", VOCABULARY_MSI_LOG);
     }
 
-    sql =  "CREATE TABLE VOCABULARY_METADATA ("  \
-           "ATTR      text      not null," \
-           "UNIT      text      not null," \
-           "TYPE      text      not null );";
+    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, CREATE_TABLE_VOCABULARY_METADATA);
 
-    rodsLog(LOG_NOTICE, "%s %s", VOCABULARY_MSI_LOG, sql);
-
-    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, CREATE_TABLE_VOCABULARY_METADATA, callback, 0, &zErrMsg);
 
     if( rc != SQLITE_OK ){
         rodsLog(LOG_ERROR, "%s Could not Create Table VOCABULARY_METADATA. SQL error: %s\n", VOCABULARY_MSI_LOG, zErrMsg);

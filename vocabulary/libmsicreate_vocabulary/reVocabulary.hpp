@@ -10,6 +10,20 @@
 #include <stdio.h>
 
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
+#define CREATE_TABLE_VOCABULARY  "CREATE TABLE VOCABULARIES ("  \
+                                 "NAME           text           not null," \
+                                 "AUTHOR         text           not null," \
+                                 "CREATED_AT     datetime       default current_timestamp," \
+                                 "MODIFIED_AT    datetime       default current_timestamp );"
+
+#define CREATE_TABLE_VOCABULARY_METADATA "CREATE TABLE VOCABULARY_METADATA ("  \
+                                         "ATTR      text      not null," \
+                                         "UNIT      text      not null," \
+                                         "TYPE      text      not null );"
+
+#define SELECT_ALL_FROM_VOCABULARIES "SELECT * FROM VOCABULARIES"
+#define INSERT_INTO_VOCABULARIES "INSERT INTO VOCABULARIES (NAME, AUTHOR) VALUES (\'%s\', \'%s\')"
+#define INSERT_INTO_VOCABULARY_METADATA "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');"
 
 /*
  * Adds metadata (AVU) to a vocabulary existing in a path.
@@ -19,7 +33,7 @@ bool add_metadata_to_vocabulary(char*, char*, char*, char*, ruleExecInfo_t*);
 /*
  * Removes a metadata from a vocabulary based on its attribute name.
  * */
-bool remove_vocab_metadata(char*, char*, ruleExecInfo_t*);
+bool remove_vocab_metadata(char*, char*);
 
 /*
  * Unlinks a data object from the grid.
@@ -54,7 +68,7 @@ bool is_there_any_vocab_under_path (char* vocab_irods_path, ruleExecInfo_t* rei)
 /*
  * Auxiliar function called by sqlite when an operation in the database is done.
  * */
-static int callback(void*, int, char**, char**);
+int callback(void*, int, char**, char**);
 
 /*
  * Creates a SQLite database schema for a vocabulary
