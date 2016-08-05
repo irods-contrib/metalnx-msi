@@ -9,6 +9,10 @@
 #include<sqlite3.h>
 #include <stdio.h>
 
+#include <iostream>
+#include <boost/filesystem.hpp>
+
+#define MAX_STR_LEN 200
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"
 #define CREATE_TABLE_VOCABULARY  "CREATE TABLE VOCABULARIES ("  \
                                  "NAME           text           not null," \
@@ -26,8 +30,15 @@
 #define INSERT_INTO_VOCABULARY_METADATA "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');"
 #define DELETE_FROM_VOCAB_METADATA "delete from vocabulary_metadata where attr=\'%s\';"
 
-#define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies/test.vocab"
+#define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies"
 
+
+char* find_vocab_irods_path(char*);
+
+/*
+ * Finds the directory in the local file system where the vocabulary database file is.
+ * */
+char* find_vocab_phy_dir(char* irods_obj_path);
 
 /*
  * Removes a file from the local file system.
@@ -37,7 +48,7 @@ bool rm_file(char*);
 /*
  * Resolves the vocabulary database physical path based on an iRODS path.
  * */
-char* resolve_db_path(char*);
+char* find_vocab_phy_path(char*);
 
 /*
  * Adds metadata (AVU) to a vocabulary existing in a path.
