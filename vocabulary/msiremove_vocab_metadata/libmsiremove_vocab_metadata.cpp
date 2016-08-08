@@ -14,7 +14,7 @@ extern "C" {
     	char* obj_path = parseMspForStr(_objPath);
     	char* attr_name = parseMspForStr(_attrName);
 
-        if (!remove_vocab_metadata(obj_path, attr_name)) {
+        if (!remove_vocab_metadata(obj_path, attr_name, rei)) {
             rodsLog(LOG_ERROR,
                     "%s No metadata found in %s that matches %s.\n",
                     VOCABULARY_MSI_LOG, obj_path, attr_name);
