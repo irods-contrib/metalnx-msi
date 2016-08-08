@@ -72,23 +72,6 @@ char* find_vocab_phy_dir(char* irods_obj_path) {
     return dir;
 }
 
-char* find_vocab_irods_path(char* irods_dir_path, ruleExecInfo_t* rei) {
-    const char* vocab_name = find_vocab_under_irods_path (irods_dir_path, "demoResc", rei);
-
-    if(vocab_name == NULL) return NULL;
-
-    char* db_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
-    memset(db_path, 0, MAX_STR_LEN);
-
-    strcat (db_path, irods_dir_path);
-    strcat (db_path, "/");
-    strcat (db_path, vocab_name);
-
-    rodsLog(LOG_NOTICE, "%s Vocabulary file: %s\n", VOCABULARY_MSI_LOG, db_path);
-
-    return db_path;
-}
-
 bool add_metadata_to_vocabulary(char* irods_obj_path, char* attr_name, char* attr_unit, char* attr_type, ruleExecInfo_t* rei) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -175,25 +158,42 @@ bool unlink_obj(const char* irods_obj_path, ruleExecInfo_t* rei) {
     return true;
 }
 
-bool rm_file(char* phy_path) {
-    return remove( phy_path ) != 0;
-}
-
 bool remove_vocabulary(char* irods_obj_path, ruleExecInfo_t* rei) {
-    char* vocab_irods_path = find_vocab_irods_path(irods_obj_path, rei);
+    const char* vocab_name = find_vocab_under_irods_path (irods_obj_path, "demoResc", rei);
 
-    if (vocab_irods_path == NULL) {
+    if (vocab_name == NULL) {
         rodsLog(LOG_NOTICE,
                 "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
                 VOCABULARY_MSI_LOG, irods_obj_path);
-        return 0;
+        return false;
     }
 
-    unlink_obj(vocab_irods_path, rei);
+    char* vocab_irods_path = (char*) malloc(MAX_STR_LEN * sizeof(char));
+    memset(vocab_irods_path, 0, MAX_STR_LEN);
 
-    rm_file(find_vocab_phy_path(irods_obj_path));
+    strcat (vocab_irods_path, irods_obj_path);
+    strcat (vocab_irods_path, "/");
+    strcat (vocab_irods_path, vocab_name);
 
-    rodsLog(LOG_NOTICE, "%s Vocabulary file removed from the file system successfully.", VOCABULARY_MSI_LOG );
+    rodsLog(LOG_NOTICE, "%s Unlinking vocabulary file from iRODS %s\n", VOCABULARY_MSI_LOG, vocab_irods_path);
+
+    if(!unlink_obj(vocab_irods_path, rei)) {
+        rodsLog(LOG_NOTICE,
+                "%s Could not unlink vocabulary file from iRODS.\n",
+                VOCABULARY_MSI_LOG);
+        return false;
+    }
+
+    rodsLog(LOG_NOTICE,
+            "%s Removing vocabulary database file from file system %s\n",
+            VOCABULARY_MSI_LOG, vocab_irods_path);
+
+    remove(find_vocab_phy_path(irods_obj_path));
+
+    rodsLog(LOG_NOTICE,
+            "%s Vocabulary file removed from the file system and unlinked from iRODS successfully.",
+            VOCABULARY_MSI_LOG );
+
     return true;
 }
 

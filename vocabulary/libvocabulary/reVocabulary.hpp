@@ -6,7 +6,7 @@
 #include "apiHeaderAll.h"
 #include "miscServerFunct.hpp"
 
-#include<sqlite3.h>
+#include <sqlite3.h>
 #include <stdio.h>
 
 #include <iostream>
@@ -32,21 +32,12 @@
 
 #define VOCABULARIES_BASE_DIR "/etc/irods/vocabularies"
 
-char* find_vocab_irods_path(char*, ruleExecInfo_t*);
-
 const char* find_vocab_under_irods_path(char*, char*, ruleExecInfo_t*);
-
-char* find_vocab_irods_path(char*);
 
 /*
  * Finds the directory in the local file system where the vocabulary database file is.
  * */
 char* find_vocab_phy_dir(char* irods_obj_path);
-
-/*
- * Removes a file from the local file system.
- * */
-bool rm_file(char*);
 
 /*
  * Resolves the vocabulary database physical path based on an iRODS path.
