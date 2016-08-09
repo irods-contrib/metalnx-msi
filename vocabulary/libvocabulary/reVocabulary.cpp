@@ -87,7 +87,6 @@ bool add_metadata_to_vocabulary(char* irods_path, char* attr_name, char* attr_un
         return false;
     }
 
-    rodsLog(LOG_NOTICE, "%s >>>> %s.\n", VOCABULARY_MSI_LOG, vocab_name);
     db = open_db_connection(find_vocab_phy_path(irods_path, vocab_name));
 
     sprintf(sql, INSERT_INTO_VOCABULARY_METADATA, attr_name, attr_unit, attr_type);
