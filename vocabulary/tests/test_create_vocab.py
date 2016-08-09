@@ -32,7 +32,7 @@ def rm_rf_vocab_file():
 
 class TestCreateVocabularyRule(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        # subprocess.call(['su', '-', VOCAB_AUTHOR])
         subprocess.call(['irm', VOCAB_NAME])
 
         if os.path.exists(VOCAB_DIR):
@@ -44,7 +44,7 @@ class TestCreateVocabularyRule(unittest.TestCase):
         a collection that does not have one.
         """
 
-        self.assertTrue(subprocess.check_call(CREATE_VOCAB_RULE_ARGS) == 0)
+        self.assertTrue(subprocess.call(CREATE_VOCAB_RULE_ARGS) == 0)
 
     def tearDown(self):
         rm_rf_vocab_file()
@@ -52,7 +52,7 @@ class TestCreateVocabularyRule(unittest.TestCase):
 
 class TestCreateVocabularyInFileSystem(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        # subprocess.call(['su', '-', VOCAB_AUTHOR])
         subprocess.call(['irm', VOCAB_NAME])
 
         if os.path.exists(VOCAB_DIR):
@@ -80,7 +80,7 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase):
 
 class TestCreateVocabularyInIRODS(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        # subprocess.call(['su', '-', VOCAB_AUTHOR])
         subprocess.call(['irm', VOCAB_NAME])
 
         if os.path.exists(VOCAB_DIR):

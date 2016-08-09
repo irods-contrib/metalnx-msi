@@ -33,7 +33,7 @@ def rm_rf_vocab_file():
 
 class TestVocabularyDatabase(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        # subprocess.call(['su', '-', VOCAB_AUTHOR])
         subprocess.call(['irm', VOCAB_NAME])
 
         if os.path.exists(VOCAB_DIR):
