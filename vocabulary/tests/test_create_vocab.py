@@ -7,29 +7,36 @@ import subprocess
 import shutil
 import os
 
+VOCAB_AUTHOR = 'rods'
+
+VOCAB_TABLE_NAME = 'VOCABULARIES'
+VOCAB_METADATA_TABLE_NAME = 'VOCABULARY_METADATA'
+
+IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
+
 CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
 
-VOCABULARY_NAME = 'test.vocab'
+VOCAB_NAME = 'test.vocab'
 
-VOCABULARIES_DIR = '/etc/irods/vocabularies'
+VOCAB_DIR = '/etc/irods/vocabularies'
 
 
 def rm_rf_vocab_file():
     # 1. Unlink *.vocab file from iRODS
-    subprocess.call(['irm', VOCABULARY_NAME])
+    subprocess.call(['irm', VOCAB_NAME])
 
     # 2. rm -rf *.vocab file from file system
-    if os.path.exists(VOCABULARIES_DIR):
-        shutil.rmtree(VOCABULARIES_DIR)
+    if os.path.exists(VOCAB_DIR):
+        shutil.rmtree(VOCAB_DIR)
 
 
 class TestCreateVocabularyRule(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', 'irods'])
-        subprocess.call(['irm', VOCABULARY_NAME])
+        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        subprocess.call(['irm', VOCAB_NAME])
 
-        if os.path.exists(VOCABULARIES_DIR):
-            shutil.rmtree(VOCABULARIES_DIR)
+        if os.path.exists(VOCAB_DIR):
+            shutil.rmtree(VOCAB_DIR)
 
     def test_create_valid_vocab_rule(self):
         """
@@ -45,11 +52,11 @@ class TestCreateVocabularyRule(unittest.TestCase):
 
 class TestCreateVocabularyInFileSystem(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', 'irods'])
-        subprocess.call(['irm', VOCABULARY_NAME])
+        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        subprocess.call(['irm', VOCAB_NAME])
 
-        if os.path.exists(VOCABULARIES_DIR):
-            shutil.rmtree(VOCABULARIES_DIR)
+        if os.path.exists(VOCAB_DIR):
+            shutil.rmtree(VOCAB_DIR)
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 
@@ -58,14 +65,14 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase):
         mlxCreateVocabulary rule should create a vocabulary tree under the vocabularies directory
         in the local file system
         """
-        self.assertTrue(os.path.exists(VOCABULARIES_DIR))
+        self.assertTrue(os.path.exists(VOCAB_DIR))
 
     def test_create_valid_vocab_db_file(self):
         """
         mlxCreateVocabulary rule should create a *.vocab file in the file system
         """
 
-        self.assertTrue(os.path.join(VOCABULARIES_DIR, '/msiZone/home/rods', VOCABULARY_NAME))
+        self.assertTrue(os.path.join(VOCAB_DIR, IRODS_TEST_COLL_PATH, VOCAB_NAME))
 
     def tearDown(self):
         rm_rf_vocab_file()
@@ -73,11 +80,11 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase):
 
 class TestCreateVocabularyInIRODS(unittest.TestCase):
     def setUp(self):
-        # subprocess.check_call(['su', '-', 'irods'])
-        subprocess.call(['irm', VOCABULARY_NAME])
+        # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
+        subprocess.call(['irm', VOCAB_NAME])
 
-        if os.path.exists(VOCABULARIES_DIR):
-            shutil.rmtree(VOCABULARIES_DIR)
+        if os.path.exists(VOCAB_DIR):
+            shutil.rmtree(VOCAB_DIR)
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 
@@ -86,7 +93,7 @@ class TestCreateVocabularyInIRODS(unittest.TestCase):
         mlxCreateVocabulary rule should link the vocabulary database file to iRODS
         """
 
-        self.assertIn(VOCABULARY_NAME, subprocess.check_output(['ils']))
+        self.assertIn(VOCAB_NAME, subprocess.check_output(['ils']))
 
     def tearDown(self):
         rm_rf_vocab_file()
