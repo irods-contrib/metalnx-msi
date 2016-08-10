@@ -1,5 +1,5 @@
 """
-Test Vocabulary creation in iRODS.
+Test Add Metadata to Vocabulary.
 """
 
 import unittest
@@ -18,6 +18,13 @@ VOCAB_DIR = '/etc/irods/vocabularies'
 IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
 
 
+def copy_vocab_rules_file_to_etc_irods():
+    """
+    Copy the vocabulary_rules.re file to /etc/irods
+    """
+    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
+
+
 def rm_rf_vocab_file():
     # 1. Unlink *.vocab file from iRODS
     subprocess.call(['irm', VOCAB_NAME])
@@ -31,6 +38,8 @@ class TestAddMetadataToVocabularyRule(unittest.TestCase):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         rm_rf_vocab_file()
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 
@@ -49,6 +58,8 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         rm_rf_vocab_file()
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
         subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])

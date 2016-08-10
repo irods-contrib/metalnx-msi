@@ -238,13 +238,13 @@ void close_db_connection(sqlite3* db) {
     if(db) sqlite3_close(db);
 }
 
-bool create_vocabulary (char* irods_path, char* vocab_name, char* vocab_author, ruleExecInfo_t* rei) {
+bool create_vocabulary (char* irods_path, char* resc, char* vocab_name, char* vocab_author, ruleExecInfo_t* rei) {
 	if (irods_path == NULL || vocab_name == NULL || vocab_author == NULL) {
 		rodsLog( LOG_ERROR, "%s Could not create Vocabulary struct. NULL parameter provided.", VOCABULARY_MSI_LOG );
 		return false;
 	}
 
-	if (find_vocab_under_irods_path (irods_path, "demoResc", rei) != NULL) {
+	if (find_vocab_under_irods_path (irods_path, resc, rei) != NULL) {
         rodsLog(LOG_NOTICE, "%s Could not create a new Vocabulary. Another one already exists.\n", VOCABULARY_MSI_LOG);
         return false;
     }

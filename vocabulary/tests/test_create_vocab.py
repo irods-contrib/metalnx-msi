@@ -21,6 +21,13 @@ VOCAB_NAME = 'test.vocab'
 VOCAB_DIR = '/etc/irods/vocabularies'
 
 
+def copy_vocab_rules_file_to_etc_irods():
+    """
+    Copy the vocabulary_rules.re file to /etc/irods
+    """
+    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
+
+
 def rm_rf_vocab_file():
     # 1. Unlink *.vocab file from iRODS
     subprocess.call(['irm', VOCAB_NAME])
@@ -37,6 +44,8 @@ class TestCreateVocabularyRule(unittest.TestCase):
 
         if os.path.exists(VOCAB_DIR):
             shutil.rmtree(VOCAB_DIR)
+
+        copy_vocab_rules_file_to_etc_irods()
 
     def test_create_valid_vocab_rule(self):
         """
@@ -57,6 +66,8 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase):
 
         if os.path.exists(VOCAB_DIR):
             shutil.rmtree(VOCAB_DIR)
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 
@@ -85,6 +96,8 @@ class TestCreateVocabularyInIRODS(unittest.TestCase):
 
         if os.path.exists(VOCAB_DIR):
             shutil.rmtree(VOCAB_DIR)
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 

@@ -21,6 +21,13 @@ VOCAB_NAME = 'test.vocab'
 VOCAB_DIR = '/etc/irods/vocabularies'
 
 
+def copy_vocab_rules_file_to_etc_irods():
+    """
+    Copy the vocabulary_rules.re file to /etc/irods
+    """
+    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
+
+
 class TestRemoveVocabularyRule(unittest.TestCase):
     def setUp(self):
         # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
@@ -28,6 +35,8 @@ class TestRemoveVocabularyRule(unittest.TestCase):
 
         if os.path.exists(VOCAB_DIR):
             shutil.rmtree(VOCAB_DIR)
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 

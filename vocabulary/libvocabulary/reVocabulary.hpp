@@ -80,7 +80,7 @@ void close_db_connection(sqlite3*);
 /*
  * Creates a vocabulary entry in the database
  * */
-bool create_vocabulary(char*, char*, char*, ruleExecInfo_t*);
+bool create_vocabulary(char*, char*, char*, char*, ruleExecInfo_t*);
 
 /*
  * Checks whether or not exist a vocabulary in the given path

@@ -1,5 +1,5 @@
 """
-Test Vocabulary creation in iRODS.
+Test creation of duplicated vocabularies.
 """
 
 import unittest
@@ -12,6 +12,13 @@ CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
 VOCABULARY_NAME = 'test.vocab'
 
 VOCABULARIES_DIR = '/etc/irods/vocabularies'
+
+
+def copy_vocab_rules_file_to_etc_irods():
+    """
+    Copy the vocabulary_rules.re file to /etc/irods
+    """
+    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
 
 
 def rm_rf_vocab_file():
@@ -30,6 +37,8 @@ class TestCreateDuplicatedVocabulary(unittest.TestCase):
 
         if os.path.exists(VOCABULARIES_DIR):
             shutil.rmtree(VOCABULARIES_DIR)
+
+        copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(CREATE_VOCAB_RULE_ARGS)
 
