@@ -12,9 +12,7 @@ class TestAddMetadataToVocabularyRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         self.rm_rf_vocab_file()
-
         self.copy_vocab_rules_file_to_etc_irods()
-
         self.call_create_vocab_rule()
 
     def test_add_metadata_to_vocab_rule(self):
@@ -32,9 +30,7 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         self.rm_rf_vocab_file()
-
         self.copy_vocab_rules_file_to_etc_irods()
-
         self.call_create_vocab_rule()
         self.call_add_metadata_to_vocab_rule()
 

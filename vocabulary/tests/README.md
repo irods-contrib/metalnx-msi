@@ -17,13 +17,13 @@ Before running the tests, make sure you have both Python 2.7.5 and iRODS 4.1+ in
 How to run the tests?
 ---------------------
 
-To run all the tests use:
+To run all the tests use (from outside the *tests* directory):
 
 ```console
 python -m unittest discover
 ```
 
-If you want to run tests separately, run the following command from inside the tests directory:
+If you want to run tests separately, run the following command from inside the *tests* directory:
 
 ```console
 python <name-of-the-test-file> # python test_create_vocab.py

@@ -33,12 +33,10 @@ const char* find_vocab_under_irods_path(char* irods_path, char* dest_resource, r
 		    continue;
 		}
 
-        std::string data_obj_name(collEnt->dataName);
-
-        if (data_obj_name.compare("test.vocab") == 0) {
+        if (boost::algorithm::ends_with(collEnt->dataName, ".vocab")) {
             rodsLog(LOG_NOTICE,
                     "%s Vocabulary %s found in %s\n",
-                    VOCABULARY_MSI_LOG, data_obj_name.c_str(), irods_path);
+                    VOCABULARY_MSI_LOG, collEnt->dataName, irods_path);
             return collEnt->dataName;
         }
 	}

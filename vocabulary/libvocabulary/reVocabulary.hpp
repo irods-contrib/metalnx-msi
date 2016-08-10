@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 #define MAX_STR_LEN 200
 #define VOCABULARY_MSI_LOG "[Metalnx Vocabulary MSI]"

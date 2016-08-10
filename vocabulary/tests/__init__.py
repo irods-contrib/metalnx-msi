@@ -24,8 +24,7 @@ class VocabConfig:
 
     def _call(self, args):
         with open(os.devnull, 'w') as os_devnull:
-            response_status = subprocess.call(args, stdout=os_devnull, stderr=os_devnull)
-        return response_status
+            return subprocess.call(args, stdout=os_devnull, stderr=os_devnull)
 
     def call_create_vocab_rule(self):
         return self._call(self.CREATE_VOCAB_RULE_ARGS)
@@ -46,7 +45,7 @@ class VocabConfig:
         """
         Copy the vocabulary_rules.re file to /etc/irods
         """
-        shutil.copyfile(os.path.join(os.getcwd(), 'tests', self.VOCAB_RULE_FILE_NAME),
+        shutil.copyfile(os.path.join(os.getcwd(), __name__, self.VOCAB_RULE_FILE_NAME),
                         '/etc/irods/vocabulary_rules.re')
 
     def rm_rf_vocab_file(self):
