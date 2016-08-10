@@ -22,7 +22,7 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
-        subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])
+        subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
 
     def test_remove_vocab(self):
         """
@@ -42,7 +42,7 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
-        subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])
+        subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
         subprocess.call(['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"'])
 
     def test_remove_metadata_from_vocab_database(self):

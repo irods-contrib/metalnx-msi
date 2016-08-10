@@ -11,6 +11,7 @@ class VocabConfig:
     IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
 
     CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
+    ADD_VOCAB_METADATA_RULE_ARGS = ['irule', 'mlxAddVocabMetadata', '"null"', '"null"']
 
     VOCAB_NAME = 'test.vocab'
     VOCAB_AUTHOR = 'rods'

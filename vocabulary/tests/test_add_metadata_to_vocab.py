@@ -23,7 +23,7 @@ class TestAddMetadataToVocabularyRule(unittest.TestCase, VocabConfig):
         mlxAddVocabMetadata rule should be executed successfully in iRODS when adding a new metadata to a vocabulary.
         """
 
-        self.assertTrue(subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"']) == 0)
+        self.assertTrue(subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS) == 0)
 
     def tearDown(self):
         VocabConfig.rm_rf_vocab_file()
@@ -37,7 +37,7 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
         subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
-        subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])
+        subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
 
     def test_add_metadata_to_vocab_database(self):
         """
