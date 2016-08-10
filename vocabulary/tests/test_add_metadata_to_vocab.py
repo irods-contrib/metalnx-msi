@@ -49,5 +49,22 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
         self.rm_rf_vocab_file()
 
 
+class TestAddDuplicatedMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
+    def setUp(self):
+        self.rm_rf_vocab_file()
+        self.copy_vocab_rules_file_to_etc_irods()
+        self.call_create_vocab_rule()
+        self.call_add_metadata_to_vocab_rule()
+
+    def test_add_duplicated_metadata_to_vocab(self):
+        """
+        Adding a metadata that already exists to a vocab should not succeed (return != 0)
+        """
+        self.assertTrue(self.call_add_metadata_to_vocab_rule() != 0)
+
+    def tearDown(self):
+        self.rm_rf_vocab_file()
+
+
 if __name__ == '__main__':
     unittest.main()
