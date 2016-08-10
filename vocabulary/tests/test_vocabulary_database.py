@@ -13,14 +13,14 @@ from tests import VocabConfig
 class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        VocabConfig.call_irm_vocab()
+        self.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
-        VocabConfig.call_create_vocab_rule()
+        self.call_create_vocab_rule()
         self.conn = sqlite3.connect(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
 
     def test_vocab_table_schema(self):
@@ -66,7 +66,7 @@ class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
         self.assertTrue(c.fetchone()[0])
 
     def tearDown(self):
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
         self.conn.close()
 
 

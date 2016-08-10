@@ -22,45 +22,37 @@ class VocabConfig:
     def __init__(self):
         pass
 
-    @staticmethod
-    def _call(args):
+    def _call(self, args):
         with open(os.devnull, 'w') as os_devnull:
             response_status = subprocess.call(args, stdout=os_devnull, stderr=os_devnull)
         return response_status
 
-    @staticmethod
-    def call_create_vocab_rule():
-        return VocabConfig._call(VocabConfig.CREATE_VOCAB_RULE_ARGS)
+    def call_create_vocab_rule(self):
+        return self._call(self.CREATE_VOCAB_RULE_ARGS)
 
-    @staticmethod
-    def call_remove_vocab_rule():
-        return VocabConfig._call(VocabConfig.REMOVE_VOCAB_RULE_ARGS)
+    def call_remove_vocab_rule(self):
+        return self._call(self.REMOVE_VOCAB_RULE_ARGS)
 
-    @staticmethod
-    def call_add_metadata_to_vocab_rule():
-        return VocabConfig._call(VocabConfig.ADD_VOCAB_METADATA_RULE_ARGS)
+    def call_add_metadata_to_vocab_rule(self):
+        return self._call(self.ADD_VOCAB_METADATA_RULE_ARGS)
 
-    @staticmethod
-    def call_remove_metadata_from_vocab_rule():
-        return VocabConfig._call(VocabConfig.REMOVE_VOCAB_METADATA_RULE_ARGS)
+    def call_remove_metadata_from_vocab_rule(self):
+        return self._call(self.REMOVE_VOCAB_METADATA_RULE_ARGS)
 
-    @staticmethod
-    def call_irm_vocab():
-        return VocabConfig._call(['irm', VocabConfig.VOCAB_NAME])
+    def call_irm_vocab(self):
+        return self._call(['irm', self.VOCAB_NAME])
 
-    @staticmethod
-    def copy_vocab_rules_file_to_etc_irods():
+    def copy_vocab_rules_file_to_etc_irods(self):
         """
         Copy the vocabulary_rules.re file to /etc/irods
         """
-        shutil.copyfile(os.path.join(os.getcwd(), 'tests', VocabConfig.VOCAB_RULE_FILE_NAME),
+        shutil.copyfile(os.path.join(os.getcwd(), 'tests', self.VOCAB_RULE_FILE_NAME),
                         '/etc/irods/vocabulary_rules.re')
 
-    @staticmethod
-    def rm_rf_vocab_file():
+    def rm_rf_vocab_file(self):
         # 1. Unlink *.vocab file from iRODS
-        VocabConfig._call(['irm', VocabConfig.VOCAB_NAME])
+        self._call(['irm', self.VOCAB_NAME])
 
         # 2. rm -rf *.vocab file from file system
-        if os.path.exists(VocabConfig.VOCAB_DIR):
-            shutil.rmtree(VocabConfig.VOCAB_DIR)
+        if os.path.exists(self.VOCAB_DIR):
+            shutil.rmtree(self.VOCAB_DIR)

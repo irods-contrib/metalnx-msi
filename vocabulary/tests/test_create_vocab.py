@@ -13,12 +13,12 @@ from tests import VocabConfig
 class TestCreateVocabularyRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        VocabConfig.call_irm_vocab()
+        self.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
     def test_create_valid_vocab_rule(self):
         """
@@ -26,23 +26,23 @@ class TestCreateVocabularyRule(unittest.TestCase, VocabConfig):
         a collection that does not have one.
         """
 
-        self.assertTrue(VocabConfig.call_create_vocab_rule() == 0)
+        self.assertTrue(self.call_create_vocab_rule() == 0)
 
     def tearDown(self):
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
 
 
 class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        VocabConfig.call_irm_vocab()
+        self.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
-        VocabConfig.call_create_vocab_rule()
+        self.call_create_vocab_rule()
 
     def test_create_valid_vocab_dir_tree(self):
         """
@@ -58,20 +58,20 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
         self.assertTrue(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
 
     def tearDown(self):
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
 
 
 class TestCreateVocabularyInIRODS(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        VocabConfig.call_irm_vocab()
+        self.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
-        VocabConfig.call_create_vocab_rule()
+        self.call_create_vocab_rule()
 
     def test_create_valid_vocab_is_linked(self):
         """
@@ -81,7 +81,7 @@ class TestCreateVocabularyInIRODS(unittest.TestCase, VocabConfig):
         self.assertIn(self.VOCAB_NAME, subprocess.check_output(['ils']))
 
     def tearDown(self):
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
 
 
 if __name__ == '__main__':

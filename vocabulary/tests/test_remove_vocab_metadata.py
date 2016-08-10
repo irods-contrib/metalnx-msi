@@ -15,34 +15,34 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
 
         if os.path.exists(self.VOCAB_DIR):
-            VocabConfig.call_irm_vocab()
+            self.call_irm_vocab()
             shutil.rmtree(self.VOCAB_DIR)
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
-        VocabConfig.call_create_vocab_rule()
-        VocabConfig.call_add_metadata_to_vocab_rule()
+        self.call_create_vocab_rule()
+        self.call_add_metadata_to_vocab_rule()
 
     def test_remove_vocab(self):
         """
         mlxRemoveVocabulary rule should be executed successfully in iRODS for vocabulary removal.
         """
-        self.assertTrue(VocabConfig.call_remove_metadata_from_vocab_rule() == 0)
+        self.assertTrue(self.call_remove_metadata_from_vocab_rule() == 0)
 
     def tearDown(self):
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
 
 
 class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
-        VocabConfig.rm_rf_vocab_file()
+        self.rm_rf_vocab_file()
 
-        VocabConfig.copy_vocab_rules_file_to_etc_irods()
+        self.copy_vocab_rules_file_to_etc_irods()
 
-        VocabConfig.call_create_vocab_rule()
-        VocabConfig.call_add_metadata_to_vocab_rule()
-        VocabConfig.call_remove_metadata_from_vocab_rule()
+        self.call_create_vocab_rule()
+        self.call_add_metadata_to_vocab_rule()
+        self.call_remove_metadata_from_vocab_rule()
 
     def test_remove_metadata_from_vocab_database(self):
         """
