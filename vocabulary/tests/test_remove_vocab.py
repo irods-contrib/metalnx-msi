@@ -26,7 +26,7 @@ class TestRemoveVocabularyRule(unittest.TestCase, VocabConfig):
         """
         mlxRemoveVocabulary rule should be executed successfully in iRODS for vocabulary removal.
         """
-        self.assertTrue(subprocess.call(['irule', 'mlxRemoveVocabulary', '"null"', '"null"']) == 0)
+        self.assertTrue(subprocess.call(self.REMOVE_VOCAB_RULE_ARGS) == 0)
 
 
 if __name__ == '__main__':

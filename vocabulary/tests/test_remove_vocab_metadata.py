@@ -28,7 +28,7 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         """
         mlxRemoveVocabulary rule should be executed successfully in iRODS for vocabulary removal.
         """
-        self.assertTrue(subprocess.call(['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"']) == 0)
+        self.assertTrue(subprocess.call(self.REMOVE_VOCAB_METADATA_RULE_ARGS) == 0)
 
     def tearDown(self):
         VocabConfig.rm_rf_vocab_file()
@@ -43,7 +43,7 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
 
         subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
         subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
-        subprocess.call(['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"'])
+        subprocess.call(self.REMOVE_VOCAB_METADATA_RULE_ARGS)
 
     def test_remove_metadata_from_vocab_database(self):
         """

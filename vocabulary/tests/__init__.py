@@ -12,6 +12,8 @@ class VocabConfig:
 
     CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
     ADD_VOCAB_METADATA_RULE_ARGS = ['irule', 'mlxAddVocabMetadata', '"null"', '"null"']
+    REMOVE_VOCAB_METADATA_RULE_ARGS = ['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"']
+    REMOVE_VOCAB_RULE_ARGS = ['irule', 'mlxRemoveVocabulary', '"null"', '"null"']
 
     VOCAB_NAME = 'test.vocab'
     VOCAB_AUTHOR = 'rods'
@@ -26,7 +28,8 @@ class VocabConfig:
         """
         Copy the vocabulary_rules.re file to /etc/irods
         """
-        shutil.copyfile(os.path.join(os.getcwd(), __name__, VocabConfig.VOCAB_RULE_FILE_NAME), '/etc/irods/vocabulary_rules.re')
+        shutil.copyfile(os.path.join(os.getcwd(), __name__, VocabConfig.VOCAB_RULE_FILE_NAME),
+                        '/etc/irods/vocabulary_rules.re')
 
     @staticmethod
     def rm_rf_vocab_file():
