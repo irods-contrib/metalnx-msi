@@ -13,7 +13,7 @@ from tests import VocabConfig
 class TestCreateVocabularyRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        subprocess.call(['irm', self.VOCAB_NAME])
+        VocabConfig.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
@@ -35,7 +35,7 @@ class TestCreateVocabularyRule(unittest.TestCase, VocabConfig):
 class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        subprocess.call(['irm', self.VOCAB_NAME])
+        VocabConfig.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
@@ -55,7 +55,6 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
         """
         mlxCreateVocabulary rule should create a *.vocab file in the file system
         """
-
         self.assertTrue(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
 
     def tearDown(self):
@@ -65,7 +64,7 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
 class TestCreateVocabularyInIRODS(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        subprocess.call(['irm', self.VOCAB_NAME])
+        VocabConfig.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)

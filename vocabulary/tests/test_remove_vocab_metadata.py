@@ -16,7 +16,7 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
 
         if os.path.exists(self.VOCAB_DIR):
-            subprocess.call(['irm', self.VOCAB_NAME])
+            VocabConfig.call_irm_vocab()
             shutil.rmtree(self.VOCAB_DIR)
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()

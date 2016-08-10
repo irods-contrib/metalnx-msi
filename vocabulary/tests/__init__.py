@@ -24,20 +24,31 @@ class VocabConfig:
         pass
 
     @staticmethod
+    def _call(args):
+        response_status = -1
+        with open(os.devnull, 'w') as os_devnull:
+            response_status = subprocess.call(args, stdout=os_devnull, stderr=os_devnull)
+        return response_status
+
+    @staticmethod
     def call_create_vocab_rule():
-        return subprocess.call(VocabConfig.CREATE_VOCAB_RULE_ARGS)
+        return VocabConfig._call(VocabConfig.CREATE_VOCAB_RULE_ARGS)
 
     @staticmethod
     def call_remove_vocab_rule():
-        return subprocess.call(VocabConfig.REMOVE_VOCAB_RULE_ARGS)
+        return VocabConfig._call(VocabConfig.REMOVE_VOCAB_RULE_ARGS)
 
     @staticmethod
     def call_add_metadata_to_vocab_rule():
-        return subprocess.call(VocabConfig.ADD_VOCAB_METADATA_RULE_ARGS)
+        return VocabConfig._call(VocabConfig.ADD_VOCAB_METADATA_RULE_ARGS)
 
     @staticmethod
     def call_remove_metadata_from_vocab_rule():
-        return subprocess.call(VocabConfig.REMOVE_VOCAB_METADATA_RULE_ARGS)
+        return VocabConfig._call(VocabConfig.REMOVE_VOCAB_METADATA_RULE_ARGS)
+
+    @staticmethod
+    def call_irm_vocab():
+        return VocabConfig._call(['irm', VocabConfig.VOCAB_NAME])
 
     @staticmethod
     def copy_vocab_rules_file_to_etc_irods():
@@ -50,7 +61,7 @@ class VocabConfig:
     @staticmethod
     def rm_rf_vocab_file():
         # 1. Unlink *.vocab file from iRODS
-        subprocess.call(['irm', VocabConfig.VOCAB_NAME])
+        VocabConfig._call(['irm', VocabConfig.VOCAB_NAME])
 
         # 2. rm -rf *.vocab file from file system
         if os.path.exists(VocabConfig.VOCAB_DIR):

@@ -14,7 +14,7 @@ from tests import VocabConfig
 class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', VOCAB_AUTHOR])
-        subprocess.call(['irm', self.VOCAB_NAME])
+        VocabConfig.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)

@@ -13,7 +13,7 @@ from tests import VocabConfig
 class TestCreateDuplicatedVocabulary(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.check_call(['su', '-', 'irods'])
-        subprocess.call(['irm', self.VOCAB_NAME])
+        VocabConfig.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
