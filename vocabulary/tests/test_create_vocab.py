@@ -26,7 +26,7 @@ class TestCreateVocabularyRule(unittest.TestCase, VocabConfig):
         a collection that does not have one.
         """
 
-        self.assertTrue(subprocess.call(self.CREATE_VOCAB_RULE_ARGS) == 0)
+        self.assertTrue(VocabConfig.call_create_vocab_rule() == 0)
 
     def tearDown(self):
         VocabConfig.rm_rf_vocab_file()
@@ -42,7 +42,7 @@ class TestCreateVocabularyInFileSystem(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
 
     def test_create_valid_vocab_dir_tree(self):
         """
@@ -72,7 +72,7 @@ class TestCreateVocabularyInIRODS(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
 
     def test_create_valid_vocab_is_linked(self):
         """

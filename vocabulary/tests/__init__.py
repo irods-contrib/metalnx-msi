@@ -24,11 +24,27 @@ class VocabConfig:
         pass
 
     @staticmethod
+    def call_create_vocab_rule():
+        return subprocess.call(VocabConfig.CREATE_VOCAB_RULE_ARGS)
+
+    @staticmethod
+    def call_remove_vocab_rule():
+        return subprocess.call(VocabConfig.REMOVE_VOCAB_RULE_ARGS)
+
+    @staticmethod
+    def call_add_metadata_to_vocab_rule():
+        return subprocess.call(VocabConfig.ADD_VOCAB_METADATA_RULE_ARGS)
+
+    @staticmethod
+    def call_remove_metadata_from_vocab_rule():
+        return subprocess.call(VocabConfig.REMOVE_VOCAB_METADATA_RULE_ARGS)
+
+    @staticmethod
     def copy_vocab_rules_file_to_etc_irods():
         """
         Copy the vocabulary_rules.re file to /etc/irods
         """
-        shutil.copyfile(os.path.join(os.getcwd(), __name__, VocabConfig.VOCAB_RULE_FILE_NAME),
+        shutil.copyfile(os.path.join(os.getcwd(), 'tests', VocabConfig.VOCAB_RULE_FILE_NAME),
                         '/etc/irods/vocabulary_rules.re')
 
     @staticmethod

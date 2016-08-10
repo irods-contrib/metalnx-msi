@@ -20,13 +20,13 @@ class TestRemoveVocabularyRule(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
 
     def test_remove_vocab(self):
         """
         mlxRemoveVocabulary rule should be executed successfully in iRODS for vocabulary removal.
         """
-        self.assertTrue(subprocess.call(self.REMOVE_VOCAB_RULE_ARGS) == 0)
+        self.assertTrue(VocabConfig.call_remove_vocab_rule() == 0)
 
 
 if __name__ == '__main__':

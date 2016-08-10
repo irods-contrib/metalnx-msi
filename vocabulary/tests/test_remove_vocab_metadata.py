@@ -21,14 +21,14 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
-        subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
+        VocabConfig.call_add_metadata_to_vocab_rule()
 
     def test_remove_vocab(self):
         """
         mlxRemoveVocabulary rule should be executed successfully in iRODS for vocabulary removal.
         """
-        self.assertTrue(subprocess.call(self.REMOVE_VOCAB_METADATA_RULE_ARGS) == 0)
+        self.assertTrue(VocabConfig.call_remove_metadata_from_vocab_rule() == 0)
 
     def tearDown(self):
         VocabConfig.rm_rf_vocab_file()
@@ -41,9 +41,9 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
-        subprocess.call(self.ADD_VOCAB_METADATA_RULE_ARGS)
-        subprocess.call(self.REMOVE_VOCAB_METADATA_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
+        VocabConfig.call_add_metadata_to_vocab_rule()
+        VocabConfig.call_remove_metadata_from_vocab_rule()
 
     def test_remove_metadata_from_vocab_database(self):
         """

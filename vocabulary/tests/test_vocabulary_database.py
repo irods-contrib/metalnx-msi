@@ -21,7 +21,7 @@ class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
         self.conn = sqlite3.connect(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
 
     def test_vocab_table_schema(self):

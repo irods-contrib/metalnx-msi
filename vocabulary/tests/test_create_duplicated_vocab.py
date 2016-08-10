@@ -20,14 +20,14 @@ class TestCreateDuplicatedVocabulary(unittest.TestCase, VocabConfig):
 
         VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
+        VocabConfig.call_create_vocab_rule()
 
     def test_create_duplicated_vocab(self):
         """
         mlxCreateVocabulary rule should throw an error when adding a vocabulary to a collection that already has one.
         """
 
-        self.assertTrue(subprocess.call(self.CREATE_VOCAB_RULE_ARGS) != 0)
+        self.assertTrue(VocabConfig.call_create_vocab_rule() != 0)
 
     def tearDown(self):
         VocabConfig.rm_rf_vocab_file()
