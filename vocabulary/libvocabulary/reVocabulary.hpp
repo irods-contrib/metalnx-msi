@@ -25,7 +25,7 @@
                                          "ATTR      text      not null," \
                                          "UNIT      text      not null," \
                                          "TYPE      text      not null," \
-                                         "PRIMARY KEY (ATTR, UNIT, TYPE));"
+                                         "PRIMARY KEY (ATTR));"
 
 #define SELECT_ALL_FROM_VOCABULARIES "SELECT * FROM VOCABULARIES"
 #define SELECT_ALL_FROM_VOCABULARY_METADATA "SELECT * FROM VOCABULARY_METADATA WHERE attr=\'%s\' and unit=\'%s\' and type=\'%s\'"
