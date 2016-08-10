@@ -24,9 +24,11 @@
 #define CREATE_TABLE_VOCABULARY_METADATA "CREATE TABLE VOCABULARY_METADATA ("  \
                                          "ATTR      text      not null," \
                                          "UNIT      text      not null," \
-                                         "TYPE      text      not null );"
+                                         "TYPE      text      not null," \
+                                         "PRIMARY KEY (ATTR, UNIT, TYPE));"
 
 #define SELECT_ALL_FROM_VOCABULARIES "SELECT * FROM VOCABULARIES"
+#define SELECT_ALL_FROM_VOCABULARY_METADATA "SELECT * FROM VOCABULARY_METADATA WHERE attr=\'%s\' and unit=\'%s\' and type=\'%s\'"
 #define INSERT_INTO_VOCABULARIES "INSERT INTO VOCABULARIES (NAME, AUTHOR) VALUES (\'%s\', \'%s\')"
 #define INSERT_INTO_VOCABULARY_METADATA "INSERT INTO VOCABULARY_METADATA (ATTR, UNIT, TYPE) VALUES (\'%s\', \'%s\', \'%s\');"
 #define DELETE_FROM_VOCAB_METADATA "delete from vocabulary_metadata where attr=\'%s\';"
