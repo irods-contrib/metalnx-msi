@@ -1,7 +1,6 @@
 import os
-import subprocess
-
 import shutil
+import subprocess
 
 
 class VocabConfig:
@@ -25,7 +24,6 @@ class VocabConfig:
 
     @staticmethod
     def _call(args):
-        response_status = -1
         with open(os.devnull, 'w') as os_devnull:
             response_status = subprocess.call(args, stdout=os_devnull, stderr=os_devnull)
         return response_status

@@ -2,10 +2,10 @@
 Test Vocabulary creation in iRODS.
 """
 
-import unittest
-import subprocess
-import shutil
 import os
+import shutil
+import subprocess
+import unittest
 
 from tests import VocabConfig
 

@@ -2,11 +2,10 @@
 Test Vocabulary database schema.
 """
 
-import unittest
-import subprocess
-import shutil
 import os
+import shutil
 import sqlite3
+import unittest
 
 from tests import VocabConfig
 

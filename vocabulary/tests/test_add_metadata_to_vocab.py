@@ -3,7 +3,6 @@ Test Add Metadata to Vocabulary.
 """
 import os
 import sqlite3
-import subprocess
 import unittest
 
 from tests import VocabConfig

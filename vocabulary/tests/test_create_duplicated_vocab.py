@@ -2,10 +2,9 @@
 Test creation of duplicated vocabularies.
 """
 
-import unittest
-import subprocess
-import shutil
 import os
+import shutil
+import unittest
 
 from tests import VocabConfig
 
