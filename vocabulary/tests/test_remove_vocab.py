@@ -7,38 +7,20 @@ import subprocess
 import shutil
 import os
 
-VOCAB_AUTHOR = 'rods'
-
-VOCAB_TABLE_NAME = 'VOCABULARIES'
-VOCAB_METADATA_TABLE_NAME = 'VOCABULARY_METADATA'
-
-IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
-
-CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
-
-VOCAB_NAME = 'test.vocab'
-
-VOCAB_DIR = '/etc/irods/vocabularies'
+from tests import VocabConfig
 
 
-def copy_vocab_rules_file_to_etc_irods():
-    """
-    Copy the vocabulary_rules.re file to /etc/irods
-    """
-    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
-
-
-class TestRemoveVocabularyRule(unittest.TestCase):
+class TestRemoveVocabularyRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
-        subprocess.call(['irm', VOCAB_NAME])
+        subprocess.call(['irm', self.VOCAB_NAME])
 
-        if os.path.exists(VOCAB_DIR):
-            shutil.rmtree(VOCAB_DIR)
+        if os.path.exists(self.VOCAB_DIR):
+            shutil.rmtree(self.VOCAB_DIR)
 
-        copy_vocab_rules_file_to_etc_irods()
+        VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(CREATE_VOCAB_RULE_ARGS)
+        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
 
     def test_remove_vocab(self):
         """

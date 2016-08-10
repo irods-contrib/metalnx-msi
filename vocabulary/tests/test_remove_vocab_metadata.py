@@ -8,47 +8,20 @@ import shutil
 import os
 import sqlite3
 
-VOCAB_AUTHOR = 'rods'
-
-VOCAB_TABLE_NAME = 'VOCABULARIES'
-VOCAB_METADATA_TABLE_NAME = 'VOCABULARY_METADATA'
-
-IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
-
-CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
-
-VOCAB_NAME = 'test.vocab'
-
-VOCAB_DIR = '/etc/irods/vocabularies'
+from tests import VocabConfig
 
 
-def copy_vocab_rules_file_to_etc_irods():
-    """
-    Copy the vocabulary_rules.re file to /etc/irods
-    """
-    shutil.copyfile('./vocabulary_rules.re', '/etc/irods/vocabulary_rules.re')
-
-
-def rm_rf_vocab_file():
-    # 1. Unlink *.vocab file from iRODS
-    subprocess.call(['irm', VOCAB_NAME])
-
-    # 2. rm -rf *.vocab file from file system
-    if os.path.exists(VOCAB_DIR):
-        shutil.rmtree(VOCAB_DIR)
-
-
-class TestRemoveVocabularyMetadataRule(unittest.TestCase):
+class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.check_call(['su', '-', VOCAB_AUTHOR])
 
-        if os.path.exists(VOCAB_DIR):
-            subprocess.call(['irm', VOCAB_NAME])
-            shutil.rmtree(VOCAB_DIR)
+        if os.path.exists(self.VOCAB_DIR):
+            subprocess.call(['irm', self.VOCAB_NAME])
+            shutil.rmtree(self.VOCAB_DIR)
 
-        copy_vocab_rules_file_to_etc_irods()
+        VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(CREATE_VOCAB_RULE_ARGS)
+        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
         subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])
 
     def test_remove_vocab(self):
@@ -58,17 +31,17 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase):
         self.assertTrue(subprocess.call(['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"']) == 0)
 
     def tearDown(self):
-        rm_rf_vocab_file()
+        VocabConfig.rm_rf_vocab_file()
 
 
-class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase):
+class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
-        rm_rf_vocab_file()
+        VocabConfig.rm_rf_vocab_file()
 
-        copy_vocab_rules_file_to_etc_irods()
+        VocabConfig.copy_vocab_rules_file_to_etc_irods()
 
-        subprocess.call(CREATE_VOCAB_RULE_ARGS)
+        subprocess.call(self.CREATE_VOCAB_RULE_ARGS)
         subprocess.call(['irule', 'mlxAddVocabMetadata', '"null"', '"null"'])
         subprocess.call(['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"'])
 
@@ -76,9 +49,9 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase):
         """
         mlxAddVocabMetadata rule should add metadata to the vocabulary database
         """
-        conn = sqlite3.connect(os.path.join(VOCAB_DIR, IRODS_TEST_COLL_PATH, VOCAB_NAME))
+        conn = sqlite3.connect(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
         c = conn.cursor()
-        c.execute("SELECT * FROM " + VOCAB_METADATA_TABLE_NAME)
+        c.execute("SELECT * FROM " + self.VOCAB_METADATA_TABLE_NAME)
 
         # no results found after deletion
         self.assertFalse(c.fetchall())
