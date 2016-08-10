@@ -8,13 +8,14 @@
 #include "reVocabulary.hpp"
 
 extern "C" {
-    int msiremove_vocab_metadata(msParam_t* _objPath, msParam_t* _attrName, ruleExecInfo_t* rei) {
+    int msiremove_vocab_metadata(msParam_t* _objPath, msParam_t* _resc, msParam_t* _attrName, ruleExecInfo_t* rei) {
     	rodsLog(LOG_NOTICE, "%s Metalnx Vocabulary Microservice called [Remove metadata operation].", VOCABULARY_MSI_LOG);
 
     	char* obj_path = parseMspForStr(_objPath);
+    	char* resc = parseMspForStr(_resc);
     	char* attr_name = parseMspForStr(_attrName);
 
-        if (!remove_vocab_metadata(obj_path, attr_name, rei)) {
+        if (!remove_vocab_metadata(obj_path, resc, attr_name, rei)) {
             rodsLog(LOG_ERROR,
                     "%s No metadata found in %s that matches %s.\n",
                     VOCABULARY_MSI_LOG, obj_path, attr_name);
@@ -25,7 +26,7 @@ extern "C" {
     }
 
     irods::ms_table_entry* plugin_factory() {
-        irods::ms_table_entry* msvc = new irods::ms_table_entry(2);
+        irods::ms_table_entry* msvc = new irods::ms_table_entry(3);
         msvc->add_operation("msiremove_vocab_metadata", "msiremove_vocab_metadata");
         return msvc;
     }

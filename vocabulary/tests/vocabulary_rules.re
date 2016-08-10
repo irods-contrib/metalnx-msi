@@ -4,13 +4,13 @@ mlxCreateVocabulary {
 }
 
 mlxRemoveVocabulary {
-   msiremove_vocabulary("/msiZone/home/rods");
+   msiremove_vocabulary("/msiZone/home/rods", "demoResc");
 }
 
 mlxRemoveVocabMetadata {
-   msiremove_vocab_metadata("/msiZone/home/rods", "ATTR_NAME");
+   msiremove_vocab_metadata("/msiZone/home/rods", "demoResc", "ATTR_NAME");
 }
 
 mlxAddVocabMetadata {
-   msiadd_vocab_metadata("/msiZone/home/rods", "ATTR_NAME", "UNIT_NAME", "TEXT");
+   msiadd_vocab_metadata("/msiZone/home/rods", "demoResc", "ATTR_NAME", "UNIT_NAME", "TEXT");
 }

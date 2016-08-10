@@ -8,12 +8,13 @@
 #include "reVocabulary.hpp"
 
 extern "C" {
-    int msiremove_vocabulary(msParam_t* _objPath, ruleExecInfo_t* rei) {
+    int msiremove_vocabulary(msParam_t* _objPath, msParam_t* _resc, ruleExecInfo_t* rei) {
     	rodsLog(LOG_NOTICE, "%s Metalnx Vocabulary Microservice called [Remove operation].", VOCABULARY_MSI_LOG);
 
     	char* obj_path = parseMspForStr(_objPath);
+    	char* resc = parseMspForStr(_resc);
 
-        if (!remove_vocabulary(obj_path, rei)) {
+        if (!remove_vocabulary(obj_path, resc, rei)) {
             rodsLog(LOG_NOTICE,
                     "%s No vocabulary found in %s. Remove operation cannot be completed.\n",
                     VOCABULARY_MSI_LOG, obj_path);
@@ -24,7 +25,7 @@ extern "C" {
     }
 
     irods::ms_table_entry* plugin_factory() {
-        irods::ms_table_entry* msvc = new irods::ms_table_entry(1);
+        irods::ms_table_entry* msvc = new irods::ms_table_entry(2);
         msvc->add_operation("msiremove_vocabulary", "msiremove_vocabulary");
         return msvc;
     }

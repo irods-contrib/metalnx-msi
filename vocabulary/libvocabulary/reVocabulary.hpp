@@ -51,12 +51,12 @@ char* find_vocab_phy_path(char*, const char*);
 /*
  * Adds metadata (AVU) to a vocabulary existing in a path.
  * */
-bool add_metadata_to_vocabulary(char*, char*, char*, char*, ruleExecInfo_t*);
+bool add_metadata_to_vocabulary(char*, char*, char*, char*, char*, ruleExecInfo_t*);
 
 /*
  * Removes a metadata from a vocabulary based on its attribute name.
  * */
-bool remove_vocab_metadata(char*, char*, ruleExecInfo_t*);
+bool remove_vocab_metadata(char*, char*, char*, ruleExecInfo_t*);
 
 /*
  * Unlinks a data object from the grid.
@@ -66,7 +66,7 @@ bool unlink_obj(const char* irods_path, ruleExecInfo_t* rei);
 /*
  * Remove a vocabulary from a given path in the grid and from the file system.
  * */
-bool remove_vocabulary(char*, ruleExecInfo_t*);
+bool remove_vocabulary(char*, char*, ruleExecInfo_t*);
 
 /*
  * Open up a connection with a Sqlite3 database existing in the given path.
