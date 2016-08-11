@@ -8,11 +8,11 @@ class VocabConfig:
     VOCAB_METADATA_TABLE_NAME = 'VOCABULARY_METADATA'
 
     IRODS_TEST_COLL_PATH = 'msiZone/home/rods'
+    IRODS_TEST_RESC = 'demoResc'
 
     CREATE_VOCAB_RULE_ARGS = ['irule', 'mlxCreateVocabulary', '"null"', '"null"']
     ADD_VOCAB_METADATA_RULE_ARGS = ['irule', 'mlxAddVocabMetadata', '"null"', '"null"']
     REMOVE_VOCAB_METADATA_RULE_ARGS = ['irule', 'mlxRemoveVocabMetadata', '"null"', '"null"']
-    REMOVE_VOCAB_RULE_ARGS = ['irule', 'mlxRemoveVocabulary', '"null"', '"null"']
 
     VOCAB_NAME = 'test.vocab'
     VOCAB_AUTHOR = 'rods'
@@ -29,8 +29,8 @@ class VocabConfig:
     def call_create_vocab_rule(self):
         return self._call(self.CREATE_VOCAB_RULE_ARGS)
 
-    def call_remove_vocab_rule(self):
-        return self._call(self.REMOVE_VOCAB_RULE_ARGS)
+    def call_remove_vocab_rule(self, path, resc):
+        return self._call(['irule', 'mlxRemoveVocabulary', '*Path="' + path + '"', '*Resc=\"' + resc + '"'])
 
     def call_add_metadata_to_vocab_rule(self):
         return self._call(self.ADD_VOCAB_METADATA_RULE_ARGS)

@@ -4,7 +4,7 @@ mlxCreateVocabulary {
 }
 
 mlxRemoveVocabulary {
-   msiremove_vocabulary("/msiZone/home/rods", "demoResc");
+   msiremove_vocabulary(*Path, *Resc);
 }
 
 mlxRemoveVocabMetadata {
