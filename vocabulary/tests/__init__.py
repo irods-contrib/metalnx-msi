@@ -22,6 +22,8 @@ class VocabConfig:
     TEST_ATTR_UNIT = "ATTR_UNIT"
     TEST_ATTR_TYPE = "TEXT"
 
+    RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers')
+
     def __init__(self):
         pass
 
@@ -43,28 +45,20 @@ class VocabConfig:
             return subprocess.call(['irule', '-F', rule_filename], stdout=os_devnull, stderr=os_devnull)
 
     def call_create_vocab_rule(self, *args, **kwargs):
-        return self._call(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxCreateVocabulary.r'),
-            **kwargs
-        )
+        create_vocab_rule = os.path.join(self.RULE_HEADERS_PATH, 'mlxCreateVocabulary.r')
+        return self._call(create_vocab_rule, **kwargs)
 
     def call_remove_vocab_rule(self, *args, **kwargs):
-        return self._call(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxRemoveVocabulary.r'),
-            **kwargs
-        )
+        remove_vocab_rule = os.path.join(self.RULE_HEADERS_PATH, 'mlxRemoveVocabulary.r')
+        return self._call(remove_vocab_rule, **kwargs)
 
     def call_add_metadata_to_vocab_rule(self, *args, **kwargs):
-        return self._call(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxAddVocabMetadata.r'),
-            **kwargs
-        )
+        add_metadata_rule = os.path.join(self.RULE_HEADERS_PATH, 'mlxAddVocabMetadata.r')
+        return self._call(add_metadata_rule, **kwargs)
 
     def call_remove_metadata_from_vocab_rule(self, *args, **kwargs):
-        return self._call(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxRemoveVocabMetadata.r'),
-            **kwargs
-        )
+        remove_metadata_rule = os.path.join(self.RULE_HEADERS_PATH, 'mlxRemoveVocabMetadata.r')
+        return self._call(remove_metadata_rule, **kwargs)
 
     def call_irm_vocab(self):
         with open(os.devnull, 'w') as os_devnull:
