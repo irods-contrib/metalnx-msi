@@ -8,9 +8,9 @@ mlxRemoveVocabulary {
 }
 
 mlxRemoveVocabMetadata {
-   msiremove_vocab_metadata("/msiZone/home/rods", "demoResc", "ATTR_NAME");
+   msiremove_vocab_metadata(*Path, *Resc, *AttrName);
 }
 
 mlxAddVocabMetadata {
-   msiadd_vocab_metadata("/msiZone/home/rods", "demoResc", "ATTR_NAME", "UNIT_NAME", "TEXT");
+   msiadd_vocab_metadata(*Path, *Resc, *AttrName, *AttrUnit, *AttrType);
 }

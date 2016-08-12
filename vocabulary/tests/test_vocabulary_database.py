@@ -12,7 +12,7 @@ from tests import VocabConfig
 
 class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
-        # subprocess.call(['su', '-', VOCAB_AUTHOR])
+        # subprocess.call(['su', '-', TEST_VOCAB_AUTHOR])
         self.call_irm_vocab()
 
         if os.path.exists(self.VOCAB_DIR):
@@ -20,8 +20,14 @@ class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
 
         self.copy_vocab_rules_file_to_etc_irods()
 
-        self.call_create_vocab_rule()
-        self.conn = sqlite3.connect(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_PATH, self.VOCAB_NAME))
+        self.call_create_vocab_rule(
+            self.IRODS_TEST_COLL_ABS_PATH,
+            self.IRODS_TEST_RESC,
+            self.TEST_VOCAB_NAME,
+            self.TEST_VOCAB_AUTHOR
+        )
+
+        self.conn = sqlite3.connect(os.path.join(self.VOCAB_DIR, self.IRODS_TEST_COLL_REL_PATH, self.TEST_VOCAB_NAME))
 
     def test_vocab_table_schema(self):
         """
@@ -45,13 +51,13 @@ class TestVocabularyDatabase(unittest.TestCase, VocabConfig):
         c = self.conn.cursor()
         c.execute("SELECT name FROM " + self.VOCAB_TABLE_NAME)
 
-        self.assertEqual(c.fetchone()[0], self.VOCAB_NAME)
+        self.assertEqual(c.fetchone()[0], self.TEST_VOCAB_NAME)
 
     def test_vocab_author_in_database(self):
         c = self.conn.cursor()
         c.execute("SELECT author FROM " + self.VOCAB_TABLE_NAME)
 
-        self.assertEqual(c.fetchone()[0], self.VOCAB_AUTHOR)
+        self.assertEqual(c.fetchone()[0], self.TEST_VOCAB_AUTHOR)
 
     def test_vocab_created_at_in_database(self):
         c = self.conn.cursor()
