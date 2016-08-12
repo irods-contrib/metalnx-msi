@@ -21,17 +21,17 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_VOCAB_NAME,
-            self.TEST_VOCAB_AUTHOR
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            vocab_name=self.TEST_VOCAB_NAME,
+            vocab_author=self.TEST_VOCAB_AUTHOR
         )
 
-        self.call_add_metadata_to_vocab_rule(self.IRODS_TEST_COLL_ABS_PATH,
-                                             self.IRODS_TEST_RESC,
-                                             self.TEST_ATTR_NAME,
-                                             self.TEST_ATTR_UNIT,
-                                             self.TEST_ATTR_TYPE)
+        self.call_add_metadata_to_vocab_rule(path=self.IRODS_TEST_COLL_ABS_PATH,
+                                             resc=self.IRODS_TEST_RESC,
+                                             attr_name=self.TEST_ATTR_NAME,
+                                             attr_unit=self.TEST_ATTR_UNIT,
+                                             attr_type=self.TEST_ATTR_TYPE)
 
     def test_remove_vocab(self):
         """
@@ -39,9 +39,9 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
         """
         self.assertTrue(
             self.call_remove_metadata_from_vocab_rule(
-                self.IRODS_TEST_COLL_ABS_PATH,
-                self.IRODS_TEST_RESC,
-                self.TEST_ATTR_NAME) == 0
+                path=self.IRODS_TEST_COLL_ABS_PATH,
+                resc=self.IRODS_TEST_RESC,
+                attr_name=self.TEST_ATTR_NAME) == 0
         )
 
     def tearDown(self):
@@ -55,24 +55,24 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
         self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_VOCAB_NAME,
-            self.TEST_VOCAB_AUTHOR
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            vocab_name=self.TEST_VOCAB_NAME,
+            vocab_author=self.TEST_VOCAB_AUTHOR
         )
 
         self.call_add_metadata_to_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_ATTR_NAME,
-            self.TEST_ATTR_UNIT,
-            self.TEST_ATTR_TYPE
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            attr_name=self.TEST_ATTR_NAME,
+            attr_unit=self.TEST_ATTR_UNIT,
+            attr_type=self.TEST_ATTR_TYPE
         )
 
         self.call_remove_metadata_from_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_ATTR_NAME
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            attr_name=self.TEST_ATTR_NAME
         )
 
     def test_remove_metadata_from_vocab_database(self):

@@ -42,38 +42,28 @@ class VocabConfig:
         with open(os.devnull, 'w') as os_devnull:
             return subprocess.call(['irule', '-F', rule_filename], stdout=os_devnull, stderr=os_devnull)
 
-    def call_create_vocab_rule(self, path, resc, vocab_name, vocab_author):
+    def call_create_vocab_rule(self, *args, **kwargs):
         return self._call(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxCreateVocabulary.r'),
-            path=path,
-            resc=resc,
-            vocab_name=vocab_name,
-            vocab_author=vocab_author,
+            **kwargs
         )
 
-    def call_remove_vocab_rule(self, path, resc):
+    def call_remove_vocab_rule(self, *args, **kwargs):
         return self._call(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxRemoveVocabulary.r'),
-            path=path,
-            resc=resc,
+            **kwargs
         )
 
-    def call_add_metadata_to_vocab_rule(self, path, resc, attr_name, attr_unit, attr_type):
+    def call_add_metadata_to_vocab_rule(self, *args, **kwargs):
         return self._call(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxAddVocabMetadata.r'),
-            path=path,
-            resc=resc,
-            attr_name=attr_name,
-            attr_unit=attr_unit,
-            attr_type=attr_type,
+            **kwargs
         )
 
-    def call_remove_metadata_from_vocab_rule(self, path, resc, attr_name):
+    def call_remove_metadata_from_vocab_rule(self, *args, **kwargs):
         return self._call(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules', 'headers', 'mlxRemoveVocabMetadata.r'),
-            path=path,
-            resc=resc,
-            attr_name=attr_name,
+            **kwargs
         )
 
     def call_irm_vocab(self):

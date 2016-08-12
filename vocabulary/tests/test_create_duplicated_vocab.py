@@ -20,10 +20,10 @@ class TestCreateDuplicatedVocabulary(unittest.TestCase, VocabConfig):
         self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_VOCAB_NAME,
-            self.TEST_VOCAB_AUTHOR
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            vocab_name=self.TEST_VOCAB_NAME,
+            vocab_author=self.TEST_VOCAB_AUTHOR
         )
 
     def test_create_duplicated_vocab(self):
@@ -32,10 +32,10 @@ class TestCreateDuplicatedVocabulary(unittest.TestCase, VocabConfig):
         """
 
         self.assertTrue(self.call_create_vocab_rule(
-            self.IRODS_TEST_COLL_ABS_PATH,
-            self.IRODS_TEST_RESC,
-            self.TEST_VOCAB_NAME,
-            self.TEST_VOCAB_AUTHOR
+            path=self.IRODS_TEST_COLL_ABS_PATH,
+            resc=self.IRODS_TEST_RESC,
+            vocab_name=self.TEST_VOCAB_NAME,
+            vocab_author=self.TEST_VOCAB_AUTHOR
         ) != 0)
 
     def tearDown(self):
