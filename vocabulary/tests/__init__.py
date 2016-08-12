@@ -70,13 +70,6 @@ class VocabConfig:
         with open(os.devnull, 'w') as os_devnull:
             return subprocess.call(['irm', self.TEST_VOCAB_NAME], stdout=os_devnull, stderr=os_devnull)
 
-    def copy_vocab_rules_file_to_etc_irods(self):
-        """
-        Copy the vocabulary_rules.re file to /etc/irods
-        """
-        shutil.copyfile(os.path.join(os.getcwd(), __name__, self.VOCAB_RULE_FILE_NAME),
-                        '/etc/irods/vocabulary_rules.re')
-
     def rm_rf_vocab_file(self):
         # 1. Unlink *.vocab file from iRODS
         self.call_irm_vocab()

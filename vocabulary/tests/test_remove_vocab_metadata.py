@@ -18,8 +18,6 @@ class TestRemoveVocabularyMetadataRule(unittest.TestCase, VocabConfig):
             self.call_irm_vocab()
             shutil.rmtree(self.VOCAB_DIR)
 
-        self.copy_vocab_rules_file_to_etc_irods()
-
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,
             resc=self.IRODS_TEST_RESC,
@@ -52,7 +50,6 @@ class TestRemoveMetadataFromVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', self.TEST_VOCAB_AUTHOR])
         self.rm_rf_vocab_file()
-        self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,

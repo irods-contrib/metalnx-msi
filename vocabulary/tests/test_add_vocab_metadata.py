@@ -12,7 +12,6 @@ class TestAddMetadataToVocabularyRule(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         self.rm_rf_vocab_file()
-        self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,
@@ -42,7 +41,6 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         # subprocess.call(['su', '-', 'irods'])
         self.rm_rf_vocab_file()
-        self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,
@@ -76,7 +74,6 @@ class TestAddMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
 class TestAddDuplicatedMetadataToVocabularyDatabase(unittest.TestCase, VocabConfig):
     def setUp(self):
         self.rm_rf_vocab_file()
-        self.copy_vocab_rules_file_to_etc_irods()
 
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,

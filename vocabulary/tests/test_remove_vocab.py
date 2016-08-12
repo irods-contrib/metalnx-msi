@@ -17,8 +17,6 @@ class TestRemoveVocabularyRule(unittest.TestCase, VocabConfig):
         if os.path.exists(self.VOCAB_DIR):
             shutil.rmtree(self.VOCAB_DIR)
 
-        self.copy_vocab_rules_file_to_etc_irods()
-
         self.call_create_vocab_rule(
             path=self.IRODS_TEST_COLL_ABS_PATH,
             resc=self.IRODS_TEST_RESC,
