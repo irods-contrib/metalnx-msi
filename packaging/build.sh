@@ -37,6 +37,13 @@ else
     text_reset=$(tput sgr0)     # Text Reset
 fi
 
+# =-=-=-=-=-=-=-=-=-=-
+# Getting build number
+SUFFIX_BUILD_NUMBER=$PLUGINVERSIONINT
+if [ -v BUILD_NUMBER ]; then
+    SUFFIX_BUILD_NUMBER=$BUILD_NUMBER
+fi
+
 # =-=-=-=-=-=-=-
 # boilerplate
 echo "${text_cyan}${text_bold}"
@@ -185,7 +192,7 @@ $MAKEJCMD
 echo ""
 echo "${text_green}${text_bold}Creating Package...${text_reset}"
 cd $TOPLEVEL
-sed -e "s,TEMPLATE_PLUGINVERSIONINT,$PLUGINVERSIONINT,g" $LISTFILE.template > $LISTFILE.tmp
+sed -e "s,TEMPLATE_PLUGINVERSIONINT,$SUFFIX_BUILD_NUMBER,g" $LISTFILE.template > $LISTFILE.tmp
 mv $LISTFILE.tmp $LISTFILE
 sed -e "s,TEMPLATE_PLUGINVERSION,$PLUGINVERSION,g" $LISTFILE > $LISTFILE.tmp
 mv $LISTFILE.tmp $LISTFILE
