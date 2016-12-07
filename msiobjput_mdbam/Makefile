@@ -1,6 +1,6 @@
 GCC = g++
 
-INC=-I/usr/include/irods/ -I/usr/include/irods/boost/ -I/usr/local/include
+INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/ -I/usr/local/include
 
 LIBPATH=-L/usr/local/lib
 

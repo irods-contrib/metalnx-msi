@@ -7,6 +7,8 @@ MSIPUT_MDVCF = msiobjput_mdvcf
 
 MAKEFLAGS += --no-print-directory
 
+IRODSROOT?=/usr/include
+
 LIBS = \
        $(MSIGET_ILLUMINA_META) \
        $(MSIPUT_POPULATE) \
@@ -19,7 +21,7 @@ LIBS = \
 all: $(LIBS)
 
 $(LIBS):
-	@$(MAKE) -C $@;
+	@$(MAKE) IRODSROOT=${IRODSROOT} -C $@;
 
 clean:
 	@$(MAKE) -C $(MSIGET_ILLUMINA_META) clean;
