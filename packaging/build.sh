@@ -116,7 +116,7 @@ echo "Detected OS Version                 [$DETECTEDOSVERSION]"
 # detect the project name
 source $TOPLEVEL/VERSION
 echo "Detected Plugin Name                [$PLUGINNAME]"
-EPM_PACKAGENAME=${PLUGINNAME//_/-}
+EPM_PACKAGENAME=${PLUGINNAME//_/-}'-'${IRODSVERSION}
 echo "Detected EPM Package Name           [$EPM_PACKAGENAME]"
 # =-=-=-=-=-=-=-
 # detect plugin version
