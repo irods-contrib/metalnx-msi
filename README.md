@@ -8,7 +8,7 @@ Metalnx MSI is a set of microservices designed to work alongside the iRODS ([int
 
 ## Supported file types
 
-* Image files (JPG, JPEG, PNG)
+* Image files (JPG, JPEG)
 * [SAM files][samtools] (SAM, BAM, CRAM)
 * Illumina projects (entire Illumina project compressed file)
 * [Variant call files][vcf-files] (VCF)
