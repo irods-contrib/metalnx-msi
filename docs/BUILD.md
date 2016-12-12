@@ -41,11 +41,11 @@ This package also provides automatic metadata extraction for genetic research fi
 
 In order to install the `irods-dev` package, you must satisfy its dependencies. The only package you'll need to install `irods-dev` is `openssl-dev` (on DEB systems) or `openssl-devel` (on RPM systems). Once this dependency is satisfied, you can install `irods-dev` with the command:
 
-    $ rpm -ivh irods-dev-4.1.8-centos7-x86_64.rpm         # On RPM-based system
+    $ rpm -ivh irods-dev-4.1.X-centos7-x86_64.rpm         # On RPM-based system
 	
 or
 
-    $ dpkg -i irods-dev-4.1.8-ubuntu14-x86_64.deb         # On DEB-based systems
+    $ dpkg -i irods-dev-4.1.X-ubuntu14-x86_64.deb         # On DEB-based systems
 
 ### Installing HTSlib
 
@@ -72,7 +72,9 @@ On DEB-based or RPM-based systems, you will need the basic development tools in 
 
 ### Building packages
 
-Once the previous requirements are satisfied, you can build the MSI package. The format of the package will depend on which platform you are executing these commands on. That happens because the Metalnx MSI packing system is based on EPM (Enterprise Package Manager), which is part of the iRODS compilation pipeline. The EPM automatically manages the package creation depending on which platform it is running on.
+Once the previous requirements are satisfied, you can build the MSI package. The format of the package will depend on which platform you are executing these commands on. 
+
+That happens because the Metalnx MSI packing system is based on EPM (Enterprise Package Manager), which is part of the iRODS compilation pipeline. The EPM automatically manages the package creation depending on which platform it is running on.
 
 The first step is make sure you have the `metalnx-msi` sources downloaded and a terminal session opened on the source tree root:
 
@@ -82,13 +84,20 @@ Then you have to make sure your Linux user has execution permission on the `buil
 
     $ chmod u+x packaging/build.sh
 	
-The last step is to execute the `build.sh` script. 
+In order to build the MSI package against different versions of iRODS within the same environment, compilation scripts and make files have changed a little. 
+
+The MSI package compilation pipeline now relies on two environment variables that tell which iRODS version you are building the package against and where the iRODS libraries are. Those two variables are `IRODSROOT` and `IRODSVERSION`.
+
+Between these two variables, only `IRODSVERSION` is required. If `IRODSROOT` is not set, the compilation scripts will look for the iRODS libraries under `/usr/include/irods/` as before.
+	
+Now, execute the `build.sh` script
 
 **NOTE:** This command must be executed from the source tree root, otherwise it will NOT work.":
 
-    $ ./packaging/build.sh
+	$ IRODSVERSION=4.1.10 IRODSROOT=/tmp/irods-packages/4.1.10 ./packaging/build.sh      # building MSI against iRODS libs in a different location
+    $ IRODSVERSION=4.1.10 ./packaging/build.sh                                           # building MSI against iRODS libs in a standard location
 
-Once completed, your resulting package can be found at `<metalnx_msi_root>/linux-X.XX-<arch>/RPMS/<arch>metalnx-msi-plugins-1.0.0.<arch>.<rpm/deb>`.
+Once completed, your resulting package can be found at `<metalnx_msi_root>/linux-X.XX-<arch>/RPMS/<arch>metalnx-msi-plugins-4.1.X-1.0-DEV.<arch>.<rpm/deb>`.
 
 [irods-dev-download]: http://irods.org/download/
 [htslib-download]: https://github.com/samtools/htslib/releases/download/1.3.1/htslib-1.3.1.tar.bz2
