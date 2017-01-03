@@ -80,9 +80,11 @@ extern "C" {
 			}
 
 			line = strtok(NULL, "\n");
-		}	
+		}
 
-	free(bam_header);
+        // if sam file doesn't get closed, it won't be entirely removed from host when deleted
+        sam_close(filePointer);
+	    free(bam_header);
 
         return 0;
 
