@@ -12,7 +12,7 @@ class TestPopulate(TestCase, MetadataExtractConfig):
         iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.POPULATE_FILE_NAME))
 
     def test_populate(self):
-        self.call_populate_metadata(obj_path=self.obj_path)
+        self.call_populate_metadata_rule(obj_path=self.obj_path)
 
         imeta_output = imeta_ls('-d', self.obj_path)
 

@@ -7,4 +7,5 @@ GET_VERSION_RULE_FILE=mlxGetVersion.r
 BAM_RULE_FILE=mlxExtractMetadataBam.r
 JPEG_RULE_FILE=mlxExtractMetadataJpeg.r
 POPULATE_RULE_FILE=mlxPopulate.r
+MANIFEST_RULE_FILE=mlxManifest.r
 

@@ -61,9 +61,11 @@ class MetadataExtractConfig:
     BAM_FILE_NAME = 'test_bam_file.bam'
     POPULATE_FILE_NAME = 'test_populate_file.txt'
     VCF_FILE_NAME = 'test_vcf_file.vcf'
+    MANIFEST_FILE_NAME = 'test_manifest_file.xml'
     JPEG_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, JPEG_FILE_NAME)
     BAM_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, BAM_FILE_NAME)
     VCF_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, VCF_FILE_NAME)
+    MANIFEST_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, MANIFEST_FILE_NAME)
     VCF_FILE_PATH = '{}/{}'.format(VAULT_PATH, VCF_FILE_NAME)
     BAM_FILE_PATH = '{}/{}'.format(VAULT_PATH, BAM_FILE_NAME)
     JPEG_FILE_PATH = '{}/{}'.format(VAULT_PATH, JPEG_FILE_NAME)
@@ -72,6 +74,7 @@ class MetadataExtractConfig:
     VCF_RULE_FILE = config('VCF_RULE_FILE', default='mlxExtractMetadataVcf.r')
     GET_VERSION_RULE_FILE = config('GET_VERSION_RULE_FILE', default='mlxGetVersion.r')
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
+    MANIFEST_RULE_FILE = config('MANIFEST_RULE_FILE', default='mlxManifest.r')
     MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
 
     RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules')
@@ -83,7 +86,10 @@ class MetadataExtractConfig:
         self.build_rule_file(rule_filename, *args, **kwargs)
         return call_function('irule', '-F', rule_filename)
 
-    def call_populate_metadata(self, *args, **kwargs):
+    def call_manifest_rule(self, *args, **kwargs):
+        return self.call_rule_from_file(_call, self.MANIFEST_RULE_FILE, *args, **kwargs)
+
+    def call_populate_metadata_rule(self, *args, **kwargs):
         return self.call_rule_from_file(_call, self.POPULATE_RULE_FILE, *args, **kwargs)
 
     def call_get_version_rule(self, *args, **kwargs):
