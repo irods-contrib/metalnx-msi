@@ -4,7 +4,7 @@ IRODS_ZONE=msiZone
 IRODS_COLL_ABS_PATH=/msiZone/home/rods
 MSI_PACKAGE_VERSION=1.1.0
 GET_VERSION_RULE_FILE=mlxGetVersion.r
-EXTRACT_METADATA_FOR_BAM_FILE=mlxExtractMetaDataBam.r
-EXTRACT_METADATA_FOR_JPEG_FILE=mlxExtractMetadataJpeg.r
+BAM_RULE_FILE=mlxExtractMetadataBam.r
+JPEG_RULE_FILE=mlxExtractMetadataJpeg.r
 POPULATE_RULE_FILE=mlxPopulate.r
 

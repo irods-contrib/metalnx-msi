@@ -1,13 +1,14 @@
 import os
 from unittest import TestCase, main
-from tests import MetaDataExtractConfig, iput, irm, imeta_ls
+
+from tests import MetadataExtractConfig, iput, irm, imeta_ls
 
 
-class TestMetaDataVcfExtraction(TestCase, MetaDataExtractConfig):
+class TestMetadataVcfExtraction(TestCase, MetadataExtractConfig):
     def setUp(self):
         iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.VCF_FILE_NAME))
 
-    def test_extract_jpeg(self):
+    def test_extract_vcf(self):
         self.call_extract_metadata_for_vcf(
             inObjPathParam=self.VCF_OBJ_PATH,
             inFilePathParam=self.VCF_FILE_PATH

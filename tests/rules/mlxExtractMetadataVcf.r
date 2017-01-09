@@ -1,3 +1,3 @@
-mlxExtractMetaDataVcf{
+mlxExtractMetadataVcf{
     msiobjput_mdvcf(*inObjPathParam, *inFilePathParam);
 }

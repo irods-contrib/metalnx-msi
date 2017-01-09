@@ -1,9 +1,10 @@
 import os
 from unittest import TestCase, main
-from tests import MetaDataExtractConfig, iput, irm, imeta_ls
+
+from tests import MetadataExtractConfig, iput, irm, imeta_ls
 
 
-class TestMetaDataJpegExtraction(TestCase, MetaDataExtractConfig):
+class TestMetadataJpegExtraction(TestCase, MetadataExtractConfig):
     def setUp(self):
         iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.JPEG_FILE_NAME))
 

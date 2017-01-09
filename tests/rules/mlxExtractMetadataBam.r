@@ -1,3 +1,3 @@
-mlxExtractMetaDataBam{
+mlxExtractMetadataBam{
     msiobjput_mdbam(*inObjPathParam, *inFilePathParam);
 }

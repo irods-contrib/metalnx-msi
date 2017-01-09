@@ -1,15 +1,15 @@
 import os
 from unittest import TestCase, main
 
-from tests import MetaDataExtractConfig, iput, irm, imeta_ls
+from tests import MetadataExtractConfig, iput, irm, imeta_ls
 
 
-class TestPopulate(TestCase, MetaDataExtractConfig):
+class TestPopulate(TestCase, MetadataExtractConfig):
     def setUp(self):
         self.obj_path = os.path.join(self.IRODS_HOME_PATH, self.POPULATE_FILE_NAME)
 
         irm('-rf', self.obj_path)
-        iput(self.POPULATE_FILE_PATH)
+        iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.POPULATE_FILE_NAME))
 
     def test_populate(self):
         self.call_populate_metadata(obj_path=self.obj_path)

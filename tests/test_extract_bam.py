@@ -1,9 +1,10 @@
 import os
 from unittest import TestCase, main
-from tests import MetaDataExtractConfig, iput, irm, imeta_ls
+
+from tests import MetadataExtractConfig, iput, irm, imeta_ls
 
 
-class TestMetaDataBamExtraction(TestCase, MetaDataExtractConfig):
+class TestMetadataBamExtraction(TestCase, MetadataExtractConfig):
     def setUp(self):
         iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.BAM_FILE_NAME))
 
