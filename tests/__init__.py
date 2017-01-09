@@ -1,6 +1,8 @@
 import os
 import subprocess
 
+from decouple import config
+
 
 def _check_call_output(*args, **kwargs):
     return subprocess.check_output(list(args), **kwargs)
@@ -42,22 +44,28 @@ def imeta_ls(*args, **kwargs):
         """
     return _check_call_output('imeta', 'ls', *args, **kwargs)
 
+
 class MetaDataExtractConfig:
 
-    IRODS_USER = 'rods'
-    IRODS_RESC = 'demoResc'
-    IRODS_ZONE = 'tempZone'
-    VAULT_PATH = '/var/lib/irods/iRODS/Vault/home/{}'.format(IRODS_USER)
+    IRODS_USER = config('IRODS_USER', default='rods')
+    IRODS_RESC = config('IRODS_RESC', default='demoResc')
+    IRODS_ZONE = config('IRODS_ZONE', default='tempZone')
     IRODS_HOME_PATH = '/{}/home/{}'.format(IRODS_ZONE, IRODS_USER)
+    VAULT_PATH = '/var/lib/irods/iRODS/Vault/home/{}'.format(IRODS_USER)
     JPEG_FILE_NAME = '2000_Spring0017.jpg'
     JPEG_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, JPEG_FILE_NAME)
-    JPEG_FILE_PATH = '{}/{}'.format(VAULT_PATH, JPEG_FILE_NAME)
-    EXTRACT_METADATA_FOR_JPEG_FILE = 'mlxExtractMetadataJpeg.r'
     BAM_FILE_NAME = 'chrom20.ILLUMINA.bwa.JPT.low_coverage.bam'
     BAM_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, BAM_FILE_NAME)
-    BAM_FILE_PATH = '{}/{}'.format(VAULT_PATH, BAM_FILE_NAME)
-    EXTRACT_METADATA_FOR_BAM_FILE = 'mlxExtractMetaDataBam.r'
     IMETA_LS_NONE = 'AVUs defined for dataObj {}:\nNone\n'
+    BAM_FILE_PATH = '{}/{}'.format(VAULT_PATH, BAM_FILE_NAME)
+    JPEG_FILE_PATH = '{}/{}'.format(VAULT_PATH, JPEG_FILE_NAME)
+    POPULATE_FILE_NAME = 'test_populate_file.txt'
+    POPULATE_FILE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', POPULATE_FILE_NAME)
+    EXTRACT_METADATA_FOR_JPEG_FILE = config('EXTRACT_METADATA_FOR_BAM_FILE', default='mlxExtractMetadataJpeg.r')
+    EXTRACT_METADATA_FOR_BAM_FILE = config('EXTRACT_METADATA_FOR_BAM_FILE', default='mlxExtractMetaDataBam.r')
+    GET_VERSION_RULE_FILE = config('GET_VERSION_RULE_FILE', default='mlxGetVersion.r')
+    POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
+    MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
 
     RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules')
 
@@ -67,6 +75,12 @@ class MetaDataExtractConfig:
     def call_rule_from_file(self, call_function, rule_filename, *args, **kwargs):
         self.build_rule_file(rule_filename, *args, **kwargs)
         return call_function('irule', '-F', rule_filename)
+
+    def call_populate_metadata(self, *args, **kwargs):
+        return self.call_rule_from_file(_call, self.POPULATE_RULE_FILE, *args, **kwargs)
+
+    def call_get_version_rule(self, *args, **kwargs):
+        return self.call_rule_from_file(_check_call_output, self.GET_VERSION_RULE_FILE, *args, **kwargs)
 
     def call_extract_metadata_for_bam(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call
