@@ -7,6 +7,7 @@ from decouple import config
 def _check_call_output(*args, **kwargs):
     return subprocess.check_output(list(args), **kwargs)
 
+
 def _call(*args, **kwargs):
     """
     Makes a subprocess call using the args given
@@ -15,6 +16,7 @@ def _call(*args, **kwargs):
     """
     with open(os.devnull, 'w') as os_devnull:
         return subprocess.call(list(args), stdout=os_devnull, stderr=os_devnull, **kwargs)
+
 
 def iput(*args, **kwargs):
     """
@@ -25,6 +27,7 @@ def iput(*args, **kwargs):
     """
     return _call('iput', *args, **kwargs)
 
+
 def irm(*args, **kwargs):
     """
     Removes a path from irods
@@ -34,6 +37,7 @@ def irm(*args, **kwargs):
     :return:
     """
     return _call('irm', *args, **kwargs)
+
 
 def imeta_ls(*args, **kwargs):
     """
@@ -67,6 +71,11 @@ class MetaDataExtractConfig:
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
     MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
 
+    VCF_FILE_NAME = 'test_vcf_file.vcf'
+    VCF_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, VCF_FILE_NAME)
+    VCF_FILE_PATH = '{}/{}'.format(VAULT_PATH, VCF_FILE_NAME)
+    EXTRACT_METADATA_FOR_VCF_FILE = 'mlxExtractMetaDataVcf.r'
+
     RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules')
 
     def __init__(self):
@@ -89,6 +98,10 @@ class MetaDataExtractConfig:
     def call_extract_metadata_for_jpeg(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call
         return self.call_rule_from_file(call_function, self.EXTRACT_METADATA_FOR_JPEG_FILE, *args, **kwargs)
+
+    def call_extract_metadata_for_vcf(self, check_output=False, *args, **kwargs):
+        call_function = _check_call_output if check_output else _call
+        return self.call_rule_from_file(call_function, self.EXTRACT_METADATA_FOR_VCF_FILE, *args, **kwargs)
 
     def build_rule_file(self, rule_filename, *args, **kwargs):
         path_header_file = os.path.join(self.RULE_HEADERS_PATH, rule_filename)
