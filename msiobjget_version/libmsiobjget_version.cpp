@@ -18,7 +18,7 @@
 #include "irods_resource_redirect.hpp"
 
 #define MSI_LOG "[Metalnx GET Version MSI]"
-#define MSI_VERSION "2.0.0"
+#define MSI_VERSION "1.1.0"
 
 #define MSI_ERROR -1
 #define MSI_SUCCESS 0
