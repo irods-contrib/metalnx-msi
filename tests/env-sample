@@ -8,4 +8,5 @@ BAM_RULE_FILE=mlxExtractMetadataBam.r
 JPEG_RULE_FILE=mlxExtractMetadataJpeg.r
 ILLUMINA_RULE_FILE=mlxExtractMetadataIllumina.r
 POPULATE_RULE_FILE=mlxPopulate.r
+MANIFEST_RULE_FILE=mlxManifest.r
 
