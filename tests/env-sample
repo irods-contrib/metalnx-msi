@@ -1,10 +1,11 @@
 IRODS_USER=rods
 IRODS_RESC=demoResc
-IRODS_ZONE=msiZone
-IRODS_COLL_ABS_PATH=/msiZone/home/rods
+IRODS_ZONE=tempZone
+IRODS_COLL_ABS_PATH=/tempZone/home/rods
 MSI_PACKAGE_VERSION=1.1.0
 GET_VERSION_RULE_FILE=mlxGetVersion.r
 BAM_RULE_FILE=mlxExtractMetadataBam.r
 JPEG_RULE_FILE=mlxExtractMetadataJpeg.r
+ILLUMINA_RULE_FILE=mlxExtractMetadataIllumina.r
 POPULATE_RULE_FILE=mlxPopulate.r
 

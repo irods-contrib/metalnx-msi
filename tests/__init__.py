@@ -57,10 +57,15 @@ class MetadataExtractConfig:
     IRODS_HOME_PATH = '/{}/home/{}'.format(IRODS_ZONE, IRODS_USER)
     VAULT_PATH = '/var/lib/irods/iRODS/Vault/home/{}'.format(IRODS_USER)
     IMETA_LS_NONE = 'AVUs defined for dataObj {}:\nNone\n'
+    ILLUMINA_FOLDER_NAME = 'test_illumina_file'
+    ILLUMINA_FILE_NAME = '{}.tar'.format(ILLUMINA_FOLDER_NAME)
     JPEG_FILE_NAME = 'test_jpeg_file.jpg'
     BAM_FILE_NAME = 'test_bam_file.bam'
     POPULATE_FILE_NAME = 'test_populate_file.txt'
     VCF_FILE_NAME = 'test_vcf_file.vcf'
+    ILLUMINA_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, ILLUMINA_FILE_NAME)
+    ILLUMINA_FOLDER_PATH = '{}/{}'.format(IRODS_HOME_PATH, ILLUMINA_FOLDER_NAME)
+    ILLUMINA_METADATA_FILE = '{}/Data/Intensities/Offset/offsets.txt'.format(ILLUMINA_FOLDER_NAME)
     JPEG_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, JPEG_FILE_NAME)
     BAM_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, BAM_FILE_NAME)
     VCF_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, VCF_FILE_NAME)
@@ -70,6 +75,7 @@ class MetadataExtractConfig:
     JPEG_RULE_FILE = config('JPEG_RULE_FILE', default='mlxExtractMetadataJpeg.r')
     BAM_RULE_FILE = config('BAM_RULE_FILE', default='mlxExtractMetadataBam.r')
     VCF_RULE_FILE = config('VCF_RULE_FILE', default='mlxExtractMetadataVcf.r')
+    ILLUMINA_RULE_FILE = config('ILLUMINA_RULE_FILE', default='mlxExtractMetadataIllumina.r')
     GET_VERSION_RULE_FILE = config('GET_VERSION_RULE_FILE', default='mlxGetVersion.r')
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
     MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
@@ -96,6 +102,10 @@ class MetadataExtractConfig:
     def call_extract_metadata_for_jpeg(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call
         return self.call_rule_from_file(call_function, self.JPEG_RULE_FILE, *args, **kwargs)
+
+    def call_extract_metadata_for_illumina(self, check_output=False, *args, **kwargs):
+        call_function = _check_call_output if check_output else _call
+        return self.call_rule_from_file(call_function, self.ILLUMINA_RULE_FILE, *args, **kwargs)
 
     def call_extract_metadata_for_vcf(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call
