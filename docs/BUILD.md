@@ -65,7 +65,7 @@ On DEB-based or RPM-based systems, you will need the basic development tools in 
     $ wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2    # Getting sources from GitHub
     $ tar -xvf samtools-1.3.1.tar.bz2															  # Extracting tarball
     $ cd samtools-1.3.1																			  # Entering sources directory
-    $ ./configure																				  # Configuring compilation pipeline
+    $ ./configure --without-curses																  # Configuring compilation pipeline
     $ make																						  # Compiling source code
     $ sudo make install																			  # Installing compiled binary
     $ sudo cp *.h /usr/local/include/															  # Installing headers
