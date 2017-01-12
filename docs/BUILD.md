@@ -26,9 +26,6 @@ The information in this file is provided “as is.” EMC Corporation makes no r
 
 This tutorial guides you through the Metalnx MSI compilation pipeline. It explains how to build Metalnx MSI from scratch.
 
-## Version
-1.0
- 
 ## Building Metalnx MSI RPM and DEB packages
 
 The Metalnx MSI package is an optional package that provides a set of iRODS micro services allowing the data grid to automatically extract metadata from certain kinds of files. It relies on the irods-dev library provided by  [iRODS][irods-dev-download].
@@ -65,8 +62,8 @@ Now, execute the `build.sh` script
 
 **NOTE:** This command must be executed from the source tree root, otherwise it will NOT work.":
 
-	$ IRODSVERSION=4.1.10 IRODSROOT=/tmp/irods-packages/4.1.10 ./packaging/build.sh      # building MSI against iRODS libs in a different location
-    $ IRODSVERSION=4.1.10 ./packaging/build.sh                                           # building MSI against iRODS libs in a standard location
+	$ IRODSVERSION=4.1.X IRODSROOT=/tmp/irods-packages/4.1.X ./packaging/build.sh      # building MSI against iRODS libs in a different location
+    $ IRODSVERSION=4.1.X ./packaging/build.sh                                           # building MSI against iRODS libs in a standard location
 
 Once completed, your resulting package can be found at `<metalnx_msi_root>/linux-X.XX-<arch>/RPMS/<arch>metalnx-msi-plugins-4.1.X-1.0-DEV.<arch>.<rpm/deb>`.
 
