@@ -1,16 +1,7 @@
-<font color="#3892CF"> EMC METALNX MSI BUILD GUIDE
-==================================================
+# EMC METALNX MSI BUILD GUIDE
 
-<font color="#3892CF"> Build From Source Instructions
-=====================================================
+## Build From Source Instructions
 
-<font color="#A6A6A6"> <font size=+2> Revision 1.0
-
-6/2016 </font>
-
-----------------------------------
-
-<font color="#000000">
 Copyright © 2015-16 EMC Corporation.
 
 This software is provided under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
@@ -20,13 +11,14 @@ The information in this file is provided “as is.” EMC Corporation makes no r
 -------------------------------- 
 
 <br>
-<font color="#0066CC"> <font size=+2> __INTRODUCTION__ </font>
 
-<font color="#000000"> <a name="Introduction"></a>
+### Introduction
+
+<a name="Introduction"></a>
 
 This tutorial guides you through the Metalnx MSI compilation pipeline. It explains how to build Metalnx MSI from scratch.
 
-## Building Metalnx MSI RPM and DEB packages
+### Building Metalnx MSI RPM and DEB packages
 
 The Metalnx MSI package is an optional package that provides a set of iRODS micro services allowing the data grid to automatically extract metadata from certain kinds of files. It relies on the irods-dev library provided by  [iRODS][irods-dev-download].
 
@@ -34,11 +26,11 @@ This package also provides automatic metadata extraction for genetic research fi
     * [HTSlib][htslib-download]
 	* [samtools][samtools-download]
 
-### Installing the irods-dev package, HTSlib and Samtools
+#### Installing the irods-dev package, HTSlib and Samtools
 
-Please refer to our [INSTALL](INSTALL.md) document before proceeding to the next section.
+Please refer to our [INSTALL](INSTALL.md#resolving-metalnx-msi-dependencies) document before proceeding to the next section.
 
-### Building packages
+#### Building package
 
 Once the previous requirements are satisfied, you can build the MSI package. The format of the package will depend on which platform you are executing these commands on. 
 
@@ -52,7 +44,10 @@ Then you have to make sure your Linux user has execution permission on the `buil
 
     $ chmod u+x packaging/build.sh
 	
-In order to build the MSI package against different versions of iRODS within the same environment, compilation scripts and make files have changed a little. 
+> __Note__: This `build` script creates packages according to your OS (*.rpm or *.deb). In order to create `RPMs`,
+ it needs the `rpmbuild` package installed. You can install it by running: `yum install -y rpmbuild`
+
+In order to build the MSI package against different versions of iRODS within the same environment, compilation scripts and `make` files have changed a little. 
 
 The MSI package compilation pipeline now relies on two environment variables that tell which iRODS version you are building the package against and where the iRODS libraries are. Those two variables are `IRODSROOT` and `IRODSVERSION`.
 
