@@ -37,38 +37,9 @@ This package also provides automatic metadata extraction for genetic research fi
     * [HTSlib][htslib-download]
 	* [samtools][samtools-download]
 
-### Installing the irods-dev Package
+### Installing the irods-dev package, HTSlib and Samtools
 
-In order to install the `irods-dev` package, you must satisfy its dependencies. The only package you'll need to install `irods-dev` is `openssl-dev` (on DEB systems) or `openssl-devel` (on RPM systems). Once this dependency is satisfied, you can install `irods-dev` with the command:
-
-    $ rpm -ivh irods-dev-4.1.X-centos7-x86_64.rpm         # On RPM-based system
-	
-or
-
-    $ dpkg -i irods-dev-4.1.X-ubuntu14-x86_64.deb         # On DEB-based systems
-
-### Installing HTSlib
-
-On DEB-based or RPM-based systems, you will need the basic development tools in order to download, compile and install HTSlib (C++ compiler,   make):
-
-    $ wget https://github.com/samtools/htslib/releases/download/1.3.1/htslib-1.3.1.tar.bz2    # Getting sources from GitHub
-    $ tar -xvf htslib-1.3.1.tar.bz2															  # Extracting tarball
-    $ cd htslib-1.3.1																		  # Entering sources directory
-    $ ./configure																			  # Configuring compilation pipeline
-    $ make																					  # Compiling sources
-    $ sudo make install																		  # Installing compiled binary and headers
-
-### Installing samtools
-
-On DEB-based or RPM-based systems, you will need the basic development tools in order to download, compile and install samtools (C++ compiler, make):
-
-    $ wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2    # Getting sources from GitHub
-    $ tar -xvf samtools-1.3.1.tar.bz2															  # Extracting tarball
-    $ cd samtools-1.3.1																			  # Entering sources directory
-    $ ./configure																				  # Configuring compilation pipeline
-    $ make																						  # Compiling source code
-    $ sudo make install																			  # Installing compiled binary
-    $ sudo cp *.h /usr/local/include/															  # Installing headers
+Please refer to our [INSTALL](INSTALL.md) document before proceeding to the next section.
 
 ### Building packages
 

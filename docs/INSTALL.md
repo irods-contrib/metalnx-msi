@@ -115,6 +115,12 @@ $ sudo apt-get -f install
 
 The `samtools` library allows Metalnx microservices to get information from `SAM`, `BAM` and `CRAM` files. These libraries binaries are not available on CentOS7 nor Ubuntu 14 offical repositories. It implies that they must be manually compiled, configured and installed.
 
+> __Note:__ A C++ compiler must be present in the machine you are working on. If you do not have it, you can install it with the following command:
+```bash
+$ yum install -y gcc-c++    # CentOS
+$ apt-get install -y g++    # Ubuntu
+```
+
 First of all, download the samtools from the official website:
 
 ```bash
@@ -159,6 +165,7 @@ $ cd samtools-1.3.1
 $ ./configure --without-curses
 $ make
 $ sudo make install
+$ sudo cp *.h /usr/local/include/
 ```
 
 [Back to Table of Contents](#TOC)
