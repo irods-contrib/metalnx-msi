@@ -116,4 +116,4 @@ f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libm
 f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjput_mdvcf.so ./msiobjput_mdvcf/libmsiobjput_mdvcf.so
 f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjput_mdmanifest.so ./msiobjput_mdmanifest/libmsiobjput_mdmanifest.so
 f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjget_version.so ./msiobjget_version/libmsiobjget_version.so
-f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjget_microservices.so ./msiobjget_version/libmsiobjget_microservices.so
+f 755 $OS_IRODS_ACCT $OS_IRODS_ACCT ${IRODS_HOME_DIR}/plugins/microservices/libmsiobjget_microservices.so ./msiobjget_microservices/libmsiobjget_microservices.so
