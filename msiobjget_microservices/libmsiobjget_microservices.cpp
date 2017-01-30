@@ -46,7 +46,7 @@ extern "C" {
             if (boost::filesystem::is_directory(itr->status()) ) continue;
 
             msis.append(itr->path().filename().string().c_str());
-            msis.append(", ");
+            msis.append(",");
         }
 
         rodsLog(LOG_NOTICE, "%s -> %s\n", MSI_LOG, msis.c_str());
