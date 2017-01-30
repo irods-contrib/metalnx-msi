@@ -5,6 +5,7 @@ MSIPUT_MDMANIFEST = msiobjput_mdmanifest
 MSIPUT_MDBAM = msiobjput_mdbam
 MSIPUT_MDVCF = msiobjput_mdvcf
 MSIGET_VERSION = msiobjget_version
+MSIGET_MSIS = msiobjget_microservices
 
 MAKEFLAGS += --no-print-directory
 
@@ -17,7 +18,8 @@ LIBS = \
        $(MSIPUT_MDMANIFEST) \
        $(MSIPUT_MDBAM) \
        $(MSIPUT_MDVCF) \
-       $(MSIGET_VERSION)
+       $(MSIGET_VERSION) \
+       $(MSIGET_MSIS)
 
 .PHONY: all $(LIBS) clean
 all: $(LIBS)
@@ -33,4 +35,5 @@ clean:
 	@$(MAKE) -C $(MSIPUT_MDBAM) clean;
 	@$(MAKE) -C $(MSIPUT_MDVCF) clean;
 	@$(MAKE) -C $(MSIGET_VERSION) clean;
+	@$(MAKE) -C $(MSIGET_MSIS) clean;
 
