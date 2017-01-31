@@ -36,7 +36,7 @@ extern "C" {
 
         if (!boost::filesystem::exists(msi_dir_path)) {
             rodsLog(LOG_ERROR, "%s Directory %s does not exist\n", MSI_LOG, msi_dir_path.string().c_str());
-            return false;
+            return MSI_ERROR;
         }
 
         std::string msis;
