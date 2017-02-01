@@ -1,6 +1,6 @@
 GCC = g++
 
-INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/ -I/usr/local/include
+INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/ -I/usr/local/include  -I../libmetalnx -L../libmetalnx
 
 LIBPATH=-L/usr/local/lib
 

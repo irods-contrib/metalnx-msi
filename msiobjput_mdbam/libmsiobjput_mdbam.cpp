@@ -1,15 +1,8 @@
-#include <string>
-
-#include "rsApiHandler.hpp"
-#include "reFuncDefs.hpp"
-#include "rods.hpp"
-#include "reGlobalsExtern.hpp"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
-#include "modAVUMetadata.hpp"
+#include "metalnx.h"
 
 #include "htslib/bgzf.h"
 #include "bam.h"
+#include <string>
 
 #define MSO_OBJ_PUT_FAILED -1118000
 

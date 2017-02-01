@@ -1,23 +1,8 @@
+#include "metalnx.h"
+
 #include <string>
 #include <ctype.h>
 #include <libexif/exif-loader.h>
-
-#include "rods.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
-#include "modAVUMetadata.h"
-#include "reFuncDefs.hpp"
-#include "apiHeaderAll.h"
-#include "objMetaOpr.hpp"
-#include "dataObjOpr.hpp"
-#include "physPath.hpp"
-#include "miscServerFunct.hpp"
-#include "rcGlobalExtern.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_log.hpp"
-#include "irods_file_object.hpp"
-#include "irods_stacktrace.hpp"
-#include "irods_resource_redirect.hpp"
 
 extern "C" {
     /**

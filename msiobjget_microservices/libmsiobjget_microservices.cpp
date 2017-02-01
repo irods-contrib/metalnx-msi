@@ -1,31 +1,10 @@
 // Finds all MSIs under /irods/plugins/microservices
 
-#include "rods.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
-#include "modAVUMetadata.h"
-#include "reFuncDefs.hpp"
-#include "apiHeaderAll.h"
-#include "objMetaOpr.hpp"
-#include "dataObjOpr.hpp"
-#include "physPath.hpp"
-#include "miscServerFunct.hpp"
-#include "rcGlobalExtern.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_log.hpp"
-#include "irods_file_object.hpp"
-#include "irods_stacktrace.hpp"
-#include "irods_resource_redirect.hpp"
+#include "metalnx.h"
 
 #include <boost/filesystem.hpp>
 
 #define MSI_LOG "[Metalnx GET Microservices MSI]"
-#define MSI_VERSION "1.1.0"
-
-#define MSI_IRODS_DIR "/var/lib/irods/plugins/microservices"
-
-#define MSI_ERROR -1
-#define MSI_SUCCESS 0
 
 extern "C" {
     int msiobjget_microservices(msParam_t* outMicroservices, ruleExecInfo_t* rei) {

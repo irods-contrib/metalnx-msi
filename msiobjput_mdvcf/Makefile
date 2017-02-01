@@ -1,6 +1,6 @@
 GCC = g++
 
-INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/
+INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/  -I../libmetalnx -L../libmetalnx
 
 LIBS=
 

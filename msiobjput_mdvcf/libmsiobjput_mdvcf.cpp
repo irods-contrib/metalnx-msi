@@ -1,13 +1,7 @@
+#include "metalnx.h"
+
 #include <cstdio>
 #include <string>
-
-#include "rsApiHandler.hpp"
-#include "reFuncDefs.hpp"
-#include "rods.hpp"
-#include "reGlobalsExtern.hpp"
-#include "rsGlobalExtern.hpp"
-#include "rcGlobalExtern.hpp"
-#include "modAVUMetadata.hpp"
 
 #define BUFFER_SIZE 1024
 #define MSO_OBJ_PUT_FAILED -1118000

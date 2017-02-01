@@ -1,6 +1,6 @@
 GCC=g++
 
-INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/libexif -I/usr/include/irods/boost/ 
+INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/libexif -I/usr/include/irods/boost/  -I../libmetalnx -L../libmetalnx
 
 LIBS=-lexif
 

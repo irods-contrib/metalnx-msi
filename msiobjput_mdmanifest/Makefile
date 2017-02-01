@@ -1,6 +1,6 @@
 GCC=g++
 
-INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/ -I/usr/include/libxml2
+INC=-I${IRODSROOT}/irods/ -I${IRODSROOT}/irods/boost/ -I/usr/include/libxml2  -I../libmetalnx -L../libmetalnx
 
 LIBS=-lxml2
 
