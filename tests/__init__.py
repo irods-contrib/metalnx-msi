@@ -79,9 +79,12 @@ class MetadataExtractConfig:
     VCF_RULE_FILE = config('VCF_RULE_FILE', default='mlxExtractMetadataVcf.r')
     ILLUMINA_RULE_FILE = config('ILLUMINA_RULE_FILE', default='mlxExtractMetadataIllumina.r')
     GET_VERSION_RULE_FILE = config('GET_VERSION_RULE_FILE', default='mlxGetVersion.r')
+    GET_MICROSERVICES_RULE_FILE = config('GET_MICROSERVICES_RULE_FILE', default='mlxGetMicroservices.r')
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
     MANIFEST_RULE_FILE = config('MANIFEST_RULE_FILE', default='mlxManifest.r')
     MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
+    METALNX_MSIS_INSTALLED = config('METALNX_MSIS_INSTALLED').split(',')
+    IRODS_MSIS_INSTALLED = config('IRODS_MSIS_INSTALLED').split(',')
 
     RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules')
 
@@ -100,6 +103,9 @@ class MetadataExtractConfig:
 
     def call_get_version_rule(self, *args, **kwargs):
         return self.call_rule_from_file(_check_call_output, self.GET_VERSION_RULE_FILE, *args, **kwargs)
+
+    def call_get_microservices_rule(self, *args, **kwargs):
+        return self.call_rule_from_file(_check_call_output, self.GET_MICROSERVICES_RULE_FILE, *args, **kwargs)
 
     def call_extract_metadata_for_bam(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call

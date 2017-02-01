@@ -9,4 +9,6 @@ JPEG_RULE_FILE=mlxExtractMetadataJpeg.r
 ILLUMINA_RULE_FILE=mlxExtractMetadataIllumina.r
 POPULATE_RULE_FILE=mlxPopulate.r
 MANIFEST_RULE_FILE=mlxManifest.r
-
+GET_MICROSERVICES_RULE_FILE=mlxGetMicroservices.r
+METALNX_MSIS_INSTALLED=libmsiget_illumina_meta.so,libmsiobjget_microservices.so,libmsiobjget_version.so,libmsiobjjpeg_extract.so,libmsiobjput_mdbam.so,libmsiobjput_mdmanifest.so,libmsiobjput_mdvcf.so,libmsiobjput_populate.so
+IRODS_MSIS_INSTALLED=libmsiobjget_http.so,libmsiobjget_irods.so,libmsiobjget_slink.so,libmsiobjput_http.so,libmsiobjput_irods.so,libmsiobjput_slink.so,libmsisync_to_archive.so,libmsi_update_unixfilesystem_resource_free_space.so
