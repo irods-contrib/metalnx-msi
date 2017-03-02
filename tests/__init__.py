@@ -50,12 +50,12 @@ def imeta_ls(*args, **kwargs):
 
 
 class MetadataExtractConfig:
-
+    IRODS_42 = config('IRODS_42', default=False, cast=bool)
     IRODS_USER = config('IRODS_USER', default='rods')
     IRODS_RESC = config('IRODS_RESC', default='demoResc')
     IRODS_ZONE = config('IRODS_ZONE', default='tempZone')
     IRODS_HOME_PATH = '/{}/home/{}'.format(IRODS_ZONE, IRODS_USER)
-    VAULT_PATH = '/var/lib/irods/iRODS/Vault/home/{}'.format(IRODS_USER)
+    VAULT_PATH = '/var/lib/irods{}/Vault/home/{}'.format('/iRODS' if not IRODS_42 else '', IRODS_USER)
     IMETA_LS_NONE = 'AVUs defined for dataObj {}:\nNone\n'
     ILLUMINA_FOLDER_NAME = 'test_illumina_file'
     ILLUMINA_FILE_NAME = '{}.tar'.format(ILLUMINA_FOLDER_NAME)
@@ -82,9 +82,9 @@ class MetadataExtractConfig:
     GET_MICROSERVICES_RULE_FILE = config('GET_MICROSERVICES_RULE_FILE', default='mlxGetMicroservices.r')
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
     MANIFEST_RULE_FILE = config('MANIFEST_RULE_FILE', default='mlxManifest.r')
-    MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.0.0')
+    MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.1.0')
     METALNX_MSIS_INSTALLED = config('METALNX_MSIS_INSTALLED').split(',')
-    IRODS_MSIS_INSTALLED = config('IRODS_MSIS_INSTALLED').split(',')
+    IRODS_MSIS_INSTALLED = config('IRODS_42_MSIS_INSTALLED').split(',') if IRODS_42 else config('IRODS_MSIS_INSTALLED').split(',')
 
     RULE_HEADERS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rules')
 
