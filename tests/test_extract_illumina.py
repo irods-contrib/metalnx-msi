@@ -9,12 +9,14 @@ class TestMetadataIlluminaExtraction(TestCase, MetadataExtractConfig):
         iput(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'samples', self.ILLUMINA_FILE_NAME))
 
     def test_extract_illumina(self):
-        self.call_extract_metadata_for_illumina(
-            objPath=self.ILLUMINA_OBJ_PATH,
-            targetPath=self.IRODS_HOME_PATH,
-            destResc=self.IRODS_RESC,
-            status='null'
-        )
+        illumina_args = {'objPath': self.ILLUMINA_OBJ_PATH,
+                         'targetPath': self.IRODS_HOME_PATH,
+                         'destResc': self.IRODS_RESC}
+
+        if not self.IRODS_42:
+            illumina_args['status'] = 'null'
+
+        self.call_extract_metadata_for_illumina(**illumina_args)
 
         # '-d' option is used when metadatas are get from a file and not a collection
         rule_output = imeta_ls('-d', self.ILLUMINA_METADATA_FILE)
