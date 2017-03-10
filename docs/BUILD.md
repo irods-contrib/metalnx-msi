@@ -30,6 +30,16 @@ This package also provides automatic metadata extraction for genetic research fi
 
 Please refer to our [INSTALL](INSTALL.md#resolving-metalnx-msi-dependencies) document before proceeding to the next section.
 
+On DEB-based or RPM-based systems, you will need the basic development tools in order to download, compile and install samtools (C++ compiler, make):
+
+    $ wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2    # Getting sources from GitHub
+    $ tar -xvf samtools-1.3.1.tar.bz2															  # Extracting tarball
+    $ cd samtools-1.3.1																			  # Entering sources directory
+    $ ./configure --without-curses																  # Configuring compilation pipeline
+    $ make																						  # Compiling source code
+    $ sudo make install																			  # Installing compiled binary
+    $ sudo cp *.h /usr/local/include/															  # Installing headers
+
 #### Building package
 
 Once the previous requirements are satisfied, you can build the MSI package. The format of the package will depend on which platform you are executing these commands on. 
