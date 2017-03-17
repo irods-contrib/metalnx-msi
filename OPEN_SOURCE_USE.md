@@ -1,28 +1,18 @@
-<font color="#3892CF"> EMC METALNX
-===================================
+METALNX MSI
+===========
 
-<font color="#3892CF"> Open Source Usage
-=========================================
+Open Source Usage
+=================
 
-<font color="#A6A6A6"> <font size=+2> Revision 1.0 
-
-6/2016 </font>
-
-----------------------------------
-
-<font color="#000000">
-Copyright © 2015-16 EMC Corporation.
+Copyright © 2015-2017 Dell Inc.
 
 This software is provided under the Software license provided in the <a href="LICENSE"> LICENSE </a> file.
 
-The information in this file is provided “as is.” EMC Corporation makes no representations or warranties of any kind with respect to the information in this publication, and specifically disclaims implied warranties of merchantability or fitness for a particular purpose. 
+The information in this file is provided “as is.” Dell Inc. makes no representations or warranties of any kind with respect to the information in this publication, and specifically disclaims implied warranties of merchantability or fitness for a particular purpose. 
 
 -------------------------------- 
 
-<br>
-<font color="#0066CC"> <font size=+2> __OVERVIEW__ </font> <a name="introduction"></a>
-
-<font color="#000000">
+__OVERVIEW__
 
 Metalnx (the application), the Metalnx Remote Monitor Daemon, the Metalnx MSI package make use of Open Source Packages as follows:
 

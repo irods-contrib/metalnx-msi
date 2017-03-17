@@ -1,3 +1,8 @@
+//==============================================================================
+// Name        : JPEG extraction
+// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Description : Extracts metadata from JPEG files
+//==============================================================================
 #include "metalnx.h"
 
 #include <string>

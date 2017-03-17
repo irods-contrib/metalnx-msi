@@ -2,11 +2,11 @@
 # EPM Variables
 # =-=-=-=-=-=-=-
 %product Metalnx MSI package
-%copyright 2015-16, EMC Corporation
-%vendor EMC Corporation
+%copyright 2015-16, Dell Inc.
+%vendor Dell Inc.
 %license LICENSE
 %readme README.md
-%description Set of microservice plugins for EMC Metalnx Application
+%description Set of microservice plugins for Dell Inc. Application
 %version TEMPLATE_PLUGINVERSION TEMPLATE_PLUGINVERSIONINT
 
 %if DEB
