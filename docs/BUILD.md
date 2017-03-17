@@ -2,11 +2,11 @@
 
 ## Build From Source Instructions
 
-Copyright © 2015-16 EMC Corporation.
+Copyright © 2015-2017 Dell Inc.
 
 This software is provided under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-The information in this file is provided “as is.” EMC Corporation makes no representations or warranties of any kind with respect to the information in this publication, and specifically disclaims implied warranties of merchantability or fitness for a particular purpose. 
+The information in this file is provided “as is.” Dell Inc. makes no representations or warranties of any kind with respect to the information in this publication, and specifically disclaims implied warranties of merchantability or fitness for a particular purpose. 
 
 -------------------------------- 
 

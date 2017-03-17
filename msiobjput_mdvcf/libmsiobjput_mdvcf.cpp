@@ -1,3 +1,9 @@
+//==============================================================================
+// Name        : VCF metadata extraction
+// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Description : extracts metadata from VCF files.
+//==============================================================================
+
 #include "metalnx.h"
 
 #include <cstdio>

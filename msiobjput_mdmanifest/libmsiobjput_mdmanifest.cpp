@@ -1,3 +1,9 @@
+//==============================================================================
+// Name        : manifest metadata extraction
+// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Description : extracts metadata from manifest files.
+//==============================================================================
+
 #include "metalnx.h"
 
 #include <cstdio>

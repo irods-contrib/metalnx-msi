@@ -1,4 +1,8 @@
-// Finds all MSIs under /irods/plugins/microservices
+//==============================================================================
+// Name        : get microservices
+// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Description : Finds all MSIs under /irods/plugins/microservices.
+//==============================================================================
 
 #include "metalnx.h"
 
