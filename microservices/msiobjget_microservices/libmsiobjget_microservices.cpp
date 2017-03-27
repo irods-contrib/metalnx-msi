@@ -14,8 +14,8 @@ extern "C" {
     int msiobjget_microservices(msParam_t* outMicroservices, ruleExecInfo_t* rei) {
         rodsLog(LOG_NOTICE, "%s MSI Get Microservices [%s]\n",  MSI_LOG, MSI_VERSION);
 
-        boost::filesystem::path msi_dir_path(MSI_IRODS_DIR);
-        rodsLog(LOG_NOTICE, "%s Checking %s\n", MSI_LOG, msi_dir_path.string().c_str());
+        boost::filesystem::path msi_dir_path(MSI_IRODS_42_DIR);
+        rodsLog(LOG_NOTICE, "%s !!!Checking %s\n", MSI_LOG, msi_dir_path.string().c_str());
 
         if (!boost::filesystem::exists(msi_dir_path)) {
             rodsLog(LOG_ERROR, "%s Directory %s does not exist\n", MSI_LOG, msi_dir_path.string().c_str());
@@ -48,7 +48,7 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjget_microservices", "msiobjget_microservices" );
+        msvc->add_operation<msParam_t*, ruleExecInfo_t*>("msiobjget_microservices", std::function<int(msParam_t*, ruleExecInfo_t*)>(msiobjget_microservices));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system
@@ -57,7 +57,3 @@ extern "C" {
     } // plugin_factory
 
 } // extern "C"
-
-
-
-
