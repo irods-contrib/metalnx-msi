@@ -1,10 +1,5 @@
-//==============================================================================
-// Name        : VCF extraction
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
-// Description : Extracts metadata from VCF files
-//==============================================================================
-
 #include "metalnx.h"
+#include "rsModAVUMetadata.hpp"
 
 #include <cstdio>
 #include <string>
@@ -22,8 +17,8 @@ extern "C" {
         // Metadata control block
         modAVUMetadataInp_t modAVUMetadataInp;
         memset( &modAVUMetadataInp, 0, sizeof( modAVUMetadataInp_t ) );
-        modAVUMetadataInp.arg0 = "add";
-        modAVUMetadataInp.arg1 = "-d";
+        modAVUMetadataInp.arg0 = (char*) "add";
+        modAVUMetadataInp.arg1 = (char*) "-d";
         modAVUMetadataInp.arg2 = objPath;
         modAVUMetadataInp.arg3 = attributeName;
 	    modAVUMetadataInp.arg4 = attributeValue;
@@ -111,7 +106,7 @@ extern "C" {
 				int unitLen = strlen(idValue);
 				strncpy(idValue + unitLen, "_DESCRIPTION", 12);
 				idValue[unitLen + 12] = 0;
-				createMetadataOnObject(objPath, idValue, descValue, "", rei);
+				createMetadataOnObject(objPath, idValue, descValue, (char*) "", rei);
 				
 			} 
 			
@@ -131,7 +126,7 @@ extern "C" {
 				strncpy(descValue, valuePart + 13, strlen(valuePart) - 14);
 				descValue[strlen(valuePart) - 14] = 0;
 				
-				createMetadataOnObject(objPath, "ALT", idValue, descValue, rei);
+				createMetadataOnObject(objPath, (char*) "ALT", idValue, descValue, rei);
 			} 
 			
 			// Handling FORMAT type
@@ -142,7 +137,7 @@ extern "C" {
 			// Handling other lines
 			else {
 				rodsLog( LOG_NOTICE, "Normal line" );
-				createMetadataOnObject(objPath, attrName, attrValue, "", rei);
+				createMetadataOnObject(objPath, attrName, attrValue, (char*) "", rei);
 			}
 			
 			free(attrName);
@@ -162,7 +157,14 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjput_mdvcf", "msiobjput_mdvcf" );
+        msvc->add_operation<
+		msParam_t*,
+		msParam_t*,
+		ruleExecInfo_t*>("msiobjput_mdvcf",
+				std::function<int(
+					msParam_t*,
+					msParam_t*,
+					ruleExecInfo_t*)>(msiobjput_mdvcf));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system
