@@ -1,9 +1,5 @@
-//==============================================================================
-// Name        : Manifest extraction
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
-// Description : Extracts metadata from manifest files
-//==============================================================================
 #include "metalnx.h"
+#include "rsModAVUMetadata.hpp"
 
 #include <cstdio>
 #include <cstdlib>
@@ -26,11 +22,11 @@ extern "C" {
         // Metadata control block
         modAVUMetadataInp_t modAVUMetadataInp;
         memset( &modAVUMetadataInp, 0, sizeof( modAVUMetadataInp_t ) );
-        modAVUMetadataInp.arg0 = "add";
-        modAVUMetadataInp.arg1 = "-d";
+        modAVUMetadataInp.arg0 = (char*) "add";
+        modAVUMetadataInp.arg1 = (char*) "-d";
         modAVUMetadataInp.arg2 = objPath;
         modAVUMetadataInp.arg3 = attributeName;
-	    modAVUMetadataInp.arg4 = attributeValue;
+	modAVUMetadataInp.arg4 = attributeValue;
         modAVUMetadataInp.arg5 = attributeUnit;
 
         int status = rsModAVUMetadata( rei->rsComm, &modAVUMetadataInp );
@@ -68,9 +64,9 @@ extern "C" {
 				xmlChar *cvValue = xmlTextReaderGetAttribute(reader, (xmlChar *) "name");
 				printf("cvParam: [%s] [%s] [%s] [%s]\n", cvLabel, cvAccession, cvName, cvValue);
 				
-				createMetadataOnObject(objPath, "cvParam", (char *) cvLabel, "", rei);
+				createMetadataOnObject(objPath, (char*) "cvParam", (char *) cvLabel, (char*) "", rei);
 				createMetadataOnObject(objPath, (char *) cvLabel, (char *) cvValue, (char *) cvAccession, rei);
-				createMetadataOnObject(objPath, (char *) cvLabel, (char *) cvName, "", rei);
+				createMetadataOnObject(objPath, (char *) cvLabel, (char *) cvName, (char*) "", rei);
 			}
 		}
 		
@@ -124,7 +120,16 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjput_mdmanifest", "msiobjput_mdmanifest" );
+	msvc->add_operation<
+        	msParam_t*,
+	        msParam_t*,
+        	msParam_t*,
+	        ruleExecInfo_t*>("msiobjput_mdmanifest",
+                         	std::function<int(
+                             		msParam_t*,
+		                        msParam_t*,
+                		        msParam_t*,
+		                        ruleExecInfo_t*)>(msiobjput_mdmanifest));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system
