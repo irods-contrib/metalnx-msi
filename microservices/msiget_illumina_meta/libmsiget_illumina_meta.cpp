@@ -6,6 +6,13 @@
 //==============================================================================
 #include "metalnx.h"
 
+#include "rsReadCollection.hpp"
+#include "rsOpenCollection.hpp"
+#include "rsCloseCollection.hpp"
+#include "rsModAVUMetadata.hpp"
+#include "procApiRequest.h"
+#include "apiNumber.h"
+
 #include<fstream>
 
 #define METADATA_CHAR_TAM 50
@@ -136,10 +143,10 @@ extern "C" {
         IlluminaX10Metadata* sample_sheet_metadata = NULL;
 
         // Parsing the SampleSheet.csv file and extracting its metadata
-		read_metadata_from_csv_file(sample_sheet_file->phy_path, &sample_sheet_metadata);
+	read_metadata_from_csv_file(sample_sheet_file->phy_path, &sample_sheet_metadata);
 
         // Collection where the metadata should be applied recursively
-        char* data_coll_path = concat(find_parent_path(sample_sheet_file->path), COLL_TO_APPLY_METADATA);
+        char* data_coll_path = concat(find_parent_path(sample_sheet_file->path), (char*) COLL_TO_APPLY_METADATA);
 
 		// Applying the metadata got from the CSV file into a specific collection (recursively)
         add_metadata_to_files_under_path(rei, data_coll_path, destResource, sample_sheet_metadata);
@@ -162,7 +169,15 @@ extern "C" {
     irods::ms_table_entry* plugin_factory() {
         irods::ms_table_entry* msvc = new irods::ms_table_entry(2);
 
-        msvc->add_operation("msiget_illumina_meta_impl", "msiget_illumina_meta");
+        msvc->add_operation<
+		msParam_t*,
+		msParam_t*,
+		ruleExecInfo_t*>(
+			"msiget_illumina_meta_impl",
+			std::function<int(
+				msParam_t*,
+				msParam_t*,
+				ruleExecInfo_t*)>(msiget_illumina_meta_impl));
 
         return msvc;
     }
@@ -224,7 +239,7 @@ void find_sample_sheet_under_path(ruleExecInfo_t* rei, char* path, char* dest_re
 			std::string data_obj_name(collEnt->dataName);
 			if (data_obj_name.compare(SAMPLE_SHEET_FILE_NAME) == 0) {
 				rodsLog(LOG_NOTICE, "%s SAMPLE_SHEET_FILE_NAME %s", ILLUMINA_MSI_LOG, str_to_char_array(data_obj_name) );
-				*sample_sheet = create_sample_sheet(collEnt->phyPath, concat(concat(collEnt->collName, "/"), collEnt->dataName));
+				*sample_sheet = create_sample_sheet(collEnt->phyPath, concat(concat(collEnt->collName, (char*) "/"), collEnt->dataName));
 				break;
 			}
 		}
@@ -382,8 +397,8 @@ bool add_metadata_to_file(ruleExecInfo_t* rei, char* obj_path, char* A, char* V,
 
 	modAVUMetadataInp_t modAVUMetadataInp;
 	memset(&modAVUMetadataInp, 0, sizeof(modAVUMetadataInp_t));
-	modAVUMetadataInp.arg0 = "add";
-	modAVUMetadataInp.arg1 = "-d";
+	modAVUMetadataInp.arg0 = (char*) "add";
+	modAVUMetadataInp.arg1 = (char*) "-d";
 	modAVUMetadataInp.arg2 = obj_path;
 	modAVUMetadataInp.arg3 = A;
 	modAVUMetadataInp.arg4 = V;
@@ -414,7 +429,7 @@ char* find_parent_path (char* path) {
 
 	if (path == NULL || strlen(path) == 0) {
 		rodsLog(LOG_NOTICE, "%s Cannot find parent path of %s", ILLUMINA_MSI_LOG, path);
-		return "";
+		return (char*) "";
 	}
 
 	int path_len = strlen(path);
@@ -444,7 +459,7 @@ IlluminaX10Metadata* createIlluminaAVU (char* A, char* V, char* U) {
 	}
 
 	if (V == NULL) {
-		V = " ";
+		V = (char*)" ";
 	}
 
 	int a_len = strlen(A) + 1;
