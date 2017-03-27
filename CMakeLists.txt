@@ -8,15 +8,9 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 
 project(metalnx-msi-plugins C CXX)
 
-#get_cmake_property(_variableNames VARIABLES)
-#foreach (_variableName ${_variableNames})
-#    message(STATUS "${_variableName}=${${_variableName}}")
-#endforeach()
-
 include(${IRODS_TARGETS_PATH})
 include_directories(/usr/include/libxml2)
 include_directories(/usr/local/include)
-#include_directories(/usr/local/lib)
 
 set(IRODS_PLUGIN_VERSION_MAJOR "2")
 set(IRODS_PLUGIN_VERSION_MINOR "0")
