@@ -1,9 +1,5 @@
-//==============================================================================
-// Name        : Random metadata populator
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
-// Description : Populates a specific file with random metadata
-//==============================================================================
 #include "metalnx.h"
+#include "rsModAVUMetadata.hpp"
 
 extern "C" {
     /**
@@ -44,8 +40,8 @@ extern "C" {
         // Metadata control block
         modAVUMetadataInp_t modAVUMetadataInp;
         memset( &modAVUMetadataInp, 0, sizeof( modAVUMetadataInp_t ) );
-        modAVUMetadataInp.arg0 = "add";
-        modAVUMetadataInp.arg1 = "-d";
+        modAVUMetadataInp.arg0 = (char*) "add";
+        modAVUMetadataInp.arg1 = (char*) "-d";
         modAVUMetadataInp.arg2 = objPath;
         modAVUMetadataInp.arg3 = attributeName;
 	    modAVUMetadataInp.arg4 = attributeValue;
@@ -55,10 +51,10 @@ extern "C" {
 
         if ( status < 0 ) {
             irods::log( ERROR( status, "msiobjput_populate failed." ) );
-			return false;
+	    return false;
         }
 		
-		return true;
+	return true;
     }
 
     int msiobjput_populate(
@@ -68,16 +64,16 @@ extern "C" {
 		char * objPath = (char *) inObjPathParam->inOutStruct;
 		rodsLog( LOG_NOTICE, "Adding sample metadata to data object [%s]\n",  objPath);
 
-		createMetadataOnObject(objPath, "ATTRIBUTE01", "VALUE1", "chars", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE02", "2", "ints", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE03", "2, 3, 4, 5", "", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE04", "VALUE-1235", "", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE05", "1865", "bytes", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE06", "False", "bool", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE07", "_TAG-12342_", "", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE08", "['value1', 'value2, 'value3']", "as", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE09", "MLX", "", rei);
-		createMetadataOnObject(objPath, "ATTRIBUTE10", "NULL", "", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE01", (char*) "VALUE1", (char*) "chars", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE02", (char*) "2", (char*) "ints", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE03", (char*) "2, 3, 4, 5", (char*) "", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE04", (char*) "VALUE-1235", (char*) "", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE05", (char*) "1865", (char*) "bytes", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE06", (char*) "False", (char*) "bool", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE07", (char*) "_TAG-12342_", (char*) "", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE08", (char*) "['value1', 'value2, 'value3']", (char*) "as", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE09", (char*) "MLX", (char*) "", rei);
+		createMetadataOnObject(objPath, (char*) "ATTRIBUTE10", (char*) "NULL", (char*) "", rei);
         return 0;
 
     }
@@ -91,7 +87,12 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjput_populate", "msiobjput_populate" );
+        msvc->add_operation<
+		msParam_t*, 
+ 		ruleExecInfo_t*>("msiobjput_populate",
+				std::function<int(
+					msParam_t*, 
+					ruleExecInfo_t*)>(msiobjput_populate));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system
