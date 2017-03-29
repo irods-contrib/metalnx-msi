@@ -9,6 +9,7 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 project(metalnx-msi-plugins C CXX)
 
 include(${IRODS_TARGETS_PATH})
+include_directories(${CMAKE_SOURCE_DIR}/core/include)
 include_directories(/usr/include/libxml2)
 include_directories(/usr/local/include)
 
