@@ -2,3 +2,9 @@
 *.a
 *.so
 .idea
+build/CMakeCache.txt
+build/CMakeFiles/*
+build/CPackConfig.cmake
+build/CPackSourceConfig.cmake
+build/Makefile
+build/cmake_install.cmake
