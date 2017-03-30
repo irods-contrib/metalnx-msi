@@ -8,3 +8,4 @@ build/CPackConfig.cmake
 build/CPackSourceConfig.cmake
 build/Makefile
 build/cmake_install.cmake
+build/microservices/*

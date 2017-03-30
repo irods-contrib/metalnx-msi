@@ -5,6 +5,7 @@
 //				 Sheet csv file and apply it to all files in a run.
 //==============================================================================
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
 
 #include "rsReadCollection.hpp"
 #include "rsOpenCollection.hpp"

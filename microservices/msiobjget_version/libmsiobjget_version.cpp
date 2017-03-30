@@ -1,6 +1,7 @@
 // Finds the version of the MSI package
 
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
 
 #define MSI_LOG "[Metalnx GET Version MSI]"
 

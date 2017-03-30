@@ -16,7 +16,6 @@
 
 #define MSI_IRODS_DIR "/var/lib/irods/plugins/microservices"
 #define MSI_IRODS_42_DIR "/usr/lib/irods/plugins/microservices/"
-#define MSI_VERSION "1.1.0"
 
 #define MSI_ERROR -1
 #define MSI_SUCCESS 0

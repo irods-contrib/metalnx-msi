@@ -8,25 +8,24 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 
 project(metalnx-msi-plugins C CXX)
 
-include(${IRODS_TARGETS_PATH})
-include_directories(${CMAKE_SOURCE_DIR}/core/include)
-include_directories(/usr/include/libxml2)
-include_directories(/usr/local/include)
-
 set(MLX_MSI_VERSION_MAJOR "2")
 set(MLX_MSI_VERSION_MINOR "0")
 set(MLX_MSI_VERSION_PATCH "0")
 set(MLX_MSI_VERSION "${MLX_MSI_VERSION_MAJOR}.${MLX_MSI_VERSION_MINOR}.${MLX_MSI_VERSION_PATCH}")
+set(MLX_HEADERS_PATH "${PROJECT_SOURCE_DIR}/microservices/core/include")
+set(MLX_CMAKE_HEADERS_PATH "${PROJECT_BINARY_DIR}/microservices/core/include")
 
-if (NOT CPACK_PACKAGING_INSTALL_PREFIX)
-  set(CPACK_PACKAGING_INSTALL_PREFIX "/" CACHE STRING "Package root path. \"/\" is correct for normal package builds.." FORCE)
-  message(STATUS "Setting unspecified CPACK_PACKAGING_INSTALL_PREFIX to '${CPACK_PACKAGING_INSTALL_PREFIX}'. This is the correct setting for normal builds.")
-endif()
+configure_file (
+  "${MLX_HEADERS_PATH}/metalnx_msi_version.h.in"
+  "${MLX_CMAKE_HEADERS_PATH}/metalnx_msi_version.h"
+)
 
-if (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build {Debug, Release}." FORCE)
-  message(STATUS "Setting unspecified CMAKE_BUILD_TYPE to '${CMAKE_BUILD_TYPE}'")
-endif()
+#include(${IRODS_TARGETS_PATH})
+#include_directories(${PROJECT_SOURCE_DIR}/microservices/core/include)
+include_directories(/usr/include/libxml2)
+#include_directories(/usr/local/include)
+include_directories(${IRODS_EXTERNALS_FULLPATH_CLANG}/include/c++/v1)
+include_directories("${MLX_CMAKE_HEADERS_PATH}")
 
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -stdlib=libc++ -Wl,-z,defs")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -stdlib=libc++ -Wl,-z,defs")
@@ -39,15 +38,13 @@ link_libraries(exif)
 link_libraries(boost_filesystem)
 link_libraries(boost_system)
 link_libraries(hts)
-include_directories(${IRODS_EXTERNALS_FULLPATH_CLANG}/include/c++/v1)
-include_directories(/opt/irods-externals/boost)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_INSTALL_RPATH ${IRODS_EXTERNALS_FULLPATH_CLANG_RUNTIME}/lib)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 
-find_package(CURL REQUIRED)
-find_package(OpenSSL REQUIRED)
+#find_package(CURL REQUIRED)
+#find_package(OpenSSL REQUIRED)
 
 set(
   METALNX_MICROSERVICES

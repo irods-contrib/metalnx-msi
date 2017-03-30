@@ -1,4 +1,5 @@
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
 #include "rsModAVUMetadata.hpp"
 
 #include "htslib/bgzf.h"
