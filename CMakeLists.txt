@@ -20,10 +20,7 @@ configure_file (
   "${MLX_CMAKE_HEADERS_PATH}/metalnx_msi_version.h"
 )
 
-#include(${IRODS_TARGETS_PATH})
-#include_directories(${PROJECT_SOURCE_DIR}/microservices/core/include)
 include_directories(/usr/include/libxml2)
-#include_directories(/usr/local/include)
 include_directories(${IRODS_EXTERNALS_FULLPATH_CLANG}/include/c++/v1)
 include_directories("${MLX_CMAKE_HEADERS_PATH}")
 
@@ -42,9 +39,6 @@ link_libraries(hts)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_INSTALL_RPATH ${IRODS_EXTERNALS_FULLPATH_CLANG_RUNTIME}/lib)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-
-#find_package(CURL REQUIRED)
-#find_package(OpenSSL REQUIRED)
 
 set(
   METALNX_MICROSERVICES
