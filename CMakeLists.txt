@@ -111,12 +111,13 @@ set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_SOURCE_DIR}/packaging/postinst;"
 
 set(CPACK_RPM_COMPONENT_INSTALL OFF)
 set(CPACK_RPM_PACKAGE_RELEASE "1")
+set(CPACK_RPM_PACKAGE_SUMMARY "Metalnx MSI plugins")
+set(CPACK_RPM_PACKAGE_DESCRIPTION "Metalnx Microservices plugins for iRODS 4.2+"
 set(CPACK_RPM_PACKAGE_LICENSE "Apache 2.0")
 set(CPACK_RPM_PACKAGE_VENDOR "Dell Inc.")
 set(CPACK_RPM_PACKAGE_URL "https://bintray.com/metalnx")
 set(CPACK_RPM_PACKAGE_AUTOREQ 0)
 set(CPACK_RPM_PACKAGE_AUTOPROV 0)
-set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_SOURCE_DIR}/packaging/postinst")
 
 set(CPACK_ARCHIVE_COMPONENT_INSTALL OFF)
 
@@ -124,10 +125,5 @@ set(CPACK_DEBIAN_PACKAGE_NAME "metalnx-msi-plugins")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libexif-dev, libxml++2.6-dev")
 
 set(CPACK_RPM_PACKAGE_NAME "metalnx-msi-plugins")
-configure_file(
-	"${PROJECT_SOURCE_DIR}/packaging/metalnx-msi-plugins.spec.in"
-	"${CMAKE_CURRENT_BINARY_DIR}/metalnx-msi-plugins.spec" @ONLY IMMEDIATE
-)
-set(CPACK_RPM_USER_BINARY_SPECFILE "${CMAKE_CURRENT_BINARY_DIR}/metalnx-msi-plugins.spec")
 
 include(CPack)
