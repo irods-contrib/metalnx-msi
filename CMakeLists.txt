@@ -112,7 +112,7 @@ set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_SOURCE_DIR}/packaging/postinst;"
 set(CPACK_RPM_COMPONENT_INSTALL OFF)
 set(CPACK_RPM_PACKAGE_RELEASE "1")
 set(CPACK_RPM_PACKAGE_SUMMARY "Metalnx MSI plugins")
-set(CPACK_RPM_PACKAGE_DESCRIPTION "Metalnx Microservices plugins for iRODS 4.2+"
+set(CPACK_RPM_PACKAGE_DESCRIPTION "Metalnx Microservices plugins for iRODS 4.2+")
 set(CPACK_RPM_PACKAGE_LICENSE "Apache 2.0")
 set(CPACK_RPM_PACKAGE_VENDOR "Dell Inc.")
 set(CPACK_RPM_PACKAGE_URL "https://bintray.com/metalnx")
