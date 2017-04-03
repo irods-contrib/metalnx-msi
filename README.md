@@ -1,10 +1,8 @@
 ![alt text] [1]
 [1]: docs/IMAGES/emc_metalnx_logo.png 
 
-Metalnx MSI is a set of microservices designed to work alongside the iRODS ([integrated Rule-Oriented Data System][irods]). It provides tools to enable automatic metadata extraction from a specific file types.
-
-## Latest Version
-1.0
+Metalnx MSI is a set of microservices designed to work alongside the iRODS ([integrated Rule-Oriented Data System][irods]). It provides tools to enable automatic metadata extraction from a specific file types, 
+list of all microservices installed in the grid as well as the MSI package version installed in the system.
 
 ## Supported file types
 
