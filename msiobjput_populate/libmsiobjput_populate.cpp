@@ -1,6 +1,6 @@
 //==============================================================================
 // Name        : Random metadata populator
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Copyright   : 2015-2017 Dell EMC. All rights reserved.
 // Description : Populates a specific file with random metadata
 //==============================================================================
 #include "metalnx.h"

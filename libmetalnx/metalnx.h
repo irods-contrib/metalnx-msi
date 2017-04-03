@@ -1,7 +1,7 @@
 //==============================================================================
 // Name        : metalnx.cpp
 // Version     : 1.1.0
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Copyright   : 2015-2017 Dell EMC. All rights reserved.
 // Description : Metalnx header file for the Metalnx microservices.
 //==============================================================================
 

@@ -1,6 +1,6 @@
 //==============================================================================
 // Name        : BAM extraction
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Copyright   : 2015-2017 Dell EMC. All rights reserved.
 // Description : Extracts metadata from BAM files
 //==============================================================================
 #include "metalnx.h"

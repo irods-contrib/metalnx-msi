@@ -1,6 +1,6 @@
 //==============================================================================
 // Name        : Illumina.cpp
-// Copyright   : 2015-2017 Dell Inc. All rights reserved.
+// Copyright   : 2015-2017 Dell EMC. All rights reserved.
 // Description : Illumina Microservice used to extract metadata from the Sample
 //				 Sheet csv file and apply it to all files in a run.
 //==============================================================================
