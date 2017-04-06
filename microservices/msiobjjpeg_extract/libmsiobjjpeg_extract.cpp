@@ -1,9 +1,6 @@
-//==============================================================================
-// Name        : JPEG extraction
-// Copyright   : 2015-2017 Dell EMC. All rights reserved.
-// Description : Extracts metadata from JPEG files
-//==============================================================================
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
+#include "rsModAVUMetadata.hpp"
 
 #include <string>
 #include <ctype.h>
@@ -87,12 +84,12 @@ extern "C" {
         // Metadata control block
         modAVUMetadataInp_t modAVUMetadataInp;
         memset(&modAVUMetadataInp, 0, sizeof(modAVUMetadataInp_t));
-        modAVUMetadataInp.arg0 = "add";
-        modAVUMetadataInp.arg1 = "-d";
+        modAVUMetadataInp.arg0 = (char*) "add";
+        modAVUMetadataInp.arg1 = (char*) "-d";
         modAVUMetadataInp.arg2 = (char *) objPath;
         modAVUMetadataInp.arg3 = (char *) tagName;
-	    modAVUMetadataInp.arg4 = tagValue;
-        modAVUMetadataInp.arg5 = "";
+ 	modAVUMetadataInp.arg4 = tagValue;
+        modAVUMetadataInp.arg5 = (char*) "";
 
         int status = rsModAVUMetadata( userExifHandler->rei->rsComm, &modAVUMetadataInp );
 
@@ -160,7 +157,14 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjjpeg_extract", "msiobjjpeg_extract" );
+        msvc->add_operation<
+		msParam_t*,
+		msParam_t*,
+		ruleExecInfo_t*>("msiobjjpeg_extract", 
+				std::function<int(
+ 					msParam_t*,
+					msParam_t*,
+					ruleExecInfo_t*)>(msiobjjpeg_extract));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system

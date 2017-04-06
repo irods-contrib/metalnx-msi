@@ -8,18 +8,17 @@
 #ifndef RE_METALNX_HPP
 #define RE_METALNX_HPP
 
-#include "rods.h"
-#include "reGlobalsExtern.hpp"
-#include "irods_ms_plugin.hpp"
-#include "modAVUMetadata.h"
-#include "reFuncDefs.hpp"
 #include "apiHeaderAll.h"
+#include "msParam.h"
+#include "irods_ms_plugin.hpp"
+#include "irods_server_api_call.hpp"
+#include "microservice.hpp"
 
 #define MSI_IRODS_DIR "/var/lib/irods/plugins/microservices"
-
-#define MSI_VERSION "1.1.0"
+#define MSI_IRODS_42_DIR "/usr/lib/irods/plugins/microservices/"
 
 #define MSI_ERROR -1
 #define MSI_SUCCESS 0
+
 
 #endif /*RE_METALNX_HPP*/
