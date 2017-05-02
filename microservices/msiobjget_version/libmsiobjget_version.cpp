@@ -5,6 +5,7 @@
 //==============================================================================
 
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
 
 #define MSI_LOG "[Metalnx GET Version MSI]"
 
@@ -26,7 +27,7 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjget_version", "msiobjget_version" );
+        msvc->add_operation<msParam_t*, ruleExecInfo_t*>("msiobjget_version", std::function<int(msParam_t*, ruleExecInfo_t*)>(msiobjget_version));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system

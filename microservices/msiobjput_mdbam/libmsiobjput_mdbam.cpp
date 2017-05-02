@@ -5,6 +5,8 @@
 //==============================================================================
 
 #include "metalnx.h"
+#include "metalnx_msi_version.h"
+#include "rsModAVUMetadata.hpp"
 
 #include "htslib/bgzf.h"
 #include "bam.h"
@@ -30,8 +32,8 @@ extern "C" {
 		// Metadata control block
 		modAVUMetadataInp_t modAVUMetadataInp;
 		memset(&modAVUMetadataInp, 0, sizeof(modAVUMetadataInp_t));
-		modAVUMetadataInp.arg0 = "add";
-		modAVUMetadataInp.arg1 = "-d";
+		modAVUMetadataInp.arg0 = (char*) "add";
+		modAVUMetadataInp.arg1 = (char*) "-d";
 		modAVUMetadataInp.arg2 = objPath;	
 
         // Splitting lines
@@ -46,9 +48,9 @@ extern "C" {
 					// Extracting sequencer name
 					if (!strncmp(line_parts, "PL:", 3)) {
 						char * sequencer = line_parts + 3;
-						modAVUMetadataInp.arg3 = "SEQUENCER";
+						modAVUMetadataInp.arg3 = (char*) "SEQUENCER";
 						modAVUMetadataInp.arg4 = sequencer;
-						modAVUMetadataInp.arg5 = "";
+						modAVUMetadataInp.arg5 = (char*) "";
 
 						int status = rsModAVUMetadata( rei->rsComm, &modAVUMetadataInp );
 						if ( status < 0 ) {
@@ -62,9 +64,9 @@ extern "C" {
 					else if (!strncmp(line_parts, "CN:", 3)) {
 						char * sequencing_center_name = line_parts + 3;
 						
-						modAVUMetadataInp.arg3 = "SEQUENCER_CENTER_NAME";
+						modAVUMetadataInp.arg3 = (char*) "SEQUENCER_CENTER_NAME";
 						modAVUMetadataInp.arg4 = sequencing_center_name;
-						modAVUMetadataInp.arg5 = "";
+						modAVUMetadataInp.arg5 = (char*) "";
 
 						int status = rsModAVUMetadata( rei->rsComm, &modAVUMetadataInp );
 						if ( status < 0 ) {
@@ -98,7 +100,14 @@ extern "C" {
 
         // =-=-=-=-=-=-=-
         // wire the implementation to the plugin instance
-        msvc->add_operation( "msiobjput_mdbam", "msiobjput_mdbam" );
+        msvc->add_operation<
+		msParam_t*, 
+		msParam_t*, 
+		ruleExecInfo_t*>("msiobjput_mdbam", 
+				std::function<int(
+					msParam_t*,
+					msParam_t*,
+					ruleExecInfo_t*)>(msiobjput_mdbam));
 
         // =-=-=-=-=-=-=-
         // hand it over to the system
