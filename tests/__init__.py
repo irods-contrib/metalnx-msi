@@ -54,8 +54,14 @@ class MetadataExtractConfig:
     IRODS_USER = config('IRODS_USER', default='rods')
     IRODS_RESC = config('IRODS_RESC', default='demoResc')
     IRODS_ZONE = config('IRODS_ZONE', default='tempZone')
+    IRODS_ETC_DIR = config('IRODS_ETC_DIR', default='/etc/irods')
+    IRODS_SERVER_CONFIG_FILE_NAME = config('IRODS_SERVER_CONFIG_FILE_NAME', default='server_config.json')
+    IRODS_SERVER_CONFIG_PATH = '{}/{}'.format(IRODS_ETC_DIR, IRODS_SERVER_CONFIG_FILE_NAME)
+    RULE_CACHE_DIR_NAME = config('RULE_CACHE_DIR', default='.rulecache')
+    RULE_CACHE_IRODS_PATH = '/{}/{}'.format(IRODS_ZONE, RULE_CACHE_DIR_NAME)
     IRODS_HOME_PATH = '/{}/home/{}'.format(IRODS_ZONE, IRODS_USER)
-    VAULT_PATH = '/var/lib/irods{}/Vault/home/{}'.format('/iRODS' if not IRODS_42 else '', IRODS_USER)
+    VAULT_ROOT_PATH = '/var/lib/irods{}/Vault'.format('/iRODS' if not IRODS_42 else '', IRODS_USER)
+    VAULT_PATH = '{}/home/{}'.format(VAULT_ROOT_PATH, IRODS_USER)
     IMETA_LS_NONE = 'AVUs defined for dataObj {}:\nNone\n'
     ILLUMINA_FOLDER_NAME = 'test_illumina_file'
     ILLUMINA_FILE_NAME = '{}.tar'.format(ILLUMINA_FOLDER_NAME)
@@ -64,6 +70,7 @@ class MetadataExtractConfig:
     POPULATE_FILE_NAME = 'test_populate_file.txt'
     VCF_FILE_NAME = 'test_vcf_file.vcf'
     MANIFEST_FILE_NAME = 'test_manifest_file.xml'
+    RULE_DEPLOYMENT_FILE_NAME = 'test_rule_deploy.re'
     ILLUMINA_OBJ_PATH = '{}/{}'.format(IRODS_HOME_PATH, ILLUMINA_FILE_NAME)
     ILLUMINA_FOLDER_PATH = '{}/{}'.format(IRODS_HOME_PATH, ILLUMINA_FOLDER_NAME)
     ILLUMINA_METADATA_FILE = '{}/Data/Intensities/Offset/offsets.txt'.format(ILLUMINA_FOLDER_NAME)
@@ -82,6 +89,7 @@ class MetadataExtractConfig:
     GET_MICROSERVICES_RULE_FILE = config('GET_MICROSERVICES_RULE_FILE', default='mlxGetMicroservices.r')
     POPULATE_RULE_FILE = config('POPULATE_RULE_FILE', default='mlxPopulate.r')
     MANIFEST_RULE_FILE = config('MANIFEST_RULE_FILE', default='mlxManifest.r')
+    RULE_DEPLOYMENT_RULE_FILE = config('RULE_DEPLOYMENT_RULE_FILE', default='mlxRuleDeployment.r')
     MSI_PACKAGE_VERSION = config('MSI_PACKAGE_VERSION', default='1.1.0')
     METALNX_MSIS_INSTALLED = config('METALNX_MSIS_INSTALLED').split(',')
     IRODS_MSIS_INSTALLED = config('IRODS_42_MSIS_INSTALLED').split(',') if IRODS_42 else config('IRODS_MSIS_INSTALLED').split(',')
@@ -122,6 +130,9 @@ class MetadataExtractConfig:
     def call_extract_metadata_for_vcf(self, check_output=False, *args, **kwargs):
         call_function = _check_call_output if check_output else _call
         return self.call_rule_from_file(call_function, self.VCF_RULE_FILE, *args, **kwargs)
+
+    def call_rule_deployment(self, *args, **kwargs):
+        return self.call_rule_from_file(_check_call_output, self.RULE_DEPLOYMENT_RULE_FILE, *args, **kwargs)
 
     def build_rule_file(self, rule_filename, *args, **kwargs):
         path_header_file = os.path.join(self.RULE_HEADERS_PATH, rule_filename)
