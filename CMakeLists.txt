@@ -20,6 +20,7 @@ configure_file (
   "${MLX_CMAKE_HEADERS_PATH}/metalnx_msi_version.h"
 )
 
+include_directories(/usr/include/rapidjson)
 include_directories(/usr/include/libxml2)
 include_directories(${IRODS_EXTERNALS_FULLPATH_CLANG}/include/c++/v1)
 include_directories("${MLX_CMAKE_HEADERS_PATH}")
