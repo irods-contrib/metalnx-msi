@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR) #CPACK_DEBIAN_<COMPONENT>_PACKAGE_NAME
 
-find_package(IRODS 4.2.0 EXACT REQUIRED)
+find_package(IRODS)
 
 set(CMAKE_C_COMPILER ${IRODS_EXTERNALS_FULLPATH_CLANG}/bin/clang)
 set(CMAKE_CXX_COMPILER ${IRODS_EXTERNALS_FULLPATH_CLANG}/bin/clang++)
@@ -9,7 +9,7 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
 project(metalnx-msi-plugins C CXX)
 
 set(MLX_MSI_VERSION_MAJOR "1")
-set(MLX_MSI_VERSION_MINOR "2")
+set(MLX_MSI_VERSION_MINOR "3")
 set(MLX_MSI_VERSION_PATCH "0")
 set(MLX_MSI_VERSION "${MLX_MSI_VERSION_MAJOR}.${MLX_MSI_VERSION_MINOR}.${MLX_MSI_VERSION_PATCH}")
 set(MLX_HEADERS_PATH "${PROJECT_SOURCE_DIR}/microservices/core/include")
@@ -20,6 +20,7 @@ configure_file (
   "${MLX_CMAKE_HEADERS_PATH}/metalnx_msi_version.h"
 )
 
+include_directories(/usr/include/rapidjson)
 include_directories(/usr/include/libxml2)
 include_directories(${IRODS_EXTERNALS_FULLPATH_CLANG}/include/c++/v1)
 include_directories("${MLX_CMAKE_HEADERS_PATH}")
@@ -50,6 +51,7 @@ set(
   msiobjput_mdmanifest
   msiobjput_mdvcf
   msiobjput_populate
+  msirule_deployment
   )
 
 
