@@ -40,14 +40,14 @@ class TestRuleDeployment(TestCase, MetadataExtractConfig):
         iput(local_rule_file, self.RULE_CACHE_IRODS_PATH)  # iput file into /tempZone/.rulecache
 
     def test_deploy_rule(self):
-        self.call_rule_deployment(rule_name=self.RULE_DEPLOYMENT_FILE_NAME, rule_file_path=self.rule_file_path)
+        self.call_rule_deployment(rule_name=self.RULE_DEPLOYMENT_FILE_NAME[:-3], rule_file_path=self.rule_file_path)
         self.assertTrue(exists(join(self.IRODS_ETC_DIR, self.RULE_DEPLOYMENT_FILE_NAME)))
 
         server_config_json = load_server_config_as_json(self.IRODS_SERVER_CONFIG_PATH)
         rule_base_set = get_rule_base_set_from_config(server_config_json)
 
-        self.assertTrue(self.RULE_DEPLOYMENT_FILE_NAME in rule_base_set)  # rule must be present in the config file
-        self.assertEqual(self.RULE_DEPLOYMENT_FILE_NAME, rule_base_set[0])  # rule must be the first one in the list
+        self.assertTrue(self.RULE_DEPLOYMENT_FILE_NAME[:-3] in rule_base_set)  # rule must be present in the config file
+        self.assertEqual(self.RULE_DEPLOYMENT_FILE_NAME[:-3], rule_base_set[0])  # rule must be the first one in the list
 
     def tearDown(self):
         self.cleanUp()
