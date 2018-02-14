@@ -20,11 +20,12 @@ This tutorial guides you through the Metalnx MSI compilation pipeline. It explai
 
 ### Building Metalnx MSI RPM and DEB packages
 
-The Metalnx MSI package is an optional package that provides a set of iRODS micro services allowing the data grid to automatically extract metadata from certain kinds of files. It relies on the irods-dev library provided by  [iRODS][irods-dev-download].
+The Metalnx MSI package is an optional package that provides a set of iRODS micro services allowing the data grid to automatically extract metadata from certain kinds of files. It relies on the irods-dev library provided by [iRODS](https://irods.org/download/).
 
 This package also provides automatic metadata extraction for genetic research files (BAM, SAM, CRAM, VCF and Illumina project manifest). In order to allow iRODS and Metalnx to understand these files formats, you must install additional libraries:
-    * [HTSlib][htslib-download]
-	* [samtools][samtools-download]
+
+ * [HTSlib](https://github.com/samtools/htslib/releases/download/1.3.1/htslib-1.3.1.tar.bz2)
+ * [samtools](https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2)
 
 #### Installing the irods-dev package, HTSlib and Samtools
 
@@ -32,13 +33,16 @@ Please refer to our [INSTALL](INSTALL.md#resolving-metalnx-msi-dependencies) doc
 
 On DEB-based or RPM-based systems, you will need the basic development tools in order to download, compile and install samtools (C++ compiler, make):
 
-    $ wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2    # Getting sources from GitHub
-    $ tar -xvf samtools-1.3.1.tar.bz2															  # Extracting tarball
-    $ cd samtools-1.3.1																			  # Entering sources directory
-    $ ./configure --without-curses																  # Configuring compilation pipeline
-    $ make																						  # Compiling source code
-    $ sudo make install																			  # Installing compiled binary
-    $ sudo cp *.h /usr/local/include/															  # Installing headers
+    # Get and build source from GitHub
+    $ wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2
+    $ tar -xvf samtools-1.3.1.tar.bz2
+    $ cd samtools-1.3.1
+    $ ./configure --without-curses
+    $ make
+    # Installing compiled binary
+    $ sudo make install
+    # Installing headers
+    $ sudo cp *.h /usr/local/include/
 
 #### Building package
 
@@ -65,13 +69,12 @@ Between these two variables, only `IRODSVERSION` is required. If `IRODSROOT` is 
 	
 Now, execute the `build.sh` script
 
-**NOTE:** This command must be executed from the source tree root, otherwise it will NOT work.":
+**NOTE:** This command must be executed from the source tree root, otherwise it will NOT work.:
 
-	$ IRODSVERSION=4.1.X IRODSROOT=/tmp/irods-packages/4.1.X ./packaging/build.sh      # building MSI against iRODS libs in a different location
-    $ IRODSVERSION=4.1.X ./packaging/build.sh                                           # building MSI against iRODS libs in a standard location
+    # building MSI against iRODS libs in a standard location
+    $ IRODSVERSION=4.1.X ./packaging/build.sh
+
+    # building MSI against iRODS libs in a different location
+    $ IRODSVERSION=4.1.X IRODSROOT=/tmp/irods-packages/4.1.X ./packaging/build.sh
 
 Once completed, your resulting package can be found at `<metalnx_msi_root>/linux-X.XX-<arch>/RPMS/<arch>metalnx-msi-plugins-4.1.X-1.0-DEV.<arch>.<rpm/deb>`.
-
-[irods-dev-download]: http://irods.org/download/
-[htslib-download]: https://github.com/samtools/htslib/releases/download/1.3.1/htslib-1.3.1.tar.bz2
-[samtools-download]: https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2
